@@ -125,14 +125,21 @@
                         <a href="#">Home</a>
                     </li>
                     <li>
-                        <a href="#" class="dropdown-toggle">Booking</a>
-                        <div class="dropdown">
-                            <a href="#">Book Now</a>
-                            <a href="#">Manage Booking</a>
+                        <a href="#" class="dropdown-toggle-parking">Summon</a>
+                        <div class="dropdown dropdown-parking">
+                            <a href="#">List</a>
+                            <a href="#">Manage</a>
                         </div>
                     </li>
                     <li>
-                        <a href="#">Contact</a>
+                        <a href="#" class="dropdown-toggle-reports">Reports</a>
+                        <div class="dropdown dropdown-reports">
+                            <a href="#">Booking Report</a>
+                            <a href="#">Parking Report</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#">Vehicle Approval</a>
                     </li>
                 </ul>
             </nav>
@@ -140,6 +147,7 @@
                 <a href="#" class="profile-toggle"><i class="fas fa-user"></i></a>
                 <div class="profile-dropdown">
                     <a href="#">Profile</a>
+                    <a href="#">Dashboard</a>
                     <a href="#">Settings</a>
                     <a href="#">Logout</a>
                 </div>
@@ -149,34 +157,40 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Booking dropdown toggle
-            document.querySelector('.dropdown-toggle').addEventListener('click', function (event) {
+            var dropdowns = document.querySelectorAll('.dropdown');
+            var dropdownToggles = document.querySelectorAll('.dropdown-toggle-parking, .dropdown-toggle-reports');
+            var profileToggle = document.querySelector('.profile-toggle');
+
+            function closeAllDropdowns() {
+                dropdowns.forEach(function (dropdown) {
+                    dropdown.style.display = 'none';
+                });
+            }
+
+            dropdownToggles.forEach(function (toggle) {
+                toggle.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    closeAllDropdowns();
+                    var dropdown = this.nextElementSibling;
+                    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                });
+            });
+
+            profileToggle.addEventListener('click', function (event) {
                 event.preventDefault();
+                closeAllDropdowns();
                 var dropdown = this.nextElementSibling;
                 dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
             });
 
-            // Profile dropdown toggle
-            document.querySelector('.profile-toggle').addEventListener('click', function (event) {
-                event.preventDefault();
-                var dropdown = this.nextElementSibling;
-                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-            });
-
-            // Close dropdowns if clicked outside
             document.addEventListener('click', function (event) {
-                var isClickInsideBooking = document.querySelector('.dropdown-toggle').contains(event.target);
-                var isClickInsideProfile = document.querySelector('.profile-toggle').contains(event.target);
-                var dropdowns = document.querySelectorAll('.dropdown, .profile-dropdown');
-
-                if (!isClickInsideBooking && !isClickInsideProfile) {
-                    dropdowns.forEach(function (dropdown) {
-                        dropdown.style.display = 'none';
-                    });
+                if (!event.target.matches('.dropdown-toggle-parking, .dropdown-toggle-reports, .profile-toggle')) {
+                    closeAllDropdowns();
                 }
             });
         });
     </script>
+
 
 </body>
 </html>
