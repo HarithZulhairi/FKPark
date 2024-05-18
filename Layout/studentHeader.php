@@ -127,8 +127,8 @@
                     <li>
                         <a href="#" class="dropdown-toggle">Booking</a>
                         <div class="dropdown">
-                            <a href="#">Book Now</a>
-                            <a href="#">Manage Booking</a>
+                            <a href="#">Create Booking</a>
+                            <a href="#">View Booking</a>
                         </div>
                     </li>
                     <li>
