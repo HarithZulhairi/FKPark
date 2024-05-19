@@ -56,67 +56,47 @@ main {
     margin-bottom: 20px;
 }
 
-.tabs {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+.accordion {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
 }
 
-.tabs button {
+.accordion-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.accordion-button {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
     padding: 10px 20px;
     font-size: 16px;
-    cursor: pointer;
     border: none;
-    background: none;
-    outline: none;
-    position: relative;
+    border-radius: 5px 5px 0 0;
+    width: 100%;
+    text-align: left;
 }
 
-.tabs button:focus {
-    outline: none;
+.accordion-button:hover {
+    background-color: #0056b3;
 }
 
-.tabs .tab-active {
-    font-weight: bold;
-}
-
-.tab-indicator {
-    position: absolute;
-    bottom: 0;
-    height: 2px;
-    background-color: #333;
-    transition: left 0.3s ease, width 0.3s ease;
-}
-
-.tab-content {
+.accordion-content {
     display: none;
+    padding: 10px 20px;
+    border-top: 1px solid #ccc;
 }
 
-.tab-content.active {
-    display: block;
-    animation: slideDown 0.3s;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-table {
-    width: 30%;
-    margin: 0 auto;
+.accordion-content table {
+    width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
 
-table, th, td {
+.accordion-content table, th, td {
     border: 1px solid #ccc;
 }
 

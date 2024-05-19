@@ -1,15 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Add event listener to the parent element containing all book buttons
-    var bookingContainer = document.querySelector('.create-booking');
-    bookingContainer.addEventListener('click', function(event) {
-        // Check if the clicked element is a book button
-        if (event.target.classList.contains('book-link')) {
-            event.preventDefault();
-            var parkingSpot = event.target.parentNode.parentNode.firstElementChild.textContent;
-            window.location.href = 'bookingForm.html?parkingSpot=' + encodeURIComponent(parkingSpot);
-        }
-    });
-
     // Function to handle tab switching
     function showTab(sectionId, element) {
         var tabs = document.querySelectorAll('.tab-button');
@@ -39,5 +28,22 @@ document.addEventListener('DOMContentLoaded', function() {
             var sectionId = this.getAttribute('data-section');
             showTab(sectionId, this);
         });
+    });
+
+    // Initial tab setup
+    var activeTabButton = document.querySelector('.tab-button.tab-active');
+    if (activeTabButton) {
+        var sectionId = activeTabButton.getAttribute('data-section');
+        showTab(sectionId, activeTabButton);
+    }
+
+    // Add event listener to handle book link clicks
+    var bookingContainer = document.querySelector('.create-booking');
+    bookingContainer.addEventListener('click', function(event) {
+        if (event.target.classList.contains('book-link')) {
+            event.preventDefault();
+            var parkingSpot = event.target.closest('tr').querySelector('td').textContent;
+            window.location.href = 'confirmBooking.php?parkingSpot=' + encodeURIComponent(parkingSpot);
+        }
     });
 });

@@ -28,9 +28,9 @@
             </div>
 
             <div class="tabs">
-                <button class="tab-button tab-active" onclick="showTab('sectionA', this)">Parking Section A</button>
-                <button class="tab-button" onclick="showTab('sectionB', this)">Parking Section B</button>
-                <button class="tab-button" onclick="showTab('sectionC', this)">Parking Section C</button>
+                <button class="tab-button tab-active" data-section="sectionA">Parking Section A</button>
+                <button class="tab-button" data-section="sectionB">Parking Section B</button>
+                <button class="tab-button" data-section="sectionC">Parking Section C</button>
                 <div class="tab-indicator"></div>
             </div>
 
@@ -42,11 +42,11 @@
                     </tr>
                     <tr>
                         <td>A001</td>
-                        <td><a href="bookingForm.html?parkingSpot=A001" class="book-link">Book</a></td>
+                        <td><a href="confirmBooking.php?parkingSpot=A001" class="book-link">Book</a></td>
                     </tr>
                     <tr>
                         <td>A002</td>
-                        <td><a href="bookingForm.html?parkingSpot=A002" class="book-link">Book</a></td>
+                        <td><a href="confirmBooking.php?parkingSpot=A002" class="book-link">Book</a></td>
                     </tr>
                 </table>
             </div>
@@ -59,11 +59,11 @@
                     </tr>
                     <tr>
                         <td>B001</td>
-                        <td><a href="bookingForm.html?parkingSpot=B001" class="book-link">Book</a></td>
+                        <td><a href="confirmBooking.php?parkingSpot=B001" class="book-link">Book</a></td>
                     </tr>
                     <tr>
                         <td>B002</td>
-                        <td><a href="bookingForm.html?parkingSpot=B002" class="book-link">Book</a></td>
+                        <td><a href="confirmBooking.php?parkingSpot=B002" class="book-link">Book</a></td>
                     </tr>
                 </table>
             </div>
@@ -76,11 +76,11 @@
                     </tr>
                     <tr>
                         <td>C001</td>
-                        <td><a href="bookingForm.html?parkingSpot=C001" class="book-link">Book</a></td>
+                        <td><a href="confirmBooking.php?parkingSpot=C001" class="book-link">Book</a></td>
                     </tr>
                     <tr>
                         <td>C002</td>
-                        <td><a href="bookingForm.html?parkingSpot=C002" class="book-link">Book</a></td>
+                        <td><a href="confirmBooking.php?parkingSpot=C002" class="book-link">Book</a></td>
                     </tr>
                 </table>
             </div>
