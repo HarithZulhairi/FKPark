@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="createBooking.css">
-    <script src="createBooking.js" defer></script>
+    <script src="createBooking.js"></script>
     <script src="https://kit.fontawesome.com/449b7d4b66.js" crossorigin="anonymous"></script>
     <title>Booking Page</title>
+
+    <link rel="stylesheet" href="createBooking.css">
+
 </head>
 <body>
     <?php include '../Layout/studentHeader.php'; ?>
@@ -28,9 +30,9 @@
             </div>
 
             <div class="tabs">
-                <button class="tab-button tab-active" data-section="sectionA">Parking Section A</button>
-                <button class="tab-button" data-section="sectionB">Parking Section B</button>
-                <button class="tab-button" data-section="sectionC">Parking Section C</button>
+                <button class="tab-button tab-active" data-section="sectionA" onclick="showTab('sectionA', this)">Parking Section A</button>
+                <button class="tab-button" data-section="sectionB" onclick="showTab('sectionB', this)">Parking Section B</button>
+                <button class="tab-button" data-section="sectionC" onclick="showTab('sectionC', this)">Parking Section C</button>
                 <div class="tab-indicator"></div>
             </div>
 

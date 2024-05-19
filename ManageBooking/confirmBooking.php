@@ -12,7 +12,7 @@
     <main>
         <div class="booking-form-container">
             <h1>Parking Booking Form</h1>
-            <form action="submitBooking.php" method="POST">
+            <form action="QRBooking.php" method="POST">
                 <div class="form-group">
                     <label for="date">Date:</label>
                     <input type="date" id="date" name="date" required>
@@ -25,7 +25,7 @@
                     <label for="endTime">End Time:</label>
                     <input type="time" id="endTime" name="endTime" required>
                 </div>
-                <input type="hidden" id="parkingSpot" name="parkingSpot" value="">
+                <input type="hidden" id="parkingSpot" name="parkingSpot" value="<?php echo htmlspecialchars($_GET['parkingSpot']); ?>">
                 <button type="submit" class="confirm-button">Confirm Booking</button>
             </form>
         </div>
