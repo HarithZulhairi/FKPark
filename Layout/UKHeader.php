@@ -6,6 +6,42 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>FKPark</title>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var dropdowns = document.querySelectorAll('.dropdown');
+            var dropdownToggles = document.querySelectorAll('.dropdown-toggle-parking, .dropdown-toggle-reports');
+            var profileToggle = document.querySelector('.profile-toggle');
+
+            function closeAllDropdowns() {
+                dropdowns.forEach(function (dropdown) {
+                    dropdown.style.display = 'none';
+                });
+            }
+
+            dropdownToggles.forEach(function (toggle) {
+                toggle.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    closeAllDropdowns();
+                    var dropdown = this.nextElementSibling;
+                    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                });
+            });
+
+            profileToggle.addEventListener('click', function (event) {
+                event.preventDefault();
+                closeAllDropdowns();
+                var dropdown = this.nextElementSibling;
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!event.target.matches('.dropdown-toggle-parking, .dropdown-toggle-reports, .profile-toggle')) {
+                    closeAllDropdowns();
+                }
+            });
+        });
+    </script>
+
     <style>
         body, html {
             height: 100%;
@@ -20,7 +56,7 @@
         }
 
         header {
-            background-color: #333;
+            background-color: #000000;
             color: white;
             padding: 10px 0;
         }
@@ -113,12 +149,14 @@
             flex: 1;
         }
     </style>
+
+    
 </head>
 <body>
     
     <header>
         <div class="container">
-            <div class="logo"><b>FK</b>Park</div>
+            <div class="logo"><img src="../resource/FKParkUK.jpeg" alt="FKPark" width="170" height="70"></div>
             <nav>
                 <ul>
                     <li>
@@ -155,42 +193,7 @@
         </div>
     </header>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var dropdowns = document.querySelectorAll('.dropdown');
-            var dropdownToggles = document.querySelectorAll('.dropdown-toggle-parking, .dropdown-toggle-reports');
-            var profileToggle = document.querySelector('.profile-toggle');
-
-            function closeAllDropdowns() {
-                dropdowns.forEach(function (dropdown) {
-                    dropdown.style.display = 'none';
-                });
-            }
-
-            dropdownToggles.forEach(function (toggle) {
-                toggle.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    closeAllDropdowns();
-                    var dropdown = this.nextElementSibling;
-                    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-                });
-            });
-
-            profileToggle.addEventListener('click', function (event) {
-                event.preventDefault();
-                closeAllDropdowns();
-                var dropdown = this.nextElementSibling;
-                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-            });
-
-            document.addEventListener('click', function (event) {
-                if (!event.target.matches('.dropdown-toggle-parking, .dropdown-toggle-reports, .profile-toggle')) {
-                    closeAllDropdowns();
-                }
-            });
-        });
-    </script>
-
+   
 
 </body>
 </html>

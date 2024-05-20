@@ -20,7 +20,7 @@
         }
 
         header {
-            background-color: #333;
+            background-color: #BE8A62;
             color: white;
             padding: 10px 0;
         }
@@ -118,7 +118,7 @@
     
     <header>
         <div class="container">
-            <div class="logo"><b>FK</b>Park</div>
+        <div class="logo"><img src="../resource/FKParkAdmin.jpeg" alt="FKPark" width="170" height="70"></div>
             <nav>
                 <ul>
                     <li>
