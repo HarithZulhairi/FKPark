@@ -160,7 +160,7 @@
     
     <header>
         <div class="container">
-            <div class="logo"><img src="../resource/FKParkUK.jpeg" alt="FKPark" width="170" height="70"></div>
+            <div class="logo"><img src="../resource/FKPark.jpeg" alt="FKPark" width="170" height="70"></div>
             <nav>
                 <ul>
                     <li>
