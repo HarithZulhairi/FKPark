@@ -112,6 +112,10 @@
         main {
             flex: 1;
         }
+
+        li a{
+            font-size:16px;
+        }
     </style>
 </head>
 <body>
