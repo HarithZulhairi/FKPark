@@ -6,7 +6,10 @@
     <title>Booking Page</title>
 </head>
 <body>
+    <header>
     <?php include '../Layout/adminHeader.php'; ?>
+    </header>
+    
 
     <main>
         

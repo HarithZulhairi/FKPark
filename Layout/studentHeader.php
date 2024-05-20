@@ -20,7 +20,7 @@
         }
 
         header {
-            background-color: #333;
+            background-color: #473FA8;
             color: white;
             padding: 10px 0;
         }
@@ -112,13 +112,17 @@
         main {
             flex: 1;
         }
+
+        li a{
+            font-size:16px;
+        }
     </style>
 </head>
 <body>
     
     <header>
         <div class="container">
-            <div class="logo"><b>FK</b>Park</div>
+        <div class="logo"><img src="../resource/FKParkStud.jpeg" alt="FKPark" width="170" height="70"></div>
             <nav>
                 <ul>
                     <li>
