@@ -51,5 +51,24 @@ if (mysqli_query($con, $query2)) {
     echo "Error creating table: " . mysqli_error($con);
 }
 
+// Now create the parking table with the foreign key
+$query3 = 'CREATE TABLE booking( ' .
+          'booking_ID INT NOT NULL AUTO_INCREMENT, ' .
+          'booking_startTime TIME NOT NULL, ' .
+          'booking_endTime TIME NOT NULL, ' .
+          'booking_date DATE NOT NULL, ' .
+          'booking_QRCode VARCHAR(255) NOT NULL, ' .
+          'parking_ID INT, ' .
+          'PRIMARY KEY(booking_ID), ' .
+          'FOREIGN KEY (parking_ID) REFERENCES parking(parking_ID))';
+
+if (mysqli_query($con, $query3)) {
+    echo "<h3>Your booking table has been created !!!</h3>";
+} else {
+    echo "<br>";
+    echo "Error creating table: " . mysqli_error($con);
+}
+
+
 mysqli_close($con);
 ?>
