@@ -1,0 +1,115 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+.container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    box-sizing: border-box;
+    text-align: center;
+}
+.container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+.container img {
+    display: block;
+    margin: 0 auto 10px auto;
+    text-align: center;
+}
+.container label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.container input[type="text"],
+.container input[type="file"],
+.container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    text-align: center;
+}
+.container input[type="radio"] {
+    margin-right: 10px;
+}
+.container .radio-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.container .radio-group label {
+    margin-right: 15px;
+    text-align: center;
+}
+.container .radio-group input[type="radio"] + label {
+    margin-right: 10px;
+    text-align: center;
+}
+.container textarea {
+    height: 100px;
+}
+.container button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    align-items: center;
+
+}
+.container button:hover {
+    background-color: #0056b3;
+}
+
+.center-middle {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+}
+
+.radio-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.radio-group input[type="radio"] {
+    margin-right: 5px;
+}
+
+.radio-group label {
+    margin-right: 15px;
+}
+
+input[type="submit"] {
+background-color: #007bff;
+color: white; 
+padding: 10px;
+margin-bottom: 15px;
+border-radius: 10px
+
+}
+
+
+
+
+
