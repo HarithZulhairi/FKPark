@@ -93,7 +93,7 @@
 <body>
 
     <?php include '../Layout/adminHeader.php'; ?>
-    <?php include '../DB_FKPark/createDB.php'; ?>
+    <?php include '../dbcon.php'; ?>
    
     <main>
 
@@ -136,9 +136,9 @@
                 </tr>
                 <tbody>
                     <?php
-                        $query2 = "select * from 'parking'";
+                        $query = "select * from `parking`";
 
-                        $result = mysqli_query($con, $query2);
+                        $result = mysqli_query($con, $query);
 
                         if(!$result){
                             die("query Failed".mysqli_error());
@@ -147,34 +147,21 @@
                             while($row = mysqli_fetch_assoc($result)){
 
                                 ?>
-                                    <h4>hello</h4>
+                                    <tr>
+                                        <td><?php echo$row['parking_area']; ?></td>
+                                        <td><?php echo$row['parking_availability']; ?></td>
+                                        <td>
+                                            <div style="margin-top:5px; margin-bottom:5px; " class="button-container">
+                                                <a href="view-link-here" >
+                                                    <button  style="width:100px; padding:10px 10px;"type="view">View</button>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 <?php
                             }
                         }
                     ?>
-                    <tr>
-                        <td>A001</td>
-                        <td>17</td>
-                        <td>
-                            <div style="margin-top:5px; margin-bottom:5px; " class="button-container">
-                                    <a href="view-link-here" >
-                                            <button  style="width:100px; padding:10px 10px;"type="view">View</button>
-                                    </a>
-                                </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>A002</td>
-                        <td>20</td>
-                        <td>
-                            <div style="margin-top:5px; margin-bottom:5px; " class="button-container">
-                                    <a href="view-link-here" >
-                                            <button  style="width:100px; padding:10px 10px;"type="view">View</button>
-                                    </a>
-                                </div>
-                        </td>
-                    </tr>
                 </tbody>
 
 
