@@ -30,9 +30,9 @@
             </div>
 
             <div class="tabs">
-                <button class="tab-button tab-active" data-section="sectionA" onclick="showTab('sectionA', this)">Parking Section A</button>
-                <button class="tab-button" data-section="sectionB" onclick="showTab('sectionB', this)">Parking Section B</button>
-                <button class="tab-button" data-section="sectionC" onclick="showTab('sectionC', this)">Parking Section C</button>
+                <button class="tab-button tab-active" data-section="sectionA" onclick="showTab('sectionA', this)">Parking Section B1</button>
+                <button class="tab-button" data-section="sectionB" onclick="showTab('sectionB', this)">Parking Section B2</button>
+                <button class="tab-button" data-section="sectionC" onclick="showTab('sectionC', this)">Parking Section B3</button>
                 <div class="tab-indicator"></div>
             </div>
 
@@ -43,11 +43,11 @@
                         <th>Action</th>
                     </tr>
                     <tr>
-                        <td>A001</td>
+                        <td>B101</td>
                         <td><a href="confirmBooking.php?parkingSpot=A001" class="book-link">Book</a></td>
                     </tr>
                     <tr>
-                        <td>A002</td>
+                        <td>B102</td>
                         <td><a href="confirmBooking.php?parkingSpot=A002" class="book-link">Book</a></td>
                     </tr>
                 </table>
