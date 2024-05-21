@@ -29,9 +29,10 @@
     $event2_id = mysqli_fetch_assoc($result_event2_id)['event_ID'];
 
     // Insert data into the parking table using the retrieved event_IDs
-    $query4 = "INSERT INTO parking (parking_area, parking_status, parking_availability, event_ID) VALUES 
-    ('A-100', 'UNAVAILABLE', 12,  $event1_id), 
-    ('A-200', 'AVAILABLE', 18, $event2_id)";
+    $query4 = "INSERT INTO parking (parking_area, parking_slot, parking_status, parking_availability, event_ID) VALUES 
+    ('A-100', 'A101', 'UNAVAILABLE', 12,  $event1_id),
+    ('A-100', 'A102', 'UNAVAILABLE', 12,  $event1_id),  
+    ('A-200', 'A201', 'AVAILABLE', 18, $event2_id)";
 
     $result2 = mysqli_query($con, $query4);
 
