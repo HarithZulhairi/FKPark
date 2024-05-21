@@ -26,13 +26,14 @@
         <div class="create-booking">
             <div class="parking-layout">
                 <h1>Select Your Parking</h1>
-                <img src="parking-layout.png" alt="Parking Layout">
+                <img src="../resource/FKPark_Map.png" alt="Parking Layout">
             </div>
 
             <div class="tabs">
                 <button class="tab-button tab-active" data-section="sectionA" onclick="showTab('sectionA', this)">Parking Section B1</button>
                 <button class="tab-button" data-section="sectionB" onclick="showTab('sectionB', this)">Parking Section B2</button>
                 <button class="tab-button" data-section="sectionC" onclick="showTab('sectionC', this)">Parking Section B3</button>
+                <button class="tab-button" data-section="sectionD" onclick="showTab('sectionD', this)">Parking Section M1</button>
                 <div class="tab-indicator"></div>
             </div>
 
@@ -42,14 +43,12 @@
                         <th>Parking Spot</th>
                         <th>Action</th>
                     </tr>
-                    <tr>
-                        <td>B101</td>
-                        <td><a href="confirmBooking.php?parkingSpot=B101" class="book-link">Book</a></td>
-                    </tr>
-                    <tr>
-                        <td>B102</td>
-                        <td><a href="confirmBooking.php?parkingSpot=B102" class="book-link">Book</a></td>
-                    </tr>
+                    <?php for ($i = 1; $i <= 20; $i++) { ?>
+                        <tr>
+                            <td>B1<?php echo str_pad($i, 2, '0', STR_PAD_LEFT); ?></td>
+                            <td><a href="confirmBooking.php?parkingSpot=B1<?php echo str_pad($i, 2, '0', STR_PAD_LEFT); ?>" class="book-link">Book</a></td>
+                        </tr>
+                    <?php } ?>
                 </table>
             </div>
 
@@ -59,14 +58,12 @@
                         <th>Parking Spot</th>
                         <th>Action</th>
                     </tr>
-                    <tr>
-                        <td>B001</td>
-                        <td><a href="confirmBooking.php?parkingSpot=B001" class="book-link">Book</a></td>
-                    </tr>
-                    <tr>
-                        <td>B002</td>
-                        <td><a href="confirmBooking.php?parkingSpot=B002" class="book-link">Book</a></td>
-                    </tr>
+                    <?php for ($i = 1; $i <= 20; $i++) { ?>
+                        <tr>
+                            <td>B2<?php echo str_pad($i, 2, '0', STR_PAD_LEFT); ?></td>
+                            <td><a href="confirmBooking.php?parkingSpot=B2<?php echo str_pad($i, 2, '0', STR_PAD_LEFT); ?>" class="book-link">Book</a></td>
+                        </tr>
+                    <?php } ?>
                 </table>
             </div>
 
@@ -76,14 +73,27 @@
                         <th>Parking Spot</th>
                         <th>Action</th>
                     </tr>
+                    <?php for ($i = 1; $i <= 20; $i++) { ?>
+                        <tr>
+                            <td>B3<?php echo str_pad($i, 2, '0', STR_PAD_LEFT); ?></td>
+                            <td><a href="confirmBooking.php?parkingSpot=B3<?php echo str_pad($i, 2, '0', STR_PAD_LEFT); ?>" class="book-link">Book</a></td>
+                        </tr>
+                    <?php } ?>
+                </table>
+            </div>
+
+            <div id="sectionD" class="tab-content">
+                <table>
                     <tr>
-                        <td>C001</td>
-                        <td><a href="confirmBooking.php?parkingSpot=C001" class="book-link">Book</a></td>
+                        <th>Parking Spot</th>
+                        <th>Action</th>
                     </tr>
-                    <tr>
-                        <td>C002</td>
-                        <td><a href="confirmBooking.php?parkingSpot=C002" class="book-link">Book</a></td>
-                    </tr>
+                    <?php for ($i = 1; $i <= 40; $i++) { ?>
+                        <tr>
+                            <td>M1<?php echo str_pad($i, 2, '0', STR_PAD_LEFT); ?></td>
+                            <td><a href="confirmBooking.php?parkingSpot=M1<?php echo str_pad($i, 2, '0', STR_PAD_LEFT); ?>" class="book-link">Book</a></td>
+                        </tr>
+                    <?php } ?>
                 </table>
             </div>
         </div>

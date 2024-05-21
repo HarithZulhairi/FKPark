@@ -12,6 +12,7 @@
     <main>
         <div class="booking-form-container">
             <h1>Parking Booking Form</h1>
+            <p style="text-align: center;">Parking Spot: <?php echo htmlspecialchars($_GET['parkingSpot']); ?></p>
             <form action="QRBooking.php" method="POST">
                 <div class="form-group">
                     <label for="date">Date:</label>

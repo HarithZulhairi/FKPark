@@ -12,6 +12,7 @@ main {
     padding: 20px;
 }
 
+
 .booking-search {
     display: flex;
     justify-content: center;
@@ -44,7 +45,7 @@ main {
 }
 
 .parking-layout img {
-    max-width: 100%;
+    max-width: 30%;
     height: auto;
     margin-bottom: 20px;
 }
