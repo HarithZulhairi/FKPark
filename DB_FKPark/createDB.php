@@ -88,7 +88,7 @@ if (mysqli_query($con, $query3)) {
 
 // Now create the vehicle table with the foreign key
 $query5 = 'CREATE TABLE Vehicle( ' .
-          'vehicle_numPlate VARCHAR(10) NOT NULL AUTO_INCREMENT, ' .
+          'vehicle_numPlate VARCHAR(10) NOT NULL, ' .
           'vehicle_type VARCHAR(20) NOT NULL, ' .
           'vehicle_brand VARCHAR(50) NOT NULL, ' .
           'vehicle_transmission VARCHAR(20) NOT NULL, ' .
