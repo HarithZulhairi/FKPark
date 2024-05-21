@@ -131,8 +131,8 @@
                     <li>
                         <a href="#" class="dropdown-toggle-parking">Parking</a>
                         <div class="dropdown dropdown-parking">
-                            <a href="#">List</a>
-                            <a href="#">Manage</a>
+                            <a href="../ManageParkingArea/index.php">List</a>
+                            <a href="../ManageParkingArea/ManageParking.php">Manage</a>
                         </div>
                     </li>
                     <li>
