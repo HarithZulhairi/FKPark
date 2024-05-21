@@ -129,9 +129,12 @@
                         <a href="#">Home</a>
                     </li>
                     <li>
+                        <a href="../Manage Registration/RegistrationVehicle.php">Vehicle Registration</a>
+                    </li>
+                    <li>
                         <a href="#" class="dropdown-toggle">Booking</a>
                         <div class="dropdown">
-                            <a href="#">Create Booking</a>
+                            <a href="../ManageBooking/createBooking.php">Create Booking</a>
                             <a href="#">View Booking</a>
                         </div>
                     </li>

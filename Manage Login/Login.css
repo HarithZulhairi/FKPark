@@ -1,5 +1,7 @@
+/* Login.css */
 body {
-  background-color: #f8f9fa;
+  background-color: #f7f9fc;
+  font-family: 'Arial', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,74 +10,95 @@ body {
 }
 
 .card {
-  border-radius: 15px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
   max-width: 400px;
   width: 100%;
-  background-color: #fff;
-  padding: 20px;
+}
+
+.d-flex {
+  display: flex;
+  flex-direction: column;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
 }
 
 .form-label {
-  color: #00008B;
-  font-weight: bold;
-  display: block;
   margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
 }
 
 .form-control {
-  border-radius: 10px;
   padding: 10px;
-  font-size: 16px;
-  width: calc(100% - 20px);
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+}
+
+.form-select {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.d-flex .form-check {
+  display: flex;
+  align-items: center;
   margin-bottom: 15px;
 }
 
+.form-check-input {
+  margin-right: 10px;
+}
+
+.form-check-label {
+  margin: 0;
+}
+
+.forgot-password {
+  margin-left: auto;
+}
+
+.forgot-password a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.forgot-password a:hover {
+  color: #0056b3;
+}
+
 .btn-primary {
-  border-radius: 15px;
-  transition: all 0.3s ease;
   background-color: #007bff;
-  color: white;
+  color: #fff;
+  padding: 10px;
   border: none;
-  padding: 10px 20px;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .btn-primary:hover {
   background-color: #0056b3;
 }
 
-.form-check-label {
-  margin-right: 10px;
-}
-
-.form-check {
-  display: inline-block;
-  font-size: 12px;
-}
-
-.forgot-password {
-  display: inline-block;
-  font-size: 12px;
-}
-
-.d-flex {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-}
-
-.d-flex .form-check,
-.d-flex .forgot-password {
-  flex: 1;
-}
-
-.text-decoration-none {
-  text-decoration: none;
-  color: #007bff;
-}
-
-.text-decoration-none:hover {
-  color: #0056b3;
+.btn-block {
+  width: 100%;
 }
