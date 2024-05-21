@@ -1,7 +1,7 @@
 /* Login.css */
 body {
-  background-color: #f7f9fc;
-  font-family: 'Arial', sans-serif;
+  background-color: #f9f9f9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,7 +13,7 @@ body {
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  padding: 30px;
   max-width: 400px;
   width: 100%;
 }
@@ -29,19 +29,20 @@ form {
 }
 
 .form-label {
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #333;
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 16px;
 }
 
 .form-control {
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
   width: 100%;
   box-sizing: border-box;
   transition: border-color 0.3s;
+  font-size: 16px;
 }
 
 .form-control:focus {
@@ -49,36 +50,41 @@ form {
 }
 
 .form-select {
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
   width: 100%;
   box-sizing: border-box;
+  font-size: 16px;
 }
 
 .d-flex .form-check {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .form-check-input {
   margin-right: 10px;
+  cursor: pointer;
 }
 
 .form-check-label {
   margin: 0;
+  cursor: pointer;
 }
 
 .forgot-password {
-  margin-left: auto;
+  margin-top: 10px;
+  text-align: right;
 }
 
 .forgot-password a {
   color: #007bff;
   text-decoration: none;
   transition: color 0.3s;
+  font-size: 14px;
 }
 
 .forgot-password a:hover {
@@ -88,11 +94,13 @@ form {
 .btn-primary {
   background-color: #007bff;
   color: #fff;
-  padding: 10px;
+  padding: 14px;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-size: 16px;
+  text-transform: uppercase;
 }
 
 .btn-primary:hover {
@@ -101,4 +109,5 @@ form {
 
 .btn-block {
   width: 100%;
+  margin-top: 10px;
 }
