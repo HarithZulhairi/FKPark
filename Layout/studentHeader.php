@@ -20,7 +20,7 @@
         }
 
         header {
-            background-color: black;
+            background-color: #BE8A62;
             color: white;
             padding: 10px 0;
         }

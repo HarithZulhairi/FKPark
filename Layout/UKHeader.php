@@ -56,7 +56,7 @@
         }
 
         header {
-            background-color: #000000;
+            background-color: #463FA7;
             color: white;
             padding: 10px 0;
         }
