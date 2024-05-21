@@ -22,12 +22,6 @@
             flex-grow: 1;
         }
 
-        header {
-            background-color: #333;
-            color: white;
-            padding: 10px 0;
-        }
-
         .container {
             display: flex;
             justify-content: space-between;
