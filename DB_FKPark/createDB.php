@@ -121,14 +121,12 @@ if (mysqli_query($con, $query6)) {
 }
 
 // Now create the registration table
-$query7 = 'CREATE TABLE Registration( ' .
-          'registration_ID INT NOT NULL AUTO_INCREMENT, ' .
+$query7 = 'CREATE TABLE approval( ' .
+          'approval_ID INT NOT NULL AUTO_INCREMENT, ' .
           'vehicle_grant VARCHAR(100) NOT NULL, ' .
-          'registration_status VARCHAR(10) NOT NULL, ' .
-          'administrator_ID INT, ' .
+          'approval_status VARCHAR(10) NOT NULL, ' .
           'student_ID INT, ' .
-          'PRIMARY KEY(registration_ID), ' .
-          'FOREIGN KEY (administrator_ID) REFERENCES administrator(administrator_ID), ' .
+          'PRIMARY KEY(approval_ID), ' .
           'FOREIGN KEY (student_ID) REFERENCES student(student_ID))';
 
 if (mysqli_query($con, $query7)) {

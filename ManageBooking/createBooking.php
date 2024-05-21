@@ -44,11 +44,11 @@
                     </tr>
                     <tr>
                         <td>B101</td>
-                        <td><a href="confirmBooking.php?parkingSpot=A001" class="book-link">Book</a></td>
+                        <td><a href="confirmBooking.php?parkingSpot=B101" class="book-link">Book</a></td>
                     </tr>
                     <tr>
                         <td>B102</td>
-                        <td><a href="confirmBooking.php?parkingSpot=A002" class="book-link">Book</a></td>
+                        <td><a href="confirmBooking.php?parkingSpot=B102" class="book-link">Book</a></td>
                     </tr>
                 </table>
             </div>
