@@ -93,7 +93,7 @@
 <body>
 
     <?php include '../Layout/adminHeader.php'; ?>
-    <?php include '../dbcon.php'; ?>
+    <?php include '../DB_FKPark/dbcon.php'; ?>
    
     <main>
 

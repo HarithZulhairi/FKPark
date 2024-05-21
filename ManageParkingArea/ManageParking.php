@@ -35,16 +35,12 @@
                 background-color: green;
             }
 
-            .button-container button[type="view"]:hover {
+            .button-container button[type="view"] {
                 background-color: #0000FF;
-            }
-
-            .button-container button[type="edit"]:hover {
-                background-color: green;
-            }
-
-            .button-container button[type="delete"]:hover {
-                background-color: red;
+                width:70px;
+                height:40px;
+                margin-right:40px;
+                font-weight: normal;
             }
 
             #list{
@@ -77,7 +73,7 @@
 <body>
 
     <?php include '../Layout/adminHeader.php'; ?>
-    <?php include '../dbcon.php'; ?>
+    <?php include '../DB_FKPark/dbcon.php'; ?>
     <main>
 
 
@@ -121,21 +117,14 @@
                                     <tr>
                                         <td><?php echo$row['parking_area']; ?></td>
                                         <td style="border-collapse: collapse;display: flex; align-items: center;">
-                                            <div style="margin:10px 10px;" class="button-container">
-                                                <a href="add-link-here" >
-                                                        <button type="edit">Edit</button>
-                                                    </a>
-                                            </div>
                                                 <div style="margin:10px 10px;" class="button-container">
                                                     <a href="event-link-here" >
                                                         <button type="view">View</button>
                                                     </a>
                                                 </div>
-                                                <div  style="margin:10px 10px;" class="button-container">
-                                                    <a href="add-link-here" >
-                                                        <button type="delete">Delete</button>
-                                                    </a>
-                                                </div>
+
+                                                <a href="../ManageParkingArea/update_page_1.php?id=<?php echo$row['parking_ID']; ?>" class="btn btn-success" style="margin-right:40px;" >Update</a>
+                                                <a href="../ManageParkingArea/delete_page.php?id=<?php echo$row['parking_ID']; ?>" class="btn btn-danger">Delete</a>
                                                     
                                         </td>
                                         <td><?php echo$row['parking_status']; ?></td>
@@ -156,6 +145,12 @@
         <?php
                 if(isset($_GET['message'])){
                     echo "<h6>" .$_GET['message'] . "</h6>";
+                }
+            ?>
+
+<?php
+                if(isset($_GET['insert_msg'])){
+                    echo "<h6>" .$_GET['insert_msg'] . "</h6>";
                 }
             ?>
 

@@ -1,4 +1,5 @@
 <?php
+    include 'dbcon.php';
 
     if(isset($_POST['add_parking'])){
         
@@ -10,6 +11,19 @@
             header('location:../ManageParkingArea/ManageParking.php?message=You need to fill in the parking area! ');
         }
         else{
+
+            $query = "insert into `parking` (`parking_area`, `parking_availability`, `parking_status` ) value
+            ('$p_area', '$p_availability', '$p_status')";
+
+            $result = mysqli_query($con, $query);
+
+            if(!$query){
+                die("Query Failed" . mysqli_error());
+            }
+
+            else{
+                header('location:../ManageParkingArea/ManageParking.php?message=You data has been added successfully! ');
+            }
             
         }
 

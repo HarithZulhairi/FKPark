@@ -56,7 +56,7 @@
         }
 
         header {
-            background-color: #000000;
+            background-color: #463FA7;
             color: white;
             padding: 10px 0;
         }
@@ -160,7 +160,7 @@
     
     <header>
         <div class="container">
-            <div class="logo"><img src="../resource/FKPark.jpeg" alt="FKPark" width="170" height="70"></div>
+            <div class="logo"><img src="../resource/FKPark1.jpeg" alt="FKPark" width="170" height="70"></div>
             <nav>
                 <ul>
                     <li>

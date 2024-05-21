@@ -20,7 +20,7 @@
         }
 
         header {
-            background-color: black;
+            background-color: #BE8A62;
             color: white;
             padding: 10px 0;
         }
@@ -122,7 +122,7 @@
     
     <header>
         <div class="container">
-        <div class="logo"><img src="../resource/FKPark.jpeg" alt="FKPark" width="170" height="70"></div>
+        <div class="logo"><img src="../resource/FKPark1.jpeg" alt="FKPark" width="170" height="70"></div>
             <nav>
                 <ul>
                     <li>
