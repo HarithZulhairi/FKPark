@@ -196,6 +196,7 @@
     <!-- The Modal -->
     <div id="logoutModal" class="modal1">
         
+        <div class="modal-content">
         <div class="modal-content1">
             <h2>Are you sure?</h2>
             <button id="proceedButton" class="btn btn-primary">Proceed</button>
