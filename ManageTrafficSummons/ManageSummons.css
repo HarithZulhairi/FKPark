@@ -1,7 +1,7 @@
 
 .logoUK {
     display: flex;
-    margin: 20px auto 30px;
+    margin: 20px auto 20px;
     width: 300px; /* Set a width for the container div */
     height: 300px; /* Set a height for the container div */
 }
@@ -10,9 +10,8 @@
     max-height: 100%;
 }
 .button {
-    margin-left: 1275px;
     width: 200px;
-    padding: 15px 15px;
+    padding: 12px 12px;
     font-size: 14px;
     background-color:  #17252A;
     color: white;
@@ -22,12 +21,23 @@
     cursor: pointer;
     text-decoration: none;
 }
+
 .button:hover {
     background-color: #0000FF;
 }
-.button-container{
-    margin-bottom: 30px;
+
+.table-container {
+    width: 100%;
+    margin: 0 auto;
 }
+
+.button-container{
+    margin-top: 0;
+    margin-bottom: 25px;
+    margin-left: auto;
+    margin-right: 480px;
+}
+
 table {
     width: 50%;
     margin: 0 auto;
