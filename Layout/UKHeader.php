@@ -197,14 +197,14 @@
         </div>
     </header>
 
-     <!-- The Modal -->
+     <!-- The Modal 
      <div id="logoutModal" class="modal">
         <div class="modal-content">
             <h2>Are you sure?</h2>
             <button id="proceedButton" class="btn btn-primary">Proceed</button>
             <button id="cancelButton" class="btn btn-cancel">Cancel</button>
         </div>
-    </div>
+    </div> -->
 
     <script>
         document.getElementById('logoutLink').addEventListener('click', function(event) {
