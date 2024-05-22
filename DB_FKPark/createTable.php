@@ -31,10 +31,8 @@ if (mysqli_query($con, $query1)) {
 $query2 = 'CREATE TABLE parking( ' .
           'parking_ID INT NOT NULL AUTO_INCREMENT, ' .
           'parking_area VARCHAR(100) NOT NULL, ' .
-          'parking_slot VARCHAR(10) NOT NULL, ' .
           'parking_status VARCHAR(100) NOT NULL, ' .
           'parking_availability INT NOT NULL, ' .
-          'parking_QRCode VARCHAR(255) NOT NULL, ' .
           'event_ID INT, ' .
           'PRIMARY KEY(parking_ID), ' .
           'FOREIGN KEY (event_ID) REFERENCES event(event_ID))';

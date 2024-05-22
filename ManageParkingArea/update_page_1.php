@@ -1,3 +1,8 @@
+<?php
+ob_start(); // Start output buffering
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,81 +12,109 @@
     <title>Parking Booking Form</title>
     <style>
         table.center {
-          margin-left: auto; 
-          margin-right: auto;
-          width:900px;
-          margin-top:70px;
+            margin-left: auto; 
+            margin-right: auto;
+            width: 900px;
+            margin-top: 70px;
         }
-
     </style>
 </head>
 <body>
 <?php include '../Layout/adminHeader.php'; ?>
-<?php include '../DB_FKPark/dbcon.php'; ?>
-
-<?php
-$row = [];
-$p_area = ""; // Define $p_area with a default value
-
-if(isset($_GET['p_area'])){
-    $p_area = $_GET['p_area'];
+<?php include '../DB_FKPark/dbcon.php'; // Include the database connection file. ?>
 
 
-    $query = "SELECT * from `parking` WHERE `parking_area` = '$p_area'";
-
-    $result = mysqli_query($con, $query);
-
-    if(!$result){
-        die("query Failed".mysqli_error());
-                }
-        else{
-            $row = mysqli_fetch_assoc($result);
-
-            print_r($result);
-
-            if($row !== null) {
-                // Your existing code to print and use $row
-                print_r($row);
-            } else {
-                // Handle the case where $row is null
-                echo "No data found for the given parking area.";
-            }
-        }
-    
-    }
-?>
 
 <h2 style="text-align:center">Update Parking</h2>
-<table class="center">
+
 <form action="" method="POST">
-    <tr>
-        <td>
-        <div class="form-group">
-                <label for="p_area" >Parking Area</label>
-                <input type="text" name="p_area" class="form-control" value="<?php echo $row['parking_area']?>" >
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td>
-        <div class="form-group">
-                <label for="p_availability" >Parking Availability</label>
-                <input type="text" name="p_availability" class="form-control" value="<?php echo $row['parking_availability']?>">
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td>
-        <div class="form-group">
-                <label for="p_status" >Parking Status</label>
-                <input type="text" name="p_status" class="form-control" value="<?php echo $row['parking_status']?>">
-            </div>
-        </td>
-    </tr>
+    <table class="center">
+        <tbody>
+            <?php
+            $row = [];
+            $p_area = ""; // Define $p_area with a default value
+
+            if(isset($_GET['id'])){
+                $p_area = $_GET['id'];
+                $query = "SELECT * FROM `parking` WHERE `parking_ID` = '$p_area'"; // Fixed variable name typo '$id' to '$p_area'
+
+                $result = mysqli_query($con, $query);
+
+                if(!$result){
+                    die("query Failed" . mysqli_error($con));
+                } else {
+                    $row = mysqli_fetch_assoc($result);
+
+                    if($row !== null) {
+                        // Your existing code to print and use $row
+                        ?>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label for="p_area">Parking Area</label>
+                                    <input type="text" name="p_area" class="form-control" value="<?php echo $row['parking_area']?>" >
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label for="p_availability">Parking Availability</label>
+                                    <input type="text" name="p_availability" class="form-control" value="<?php echo $row['parking_availability']?>">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label for="p_status">Parking Status</label>
+                                    <input type="text" name="p_status" class="form-control" value="<?php echo $row['parking_status']?>">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input style="margin-top:20px;" type="submit" class="btn btn-success" name="update_parking" value="UPDATE"></td>
+                        </tr>
+                        <?php
+                    } else {
+                        // Handle the case where $row is null
+                        echo "No data found for the given parking area.";
+                    }
+                }
+            }
+
+            // Check if the form is submitted
+            if(isset($_POST['update_parking'])){
+                $update_p_area = $_POST['p_area'];
+                $update_p_availability = $_POST['p_availability'];
+                $update_p_status = $_POST['p_status'];
+
+                // Perform the database update
+                $query = "UPDATE `parking` SET `parking_area` = '$update_p_area', 
+                                                `parking_availability` = '$update_p_availability', 
+                                                `parking_status` = '$update_p_status' 
+                          WHERE `parking_ID` = '$p_area'"; // Changed `$id_new` to `$p_area`
+
+                $result = mysqli_query($con, $query);
+
+                if(!$result){
+                    die("query Failed" . mysqli_error($con));
+                } else {
+                    // Redirect to the ManageParking.php file
+                    header('location:../ManageParkingArea/ManageParking.php?update_msg=You have successfully updated the data!');
+                    exit; // Exit to prevent further execution
+                }
+            }
+            ?>
+        </tbody>
+    </table>
 </form>
-</table>
 
 <?php include '../Layout/allUserFooter.php'; ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
+
+<?php
+ob_end_flush(); // Flush the output buffer and send the output to the browser
+?>
