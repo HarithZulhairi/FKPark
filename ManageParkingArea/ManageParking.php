@@ -168,8 +168,9 @@
 
  <!-- Modal -->
  <form action="../DB_FKPark/insert_data.php" method="post" >
- <div class="modal fade" id="parkingexampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal fade" id="parkingexampleModal" tabindex="-1" role="dialog" aria-labelledby="parkingexampleModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
+  
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel" >Add New Parking</h5>
@@ -208,7 +209,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel" >Add New Parking</h5>
+        <h5 class="modal-title" id="exampleModalLabel" >Add Event</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          
         </button>
@@ -239,6 +240,11 @@
                 <label for="event_description" >Event Description</label>
                 <input type="text" name="event_description" class="form-control">
             </div>
+            <div class="form-group">
+                <label for="p_area" >Parking Area</label>
+                <input type="text" name="p_area" class="form-control">
+            </div>
+                
             
         
       </div>

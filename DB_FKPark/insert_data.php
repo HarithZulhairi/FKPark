@@ -38,6 +38,7 @@
         $event_end = $_POST['event_end'];
         $event_place = $_POST['event_place'];
         $event_description = $_POST['event_description'];
+        $p_area = $_POST['p_area'];
 
         if($event_name == "" || empty($event_name)){
             header('location:../ManageParkingArea/ManageParking.php?message=You need to fill in the event detail! ');
