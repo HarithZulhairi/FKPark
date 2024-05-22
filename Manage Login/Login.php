@@ -25,8 +25,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Adjust the query based on user type
     if ($userType == 'student') {
         $sql = "SELECT * FROM Student WHERE student_username='$username' AND student_password='$password'";
-    } else {
-        $sql = "SELECT * FROM users WHERE username='$username' AND password='$password' AND user_type='$userType'";
+        $userIDColumn = "student_ID"; // Adjust the column name accordingly
+    } else if ($userType == 'administrator') {
+        $sql = "SELECT * FROM Administrator WHERE administrator_username='$username' AND administrator_password='$password'";
+        $userIDColumn = "administrator_ID"; // Adjust the column name accordingly
+    } else if ($userType == 'unit_staff') {
+        $sql = "SELECT * FROM UnitKeselamatanStaff WHERE uk_username='$username' AND uk_password='$password'";
+        $userIDColumn = "uk_ID"; // Adjust the column name accordingly
     }
 
     $result = $con->query($sql);
@@ -36,8 +41,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else if ($result->num_rows == 1) {
         // Successful login
         $row = $result->fetch_assoc();
-        $_SESSION['userID'] = $row['student_ID']; // Store userID in session
-        echo json_encode(["success" => true]);
+        $_SESSION['userID'] = $row[$userIDColumn]; // Store userID in session
+
+        // Determine redirect URL based on user type
+        $redirectURL = '';
+        if ($userType == 'student') {
+            $redirectURL = "../Home/homeStudent.php";
+        } else if ($userType == 'administrator') {
+            $redirectURL = "../Home/homeAdmin.php";
+        } else if ($userType == 'unit_staff') {
+            $redirectURL = "../Home/homeUK.php";
+        }
+
+        echo json_encode(["success" => true, "redirectURL" => $redirectURL]);
     } else {
         // Failed login
         echo json_encode(["success" => false, "message" => "Incorrect username or password. Please try again."]);

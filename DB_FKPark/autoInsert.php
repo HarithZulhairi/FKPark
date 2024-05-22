@@ -1,7 +1,7 @@
 <?php
 // Connect to the database
 $con = mysqli_connect("localhost", "root") or die(mysqli_connect_error());
-mysqli_select_db($con, "fkpark") or die(mysqli_error());
+mysqli_select_db($con, "fkpark") or die(mysqli_error($con));
 
 // Insert data into the event table
 $query3 = "INSERT INTO event (event_name, event_date, event_startTime, event_endTime, event_place, event_description) VALUES 
