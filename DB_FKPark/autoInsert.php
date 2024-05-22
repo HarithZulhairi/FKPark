@@ -27,33 +27,10 @@ $event1_id = mysqli_fetch_assoc($result_event1_id)['event_ID'];
 $event2_id = mysqli_fetch_assoc($result_event2_id)['event_ID'];
 
 // Prepare the base query
-$query4 = "INSERT INTO parking (parking_area, parking_slot, parking_status, parking_availability, event_ID) VALUES ";
+$query4 = "INSERT INTO parking (parking_area, parking_status, parking_availability, event_ID) VALUES 
+('A1', 'UNAVAILABLE', 12, $event1_id), 
+('A2', 'AVAILABLE', 18,  $event2_id)";
 
-// Function to generate parking slots
-function generateParkingSlots($area, $start, $end, $status, $availability, $event_id) {
-    $values = [];
-    for ($i = $start; $i <= $end; $i++) {
-        $slot = $area . str_pad($i, 2, '0', STR_PAD_LEFT);
-        $values[] = "('$area', '$slot', '$status', $availability, $event_id)";
-    }
-    return implode(", ", $values);
-}
-
-// Generate parking slots for each area
-$query4 .= generateParkingSlots('A1', 01, 20, 'UNAVAILABLE', 12, $event1_id) . ", ";
-$query4 .= generateParkingSlots('A2', 01, 20, 'AVAILABLE', 18, $event2_id) . ", ";
-$query4 .= generateParkingSlots('A3', 01, 20, 'AVAILABLE', 18, $event2_id) . ", ";
-$query4 .= generateParkingSlots('A4', 01, 20, 'AVAILABLE', 18, $event2_id) . ", ";
-$query4 .= generateParkingSlots('A5', 01, 20, 'AVAILABLE', 18, $event2_id) . ", ";
-$query4 .= generateParkingSlots('B1', 01, 20, 'UNAVAILABLE', 12, $event1_id) . ", ";
-$query4 .= generateParkingSlots('B2', 01, 20, 'AVAILABLE', 18, $event2_id) . ", ";
-$query4 .= generateParkingSlots('B3', 01, 20, 'AVAILABLE', 18, $event2_id) . ", ";
-$query4 .= generateParkingSlots('M2', 01, 40, 'AVAILABLE', 18, $event2_id);
-
-// Remove the last comma and space
-$query4 = rtrim($query4, ', ');
-
-// Execute the query
 $result2 = mysqli_query($con, $query4);
 
 // Check whether the inserts were successful
