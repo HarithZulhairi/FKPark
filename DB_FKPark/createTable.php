@@ -148,8 +148,6 @@ if (mysqli_query($con, $query8)) {
 } else {
     echo "<br>";
     echo "Error creating table: " . mysqli_error($con);
-<<<<<<< HEAD
-=======
 } 
 
 // Create the summons table 
@@ -171,7 +169,6 @@ if (mysqli_query($con, $query9)) {
 } else {
     echo "<br>";
     echo "Error creating table: " . mysqli_error($con);
->>>>>>> 016f6d39381c788900dcf947b09ba744870017d9
 }
 
 

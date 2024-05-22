@@ -31,16 +31,8 @@
             padding: 20px;
             text-align: center;
         }
-        th {
-            background-color: #007BFF;
-            color: white;
-        }
-        td {
-            background-color: #f4f4f9;
-        }
         img {
             border-radius: 50%;
-            border: 2px solid #007BFF;
         }
         @media (max-width: 600px) {
             table, th, td {
@@ -64,10 +56,10 @@
     <div class="container">
         <table>
             <tr>
-                <th><img src="cipud.png" alt="akmal" width="100" height="100"></th>
-                <th><img src="arep.png" alt="arif" width="100" height="100"></th>
-                <th><img src="whoopy.png" alt="harith" width="100" height="100"></th>
-                <th><img src="azam.png" alt="Azam" width="100" height="100"></th>
+                <th><img src="../resource/Syariffudin.jpg" alt="akmal" width="100" height="100"></th>
+                <th><img src="../resource/ArifAzlan.jpg" alt="arif" width="100" height="100"></th>
+                <th><img src="../resource/Harith.jpg" alt="harith" width="100" height="100"></th>
+                <th><img src="../resource/Azam.jpg" alt="Azam" width="100" height="100"></th>
             </tr>
             <tr>
                 <td>CB22071</td>

@@ -135,7 +135,7 @@
                         <a class="dropdown-toggle">Booking</a>
                         <div class="dropdown">
                             <a href="../ManageBooking/createBooking.php">Create Booking</a>
-                            <a href="#">View Booking</a>
+                            <a href="../ManageBooking/viewBooking.php">View Booking</a>
                         </div>
                     </li>
                     <li>

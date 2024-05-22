@@ -1,5 +1,11 @@
-.title-view, .view-container td {
+.title-view {
     text-align: center;
+}
+
+.view-container td {
+    width: 0%;
+    text-align: center;
+    
 }
 
 .view-container {
@@ -11,11 +17,37 @@
     border: 1px solid gray;
 }
 
+.view-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
 .view-table-header {
-    background-color: rgb(183, 181, 181);
+    background-color: rgb(126, 126, 126);
+    color: white;
 }
 
 .view-table-content {
     background-color: rgb(244, 244, 244);
 }
 
+.view-table th, .view-table td {
+    border: 1px solid gray;
+    padding: 8px;
+}
+
+.action-btn {
+    display: inline-block;
+    width: 38%;
+    padding: 8px;
+    text-decoration: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.action-btn:hover {
+    background-color: #0056b3;
+}

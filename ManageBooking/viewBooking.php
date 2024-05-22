@@ -21,10 +21,9 @@
                 <tr class="view-table-content">
                     <td>1</td>
                     <td>B113</td>
-                    <td><a href="#">Edit</a></td>
-                    <td><a href="#">Delete</a></td>
+                    <td><a href="#" class="action-btn">Edit</a></td>
+                    <td><a href="#" class="action-btn">Delete</a></td>
                 </tr>
-
             </table>
         </div>
     </main>

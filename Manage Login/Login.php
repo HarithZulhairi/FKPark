@@ -26,7 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($userType == 'student') {
         $sql = "SELECT * FROM Student WHERE student_username='$username' AND student_password='$password'";
     } else {
-        // Assuming other user types are stored in a different table named 'users'
         $sql = "SELECT * FROM users WHERE username='$username' AND password='$password' AND user_type='$userType'";
     }
 
@@ -37,8 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else if ($result->num_rows == 1) {
         // Successful login
         $row = $result->fetch_assoc();
-        $userID = $row['student_ID']; // Assign student_ID to $userID
-        $_SESSION['userID'] = $userID; // Store userID in session
+        $_SESSION['userID'] = $row['student_ID']; // Store userID in session
         echo json_encode(["success" => true]);
     } else {
         // Failed login

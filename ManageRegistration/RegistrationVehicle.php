@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +51,7 @@
         }
 
         .center-middle {
-            padding: 20px;
+            padding: 0px 30px;
         }
 
         .center-middle p {
@@ -86,10 +90,14 @@
         input[type="text"], input[type="file"], textarea {
             width: 100%;
             padding: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
+        }
+
+        input[type="file"] {
+            
         }
 
         .submit-btn {
@@ -124,7 +132,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <img src="FKPARK.png" alt="parking" width="150" height="150">
+                    <img src="../resource/illustration.jpg" alt="parking" width="200" height="200">
                 </td>
             </tr>
             <tr>
@@ -161,7 +169,6 @@
 </html>
 
 <?php
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $con = mysqli_connect("localhost", "root", "", "fkpark");
     if (!$con) {
@@ -174,9 +181,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $numPlate = $_POST["numPlate"];
     $brand = $_POST["brand"];
     $trans = $_POST["trans"];
-    $studentID = $_SESSION['userID'];
-    echo $studentID;
-    
+    $studentID = isset($_SESSION['userID']) ? $_SESSION['userID'] : null; // Retrieve student ID from session
+
+    if ($studentID === null) {
+        die('Student ID not found in session. Please login again.');
+    }
+
     // Handle file upload
     $grantFile = $_FILES["grantFile"];
     $grantFileName = basename($grantFile["name"]);
@@ -190,7 +200,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Upload file to server
         if (move_uploaded_file($grantFile["tmp_name"], $targetFilePath)) {
             // Insert form data into the database
-            $studentID = $_SESSION['userID'];
             $strSQL = "INSERT INTO Vehicle(vehicle_numPlate, vehicle_type, vehicle_brand, vehicle_transmission, student_ID, vehicle_grant) VALUES('$numPlate','$vehicleType','$brand','$trans','$studentID','$targetFilePath')";
 
             if (mysqli_query($con, $strSQL)) {
