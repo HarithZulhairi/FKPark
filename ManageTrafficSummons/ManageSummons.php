@@ -14,10 +14,10 @@
         <img src="../resource/logUK1.png" alt="Logo Unit Keselamatan">
     </div>
     
+    <div class="button-container"><a href="destination.php" class="button">CREATE SUMMONS</a></div>
+    
     <div>
-        <div>
-            
-        </div>
+        
         <div>
             <table>
                 <tr>

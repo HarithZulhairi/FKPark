@@ -10,9 +10,10 @@
     max-height: 100%;
 }
 .button {
-    margin: 0 10px;
+    margin-left: 1275px;
+    width: 200px;
     padding: 15px 15px;
-    font-size: 16px;
+    font-size: 14px;
     background-color:  #17252A;
     color: white;
     font-weight: bold;
@@ -24,7 +25,9 @@
 .button:hover {
     background-color: #0000FF;
 }
-
+.button-container{
+    margin-bottom: 30px;
+}
 table {
     width: 50%;
     margin: 0 auto;
@@ -45,8 +48,11 @@ th {
     background-color: #f2f2f2;
 }
 
-.no-border {
-    border-style: none; /* Removes border from table, rows, and cells */
+.no-border td {
+    border: none;
+    width: 100%;
+    height: 50px; 
+    text-align: right;/* Removes border from table, rows, and cells */
 }
 
 h1,h3,h4{
