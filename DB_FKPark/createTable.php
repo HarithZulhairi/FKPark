@@ -103,8 +103,11 @@ $query6 = 'CREATE TABLE Student( ' .
           'student_password VARCHAR(100) NOT NULL, ' .
           'student_email VARCHAR(100) NOT NULL, ' .
           'student_age INT NOT NULL, ' .
-          'student_demtot INT NOT NULL, ' .
-          'PRIMARY KEY(student_ID))' ;
+          'student_phoneNum VARCHAR(15) NOT NULL, ' .
+          'student_gender VARCHAR(10) NOT NULL, ' .
+          'student_birthdate DATE NOT NULL, ' .
+          'student_profile VARCHAR(255) NOT NULL, ' .
+          'PRIMARY KEY(student_ID))';
 
 if (mysqli_query($con, $query6)) {
     echo "<h3>Your student table has been created !!!</h3>";
@@ -135,6 +138,7 @@ $query8 = 'CREATE TABLE Vehicle( ' .
           'vehicle_type VARCHAR(20) NOT NULL, ' .
           'vehicle_brand VARCHAR(50) NOT NULL, ' .
           'vehicle_transmission VARCHAR(20) NOT NULL, ' .
+          'vehicle_grant VARCHAR(255), ' .
           'student_ID INT, ' .
           'PRIMARY KEY(vehicle_numPlate), ' .
           'FOREIGN KEY (student_ID) REFERENCES student(student_ID))';

@@ -1,75 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="Login.css">
-  <title>Login</title>
-</head>
-<body>
-  
-<div class="card">
-  <div class="d-flex">
-    <form id="loginForm">
-      <div>
-        <label for="username" class="form-label">Username</label>
-        <input type="text" id="username" class="form-control" required />
-      </div>
-      <div>
-        <label for="password" class="form-label">Password</label>
-        <input type="password" id="password" class="form-control" required />
-      </div>
-      <div>
-        <select class="form-select form-control" id="userType" required>
-          <option value="platinum">Undergraduate Student</option>
-          <option value="staff">Postgraduate Student</option>
-          <option value="mentor">Administrator</option>
-          <option value="security">Unit Keselamatan Staff</option>
-        </select>
-      </div>
-      <div class="d-flex">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="rememberMe" checked />
-          <label class="form-check-label" for="rememberMe"> Remember me </label>
-        </div>
-        <div class="forgot-password">
-            <a href="{{ route('forgot.password') }}" class="text-decoration-none">Forgot password?</a>
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary btn-block">Login</button>
-    </form>
-  </div>
-</div>
+<?php
+session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('loginForm').addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent the default form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $userType = $_POST['userType'];
 
-        // Get the form values
-        var username = document.getElementById('username').value.trim();
-        var password = document.getElementById('password').value.trim();
-        var userType = document.getElementById('userType').value;
+    // Connect to the database
+    $con = new mysqli("localhost", "root", "", "fkpark");
 
-        // Perform validation
-        if (username === '' || password === '') {
-            alert('Please fill in all the fields.');
-            return;
-        }
+    if ($con->connect_error) {
+        echo json_encode(["success" => false, "message" => "Connection failed: " . $con->connect_error]);
+        exit();
+    }
 
-        // Here, you can perform further validation or check against a database for correct credentials.
-        // For demonstration purposes, let's assume correct credentials are 'admin' for both username and password.
-        if (username !== 'admin' || password !== 'admin') {
-            alert('Incorrect username or password. Please try again.');
-            return;
-        }
+    // Escape the input data
+    $username = $con->real_escape_string($username);
+    $password = $con->real_escape_string($password);
+    $userType = $con->real_escape_string($userType);
 
-        // If everything is correct, you can proceed with the login action
-        // For now, let's just log a success message
-        alert('Login successful!');
-    });
-});
-</script>
+    // Adjust the query based on user type
+    if ($userType == 'student') {
+        $sql = "SELECT * FROM Student WHERE student_username='$username' AND student_password='$password'";
+    } else {
+        // Assuming other user types are stored in a different table named 'users'
+        $sql = "SELECT * FROM users WHERE username='$username' AND password='$password' AND user_type='$userType'";
+    }
 
-</body>
-</html>
+    $result = $con->query($sql);
+
+    if ($result === false) {
+        echo json_encode(["success" => false, "message" => "Error: " . $con->error]);
+    } else if ($result->num_rows == 1) {
+        // Successful login
+        $row = $result->fetch_assoc();
+        $userID = $row['student_ID']; // Assign student_ID to $userID
+        $_SESSION['userID'] = $userID; // Store userID in session
+        echo json_encode(["success" => true]);
+    } else {
+        // Failed login
+        echo json_encode(["success" => false, "message" => "Incorrect username or password. Please try again."]);
+    }
+
+    $con->close();
+}
+?>

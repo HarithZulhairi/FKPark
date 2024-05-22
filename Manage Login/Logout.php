@@ -15,7 +15,7 @@
 
     <script>
         document.getElementById('loginButton').addEventListener('click', function() {
-            window.location.href = 'Login.php';  
+            window.location.href = 'Login.html';  
         });
     </script>
 </body>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration</title>
+    <title>Vehicle Registration</title>
     <style>
         body, html {
             height: 100%;
@@ -119,7 +119,7 @@
         <table border="0" cellspacing="0" cellpadding="0" class="center-table">
             <tr>
                 <td colspan="2">
-                    <h1>Registration Form</h1>
+                    <h1>Vehicle Registration Form</h1>
                 </td>
             </tr>
             <tr>
@@ -129,23 +129,23 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <form action="Registration.php" method="post" enctype="multipart/form-data">
+                    <form action="RegistrationVehicle.php" method="post" enctype="multipart/form-data">
                         <div class="center-middle">
                             <p>Select Vehicle Type</p>
                             <div class="radio-group">
-                                <input type="radio" id="car" name="vehicleType" value="Car">
+                                <input type="radio" id="car" name="vehicleType" value="Car" required>
                                 <label for="car">Car</label>
-                                <input type="radio" id="motorcycle" name="vehicleType" value="Motorcycle">
+                                <input type="radio" id="motorcycle" name="vehicleType" value="Motorcycle" required>
                                 <label for="motorcycle">Motorcycle</label>
                             </div>
-                            <label for="numPlate">Number Plate</label>
+                            <label for="numPlate">Number Plate:</label>
                             <input type="text" id="numPlate" name="numPlate" required>
-                            <label for="grantFile">Upload Grant File</label>
+                            <label for="brand">Brand:</label>
+                            <input type="text" id="brand" name="brand" required>
+                            <label for="trans">Transmission:</label>
+                            <input type="text" id="trans" name="trans" required>
+                            <label for="grantFile">Upload Grant File:</label>
                             <input type="file" id="grantFile" name="grantFile" required>
-                        </div>
-                        <div class="center-middle">
-                            <label for="comment">Comments</label>
-                            <textarea rows="4" id="comment" name="comment" form="comment" placeholder="Enter text here"></textarea>
                         </div>
                         <div class="submit-btn">
                             <input type="submit" value="Submit">
@@ -159,3 +159,52 @@
     <?php include '../Layout/allUserFooter.php'; ?>
 </body>
 </html>
+
+<?php
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $con = mysqli_connect("localhost", "root", "", "fkpark");
+    if (!$con) {
+        die('Could not connect: ' . mysqli_connect_error());
+    }
+
+    mysqli_select_db($con, "fkpark") or die(mysqli_error($con));
+
+    $vehicleType = $_POST["vehicleType"];
+    $numPlate = $_POST["numPlate"];
+    $brand = $_POST["brand"];
+    $trans = $_POST["trans"];
+    $studentID = $_SESSION['userID'];
+    echo $studentID;
+    
+    // Handle file upload
+    $grantFile = $_FILES["grantFile"];
+    $grantFileName = basename($grantFile["name"]);
+    $targetDir = "uploads/";
+    $targetFilePath = $targetDir . $grantFileName;
+    $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+
+    // Allow certain file formats
+    $allowTypes = array('jpg', 'png', 'jpeg', 'pdf');
+    if (in_array($fileType, $allowTypes)) {
+        // Upload file to server
+        if (move_uploaded_file($grantFile["tmp_name"], $targetFilePath)) {
+            // Insert form data into the database
+            $studentID = $_SESSION['userID'];
+            $strSQL = "INSERT INTO Vehicle(vehicle_numPlate, vehicle_type, vehicle_brand, vehicle_transmission, student_ID, vehicle_grant) VALUES('$numPlate','$vehicleType','$brand','$trans','$studentID','$targetFilePath')";
+
+            if (mysqli_query($con, $strSQL)) {
+                echo "<script>alert('Vehicle registration successful!');</script>";
+            } else {
+                echo "Error: " . mysqli_error($con);
+            }
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+        }
+    } else {
+        echo "Sorry, only JPG, JPEG, PNG, & PDF files are allowed.";
+    }
+
+    mysqli_close($con);
+}
+?>
