@@ -11,7 +11,7 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif; /* Ensures the same font throughout */
+            font-family: Arial, sans-serif;
         }
 
         body {
@@ -119,7 +119,7 @@
 
         /* Modal styles */
         .modal {
-            display: none; /* Hidden by default */
+            display: none;
             position: fixed;
             z-index: 1;
             left: 0;
@@ -127,7 +127,7 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+            background-color: rgba(0, 0, 0, 0.4);
             justify-content: center;
             align-items: center;
         }
