@@ -181,7 +181,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="#">User Registration</a>
+                        <a href="../Manage Registration/StudentRegistration.php">User Registration</a>
                     </li>
                 </ul>
             </nav>
@@ -246,7 +246,7 @@
         });
 
         document.getElementById('proceedButton').addEventListener('click', function() {
-            window.location.href = 'Logout.php';  // Navigate to the logout page
+            window.location.href = '../Manage Login/Logout.php';  // Navigate to the logout page
         });
 
         document.getElementById('cancelButton').addEventListener('click', function() {

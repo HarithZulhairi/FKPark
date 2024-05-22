@@ -1,34 +1,28 @@
-body {
-    background-color: #f3f4f6;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
+.container-registration {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    height: 100vh;
+    align-items: center;
+    flex-direction: column;
 }
 
-.container {
-    border-radius: 15px;
-    padding: 30px;
-    max-width: 600px;
-    width: 100%;
-    text-align: center;
-    
+.title-registration {
+    padding: 0;
 }
 
-h2 {
-    margin-bottom: 30px;
-    font-size: 24px;
-    color: #333;
+.form-card {
+    background-color: #ddd;
+    width: 40%;
+    border-radius: 20px;
+    border: 1px solid gray;
+    margin-bottom: 20px;
 }
 
 .form-table {
-    width: 100%;
+    padding: 10px 0px;
+    width: 70%;
     margin: 0 auto;
     border-collapse: separate;
     border-spacing: 0 15px;
-    padding-top: 105px;
 }
 
 .form-table td {
