@@ -10,22 +10,24 @@ if (!$con) {
 mysqli_select_db($con, "fkpark") or die(mysqli_error($con));
 
 // Now create the student table
-$query5 = 'CREATE TABLE student( ' .
+$query6 = 'CREATE TABLE Student( ' .
           'student_ID INT NOT NULL AUTO_INCREMENT, ' .
           'student_username VARCHAR(100) NOT NULL, ' .
           'student_password VARCHAR(100) NOT NULL, ' .
           'student_email VARCHAR(100) NOT NULL, ' .
           'student_age INT NOT NULL, ' .
-          'student_demtot INT NOT NULL, ' .
-          'administrator_ID INT, ' .
-          'PRIMARY KEY(student_ID), ' .
-          'FOREIGN KEY (administrator_ID) REFERENCES administrator(administrator_ID))';
+          'student_phoneNum VARCHAR(15) NOT NULL, ' .
+          'student_gender VARCHAR(10) NOT NULL, ' .
+          'student_birthdate DATE NOT NULL, ' .
+          'student_profile VARCHAR(255) NOT NULL, ' .
+          'PRIMARY KEY(student_ID))';
 
-if (mysqli_query($con, $query5)) {
+if (mysqli_query($con, $query6)) {
     echo "<h3>Your student table has been created !!!</h3>";
 } else {
     echo "<br>";
     echo "Error creating table: " . mysqli_error($con);
 }
+
 mysqli_close($con);
 ?>
