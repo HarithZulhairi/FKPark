@@ -19,8 +19,8 @@ $query1 = 'CREATE TABLE summons( ' .
           'uk_ID VARCHAR(255) NOT NULL, ' .
           'vehicle_numPlate VARCHAR(10), ' .
           'PRIMARY KEY(summons_ID))' .
-          'FOREIGN KEY (uk_ID) REFERENCES Unitkeselamatanstaff(uk_ID))' . 
-          'FOREIGN KEY (vehicle_numPlate) REFERENCES Vehicle(vehicle_numPlate))';
+          'FOREIGN KEY (uk_ID) REFERENCES unitkeselamatanstaff(uk_ID))' . 
+          'FOREIGN KEY (vehicle_numPlate) REFERENCES vehicle(vehicle_numPlate))';
 
 if (mysqli_query($con, $query1)) {
     echo "<h3>Your summons table has been created !!!</h3>";

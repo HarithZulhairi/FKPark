@@ -10,7 +10,7 @@ if (!$con) {
 mysqli_select_db($con, "fkpark") or die(mysqli_error($con));
 
 // Now create the unitkeselamatanstaff table with the foreign key
-$query1 = 'CREATE TABLE UnitKeselamatanStaff( ' .
+$query1 = 'CREATE TABLE unitKeselamatanStaff( ' .
           'uk_ID VARCHAR(10) NOT NULL AUTO_INCREMENT, ' .
           'uk_username VARCHAR(100) NOT NULL, ' .
           'uk_password VARCHAR(100) NOT NULL, ' .

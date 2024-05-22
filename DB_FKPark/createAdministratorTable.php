@@ -10,7 +10,7 @@ if (!$con) {
 mysqli_select_db($con, "fkpark") or die(mysqli_error($con));
 
 // Now create the administrator table
-$query1 = 'CREATE TABLE Administrator( ' .
+$query1 = 'CREATE TABLE administrator( ' .
           'administrator_ID INT NOT NULL AUTO_INCREMENT, ' .
           'administrator_username VARCHAR(100) NOT NULL, ' .
           'administrator_password VARCHAR(100) NOT NULL, ' .
