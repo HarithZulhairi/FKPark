@@ -197,6 +197,37 @@
         </div>
     </header>
 
+     <!-- The Modal 
+     <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <h2>Are you sure?</h2>
+            <button id="proceedButton" class="btn btn-primary">Proceed</button>
+            <button id="cancelButton" class="btn btn-cancel">Cancel</button>
+        </div>
+    </div> -->
+
+    <script>
+        document.getElementById('logoutLink').addEventListener('click', function(event) {
+            event.preventDefault();  // Prevent the default link behavior
+            document.getElementById('logoutModal').style.display = 'flex';  // Show the modal
+        });
+
+        document.getElementById('proceedButton').addEventListener('click', function() {
+            window.location.href = '../Manage Login/Logout.php';  // Navigate to the logout page
+        });
+
+        document.getElementById('cancelButton').addEventListener('click', function() {
+            document.getElementById('logoutModal').style.display = 'none';  // Hide the modal
+        });
+
+        // Close the modal if the user clicks outside of it
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('logoutModal')) {
+                document.getElementById('logoutModal').style.display = 'none';
+            }
+        }
+    </script>
+
    
 
 </body>
