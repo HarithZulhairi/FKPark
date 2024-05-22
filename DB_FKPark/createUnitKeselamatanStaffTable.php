@@ -11,12 +11,12 @@ mysqli_select_db($con, "fkpark") or die(mysqli_error($con));
 
 // Now create the unitkeselamatanstaff table with the foreign key
 $query1 = 'CREATE TABLE unitKeselamatanStaff( ' .
-          'uk_ID VARCHAR(10) NOT NULL AUTO_INCREMENT, ' .
+          'uk_ID INT NOT NULL AUTO_INCREMENT, ' .
           'uk_username VARCHAR(100) NOT NULL, ' .
           'uk_password VARCHAR(100) NOT NULL, ' .
           'uk_email VARCHAR(100) NOT NULL, ' .
-          'uk_age NUMBER NOT NULL, ' .
-          'PRIMARY KEY(uk_ID), ' ;
+          'uk_age INT NOT NULL, ' .
+          'PRIMARY KEY(uk_ID))' ;
 
 
 if (mysqli_query($con, $query1)) {
