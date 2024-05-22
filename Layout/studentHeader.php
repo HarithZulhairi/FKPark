@@ -139,6 +139,9 @@
                         </div>
                     </li>
                     <li>
+                        <a href="#" class="dropdown-toggle-dashboard">Dashboard</a>
+                    </li>
+                    <li>
                         <a href="#">Contact</a>
                     </li>
                 </ul>

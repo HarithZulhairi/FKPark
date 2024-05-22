@@ -164,7 +164,7 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="#">Home</a>
+                        <a href="../LandingPage/LandingPage.php">Home</a>
                     </li>
                     <li>
                         <a href="#" class="dropdown-toggle-parking">Summon</a>
@@ -174,11 +174,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="#" class="dropdown-toggle-reports">Reports</a>
-                        <div class="dropdown dropdown-reports">
-                            <a href="#">Booking Report</a>
-                            <a href="#">Parking Report</a>
-                        </div>
+                        <a href="#" class="dropdown-toggle-dashboard">Dashboard</a>
                     </li>
                     <li>
                         <a href="#">Vehicle Approval</a>
@@ -189,7 +185,6 @@
                 <a href="#" class="profile-toggle"><i class="fas fa-user"></i></a>
                 <div class="profile-dropdown">
                     <a href="#">Profile</a>
-                    <a href="#">Dashboard</a>
                     <a href="#">Settings</a>
                     <a href="../Manage Login/Logout.php">Logout</a>
                 </div>

@@ -175,11 +175,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="#" class="dropdown-toggle-reports">Reports</a>
-                        <div class="dropdown dropdown-reports">
-                            <a href="#">Booking Report</a>
-                            <a href="#">Parking Report</a>
-                        </div>
+                        <a href="#" class="dropdown-toggle-dashboard">Dashboard</a>
                     </li>
                     <li>
                         <a href="../Manage Registration/StudentRegistration.php">User Registration</a>
@@ -199,11 +195,8 @@
 
     <!-- The Modal -->
     <div id="logoutModal" class="modal1">
-<<<<<<< Updated upstream
-        <div class="modal-content">
-=======
+        
         <div class="modal-content1">
->>>>>>> Stashed changes
             <h2>Are you sure?</h2>
             <button id="proceedButton" class="btn btn-primary">Proceed</button>
             <button id="cancelButton" class="btn btn-cancel">Cancel</button>
