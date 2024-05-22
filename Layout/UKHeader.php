@@ -191,7 +191,7 @@
                     <a href="#">Profile</a>
                     <a href="#">Dashboard</a>
                     <a href="#">Settings</a>
-                    <a href="#">Logout</a>
+                    <a href="../Manage Login/Logout.php">Logout</a>
                 </div>
             </div>
         </div>

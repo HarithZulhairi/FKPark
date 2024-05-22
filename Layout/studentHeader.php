@@ -148,7 +148,7 @@
                 <div class="profile-dropdown">
                     <a href="#">Profile</a>
                     <a href="#">Settings</a>
-                    <a href="#">Logout</a>
+                    <a href="../Manage Login/Logout.php">Logout</a>
                 </div>
             </div>
         </div>
