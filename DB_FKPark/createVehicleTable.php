@@ -10,7 +10,7 @@ if (!$con) {
 mysqli_select_db($con, "fkpark") or die(mysqli_error($con));
 
 // Now create the vehicle table
-$query1 = 'CREATE TABLE Vehicle( ' .
+$query1 = 'CREATE TABLE vehicle( ' .
           'vehicle_numPlate VARCHAR(10) NOT NULL, ' .
           'vehicle_type VARCHAR(20) NOT NULL, ' .
           'vehicle_brand VARCHAR(50) NOT NULL, ' .

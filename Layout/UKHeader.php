@@ -169,7 +169,7 @@
                     <li>
                         <a href="#" class="dropdown-toggle-parking">Summon</a>
                         <div class="dropdown dropdown-parking">
-                            <a href="#">List</a>
+                            <a href="#">Create</a>
                             <a href="#">Manage</a>
                         </div>
                     </li>

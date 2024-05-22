@@ -10,7 +10,7 @@ if (!$con) {
 mysqli_select_db($con, "fkpark") or die(mysqli_error($con));
 
 // Now create the student table
-$query5 = 'CREATE TABLE Student( ' .
+$query5 = 'CREATE TABLE student( ' .
           'student_ID INT NOT NULL AUTO_INCREMENT, ' .
           'student_username VARCHAR(100) NOT NULL, ' .
           'student_password VARCHAR(100) NOT NULL, ' .
