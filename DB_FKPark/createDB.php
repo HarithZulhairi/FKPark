@@ -111,8 +111,7 @@ $query6 = 'CREATE TABLE Student( ' .
           'student_age INT NOT NULL, ' .
           'student_demtot INT NOT NULL, ' .
           'administrator_ID INT, ' .
-          'PRIMARY KEY(student_ID), ' .
-          'FOREIGN KEY (administrator_ID) REFERENCES administrator(administrator_ID))';
+          'PRIMARY KEY(student_ID), ' ;
 
 if (mysqli_query($con, $query6)) {
     echo "<h3>Your student table has been created !!!</h3>";

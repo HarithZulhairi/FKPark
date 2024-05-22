@@ -12,7 +12,7 @@
     <main>
         <div class="container-registration">
             <h2 class="title-registration">Student Registration</h2>
-            <form class="form-card">
+            <form class="form-card" method="post" action="insertdataStudent.php">
                 <table class="form-table">
                     <tr>
                         <td><label for="name">Username</label></td>
