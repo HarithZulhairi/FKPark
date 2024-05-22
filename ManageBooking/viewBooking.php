@@ -13,15 +13,16 @@
         <h2 class="title-view">List booking</h2>
         <div class="view-container">
             <table class="view-table">
-                <tr>
+                <tr class="view-table-header">
                     <th>No</th>
                     <th>Parking slot</th>
-                    <th>Action</th>
+                    <th colspan="2">Action</th>
                 </tr>
-                <tr>
-                    <td>No</td>
-                    <td>Parking slot</td>
-                    <td>Action</td>
+                <tr class="view-table-content">
+                    <td>1</td>
+                    <td>B113</td>
+                    <td><a href="#">Edit</a></td>
+                    <td><a href="#">Delete</a></td>
                 </tr>
 
             </table>

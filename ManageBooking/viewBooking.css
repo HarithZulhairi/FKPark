@@ -1,11 +1,21 @@
-.title-view {
+.title-view, .view-container td {
     text-align: center;
 }
 
-.view-container { 
+.view-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: gray;
+    margin: auto;
+    width: 50%;
+    border-radius: 5px;
+    border: 1px solid gray;
 }
+
+.view-table-header {
+    background-color: rgb(183, 181, 181);
+}
+
+.view-table-content {
+    background-color: rgb(244, 244, 244);
+}
+
