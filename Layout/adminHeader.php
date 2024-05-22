@@ -118,7 +118,7 @@
         }
 
         /* Modal styles */
-        .modal {
+        .modal1 {
             display: none;
             position: fixed;
             z-index: 1;
@@ -141,7 +141,7 @@
             text-align: center;
         }
 
-        .modal .btn {
+        .modal1 .btn {
             margin: 5px;
             padding: 10px 20px;
         }
@@ -197,7 +197,7 @@
     </header>
 
     <!-- The Modal -->
-    <div id="logoutModal" class="modal">
+    <div id="logoutModal" class="modal1">
         <div class="modal-content">
             <h2>Are you sure?</h2>
             <button id="proceedButton" class="btn btn-primary">Proceed</button>
