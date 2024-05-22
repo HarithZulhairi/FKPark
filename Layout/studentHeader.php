@@ -126,30 +126,30 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="#">Home</a>
+                        <a href="../LandingPage/LandingPage.php">Home</a>
                     </li>
                     <li>
-                        <a href="../Manage Registration/RegistrationVehicle.php">Vehicle Registration</a>
+                        <a href="../ManageRegistration/RegistrationVehicle.php">Vehicle Registration</a>
                     </li>
                     <li>
-                        <a href="#" class="dropdown-toggle">Booking</a>
+                        <a class="dropdown-toggle">Booking</a>
                         <div class="dropdown">
                             <a href="../ManageBooking/createBooking.php">Create Booking</a>
                             <a href="#">View Booking</a>
                         </div>
                     </li>
                     <li>
-                        <a href="#" class="dropdown-toggle-dashboard">Dashboard</a>
+                        <a href="../Dashboard/studDashboard.php" class="dropdown-toggle-dashboard">Dashboard</a>
                     </li>
                     <li>
-                        <a href="#">Contact</a>
+                        <a href="../Contact/ContactStud.php">Contact</a>
                     </li>
                 </ul>
             </nav>
             <div class="profile">
                 <a href="#" class="profile-toggle"><i class="fas fa-user"></i></a>
                 <div class="profile-dropdown">
-                    <a href="#">Profile</a>
+                    <a href="../Profile/StudProfile.php">Profile</a>
                     <a href="#">Settings</a>
                     <a href="../Manage Login/Logout.php">Logout</a>
                 </div>

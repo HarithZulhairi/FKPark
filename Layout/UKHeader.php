@@ -167,24 +167,24 @@
                         <a href="../LandingPage/LandingPage.php">Home</a>
                     </li>
                     <li>
-                        <a href="#" class="dropdown-toggle-parking">Summon</a>
+                        <a class="dropdown-toggle-parking">Summon</a>
                         <div class="dropdown dropdown-parking">
-                            <a href="#">Create</a>
-                            <a href="#">Manage</a>
+                            <a href="../ManageTrafficSummons/CreateSummons.php">Create</a>
+                            <a href="../ManageTrafficSummons/ManageSummons.php">Manage</a>
                         </div>
                     </li>
                     <li>
-                        <a href="#" class="dropdown-toggle-dashboard">Dashboard</a>
+                        <a href="../Dashboard/UKDashboard.php" class="dropdown-toggle-dashboard">Dashboard</a>
                     </li>
                     <li>
-                        <a href="#">Vehicle Approval</a>
+                        <a href="../ManageRegistration/VehicleApproval.php">Vehicle Approval</a>
                     </li>
                 </ul>
             </nav>
             <div class="profile">
                 <a href="#" class="profile-toggle"><i class="fas fa-user"></i></a>
                 <div class="profile-dropdown">
-                    <a href="#">Profile</a>
+                    <a href="../Profile/UKProfile.php">Profile</a>
                     <a href="#">Settings</a>
                     <a href="../Manage Login/Logout.php">Logout</a>
                 </div>

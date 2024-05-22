@@ -65,7 +65,7 @@ if (mysqli_query($con, $query3)) {
 }
 
 // Now create the administrator table
-/* $query4 = 'CREATE TABLE Administrator( ' .
+ $query4 = 'CREATE TABLE Administrator( ' .
           'administrator_ID INT NOT NULL AUTO_INCREMENT, ' .
           'administrator_username VARCHAR(100) NOT NULL, ' .
           'administrator_password VARCHAR(100) NOT NULL, ' .
@@ -148,7 +148,31 @@ if (mysqli_query($con, $query8)) {
 } else {
     echo "<br>";
     echo "Error creating table: " . mysqli_error($con);
-} */ 
+<<<<<<< HEAD
+=======
+} 
+
+// Create the summons table 
+$query9 = 'CREATE TABLE summons( ' .
+          'summons_ID INT NOT NULL AUTO_INCREMENT, ' .
+          'summons_date DATE NOT NULL, ' .
+          'summons_violation VARCHAR(30) NOT NULL, ' .
+          'summons_demerit INT NOT NULL, ' .
+          'summons_QR VARCHAR(255) NOT NULL, ' .
+          'uk_ID INT NOT NULL, ' .
+          'vehicle_numPlate VARCHAR(10) NOT NULL, ' .
+          'PRIMARY KEY(summons_ID), ' .
+          'FOREIGN KEY (uk_ID) REFERENCES unitKeselamatanStaff(uk_ID), ' . 
+          'FOREIGN KEY (vehicle_numPlate) REFERENCES vehicle(vehicle_numPlate)' .
+          ')';
+
+if (mysqli_query($con, $query9)) {
+    echo "<h3>Your summons table has been created !!!</h3>";
+} else {
+    echo "<br>";
+    echo "Error creating table: " . mysqli_error($con);
+>>>>>>> 016f6d39381c788900dcf947b09ba744870017d9
+}
 
 
 mysqli_close($con);
