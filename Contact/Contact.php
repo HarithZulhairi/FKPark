@@ -9,10 +9,10 @@
     <div class="container">
         <table border="1">
             <tr>
-                <th>    </th>
-                <th>    </th>
-                <th>    </th>
-                <th>    </th>
+                <th><img src="cipud.png" alt="akmal" width="100" height="100"></th>
+                <th><img src="arep.png" alt="arif" width="100" height="100"></th>
+                <th><img src="whoopy.png" alt="harith" width="100" height="100"></th>
+                <th><img src="azam.png" alt="Azam" width="100" height="100"></th>
             </tr>
 
             <tr>
