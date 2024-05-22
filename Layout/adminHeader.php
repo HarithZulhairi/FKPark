@@ -165,27 +165,27 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="#">Home</a>
+                        <a href="../LandingPage/LandingPage.php">Home</a>
                     </li>
                     <li>
-                        <a href="#" class="dropdown-toggle-parking">Parking</a>
+                        <a class="dropdown-toggle-parking">Parking</a>
                         <div class="dropdown dropdown-parking">
-                            <a href="../ManageParkingArea/index.php">List</a>
+                            <a href="../ManageParkingArea/viewParking.php">List</a>
                             <a href="../ManageParkingArea/ManageParking.php">Manage</a>
                         </div>
                     </li>
                     <li>
-                        <a href="#" class="dropdown-toggle-dashboard">Dashboard</a>
+                        <a href="../Dashboard/adminDashboard.php" class="dropdown-toggle-dashboard">Dashboard</a>
                     </li>
                     <li>
-                        <a href="../Manage Registration/StudentRegistration.php">User Registration</a>
+                        <a href="../ManageRegistration/StudentRegistration.php">User Registration</a>
                     </li>
                 </ul>
             </nav>
             <div class="profile">
-                <a href="#" class="profile-toggle"><i class="fas fa-user"></i></a>
+                <a class="profile-toggle"><i class="fas fa-user"></i></a>
                 <div class="profile-dropdown">
-                    <a href="#">Profile</a>
+                    <a href="../Profile/AdminProfile.php">Profile</a>
                     <a href="#">Settings</a>
                     <a href="../Manage Login/Logout.php" id="logoutLink">Logout</a>
                 </div>

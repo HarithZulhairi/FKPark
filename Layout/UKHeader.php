@@ -184,7 +184,7 @@
             <div class="profile">
                 <a href="#" class="profile-toggle"><i class="fas fa-user"></i></a>
                 <div class="profile-dropdown">
-                    <a href="#">Profile</a>
+                    <a href="../Profile/UKProfile.php">Profile</a>
                     <a href="#">Settings</a>
                     <a href="../Manage Login/Logout.php">Logout</a>
                 </div>

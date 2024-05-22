@@ -59,7 +59,7 @@
     </style>
 </head>
 <body>
-<?php include '../Layout/adminHeader.php'; ?>
+<?php include '../Layout/studentHeader.php'; ?>
 
     <div class="container">
         <table>
