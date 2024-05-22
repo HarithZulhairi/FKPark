@@ -113,16 +113,54 @@
             flex: 1;
         }
 
-        li a{
-            font-size:16px;
+        li a {
+            font-size: 16px;
         }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .modal .btn {
+            margin: 5px;
+            padding: 10px 20px;
+        }
+
+        .btn-cancel {
+            background-color: #ccc;
+        }
+
+        .btn-cancel:hover {
+            background-color: #999;
+        }
+
     </style>
 </head>
 <body>
-    
+
     <header>
         <div class="container">
-        <div class="logo"><img src="../resource/FKPark1.jpeg" alt="FKPark" width="170" height="70"></div>
+            <div class="logo"><img src="../resource/FKPark1.jpeg" alt="FKPark" width="170" height="70"></div>
             <nav>
                 <ul>
                     <li>
@@ -152,11 +190,20 @@
                 <div class="profile-dropdown">
                     <a href="#">Profile</a>
                     <a href="#">Settings</a>
-                    <a href="#">Logout</a>
+                    <a href="#" id="logoutLink">Logout</a>
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- The Modal -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <h2>Are you sure?</h2>
+            <button id="proceedButton" class="btn btn-primary">Proceed</button>
+            <button id="cancelButton" class="btn btn-cancel">Cancel</button>
+        </div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -192,8 +239,27 @@
                 }
             });
         });
-    </script>
 
+        document.getElementById('logoutLink').addEventListener('click', function(event) {
+            event.preventDefault();  // Prevent the default link behavior
+            document.getElementById('logoutModal').style.display = 'flex';  // Show the modal
+        });
+
+        document.getElementById('proceedButton').addEventListener('click', function() {
+            window.location.href = 'Logout.php';  // Navigate to the logout page
+        });
+
+        document.getElementById('cancelButton').addEventListener('click', function() {
+            document.getElementById('logoutModal').style.display = 'none';  // Hide the modal
+        });
+
+        // Close the modal if the user clicks outside of it
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('logoutModal')) {
+                document.getElementById('logoutModal').style.display = 'none';
+            }
+        }
+    </script>
 
 </body>
 </html>
