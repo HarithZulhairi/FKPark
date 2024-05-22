@@ -65,7 +65,7 @@ if (mysqli_query($con, $query3)) {
 }
 
 // Now create the administrator table
-/* $query4 = 'CREATE TABLE Administrator( ' .
+$query4 = 'CREATE TABLE Administrator( ' .
           'administrator_ID INT NOT NULL AUTO_INCREMENT, ' .
           'administrator_username VARCHAR(100) NOT NULL, ' .
           'administrator_password VARCHAR(100) NOT NULL, ' .
@@ -148,7 +148,7 @@ if (mysqli_query($con, $query8)) {
 } else {
     echo "<br>";
     echo "Error creating table: " . mysqli_error($con);
-} */ 
+}
 
 
 mysqli_close($con);
