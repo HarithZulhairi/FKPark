@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>FKPark</title>
-
     <style>
         body, html {
             height: 100%;
@@ -26,7 +25,7 @@
             padding: 10px 0;
         }
 
-        .container {
+        .container-admin {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -154,32 +153,23 @@
         .btn-cancel:hover {
             background-color: #999;
         }
-
     </style>
 </head>
 <body>
-
     <header>
-        <div class="container">
+        <div class="container-admin">
             <div class="logo"><img src="../resource/FKPark1.jpeg" alt="FKPark" width="170" height="70"></div>
             <nav>
                 <ul>
-                    <li>
-                        <a href="../LandingPage/LandingPage.php">Home</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-toggle-parking">Parking</a>
+                    <li><a href="../Home/homeAdmin.php">Home</a></li>
+                    <li><a class="dropdown-toggle-parking">Parking</a>
                         <div class="dropdown dropdown-parking">
                             <a href="../ManageParkingArea/viewParking.php">List</a>
                             <a href="../ManageParkingArea/ManageParking.php">Manage</a>
                         </div>
                     </li>
-                    <li>
-                        <a href="../Dashboard/adminDashboard.php" class="dropdown-toggle-dashboard">Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="../ManageRegistration/StudentRegistration.php">User Registration</a>
-                    </li>
+                    <li><a href="../Dashboard/adminDashboard.php" class="dropdown-toggle-dashboard">Dashboard</a></li>
+                    <li><a href="../ManageRegistration/StudentRegistration.php">User Registration</a></li>
                 </ul>
             </nav>
             <div class="profile">
@@ -192,30 +182,26 @@
             </div>
         </div>
     </header>
-
     <!-- The Modal -->
     <div id="logoutModal" class="modal1">
-        
         <div class="modal-content">
-        <div class="modal-content1">
-            <h2>Are you sure?</h2>
-            <button id="proceedButton" class="btn btn-primary">Proceed</button>
-            <button id="cancelButton" class="btn btn-cancel">Cancel</button>
+            <div class="modal-content1">
+                <h2>Are you sure?</h2>
+                <button id="proceedButton" class="btn btn-primary">Proceed</button>
+                <button id="cancelButton" class="btn btn-cancel">Cancel</button>
+            </div>
         </div>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var dropdowns = document.querySelectorAll('.dropdown');
             var dropdownToggles = document.querySelectorAll('.dropdown-toggle-parking, .dropdown-toggle-reports');
             var profileToggle = document.querySelector('.profile-toggle');
-
             function closeAllDropdowns() {
                 dropdowns.forEach(function (dropdown) {
                     dropdown.style.display = 'none';
                 });
             }
-
             dropdownToggles.forEach(function (toggle) {
                 toggle.addEventListener('click', function (event) {
                     event.preventDefault();
@@ -224,41 +210,33 @@
                     dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
                 });
             });
-
             profileToggle.addEventListener('click', function (event) {
                 event.preventDefault();
                 closeAllDropdowns();
                 var dropdown = this.nextElementSibling;
                 dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
             });
-
             document.addEventListener('click', function (event) {
                 if (!event.target.matches('.dropdown-toggle-parking, .dropdown-toggle-reports, .profile-toggle')) {
                     closeAllDropdowns();
                 }
             });
         });
-
         document.getElementById('logoutLink').addEventListener('click', function(event) {
-            event.preventDefault();  // Prevent the default link behavior
-            document.getElementById('logoutModal').style.display = 'flex';  // Show the modal
+            event.preventDefault();
+            document.getElementById('logoutModal').style.display = 'flex';
         });
-
         document.getElementById('proceedButton').addEventListener('click', function() {
-            window.location.href = '../Manage Login/Logout.php';  // Navigate to the logout page
+            window.location.href = '../Manage Login/Logout.php';
         });
-
         document.getElementById('cancelButton').addEventListener('click', function() {
-            document.getElementById('logoutModal').style.display = 'none';  // Hide the modal
+            document.getElementById('logoutModal').style.display = 'none';
         });
-
-        // Close the modal if the user clicks outside of it
         window.onclick = function(event) {
             if (event.target == document.getElementById('logoutModal')) {
                 document.getElementById('logoutModal').style.display = 'none';
             }
         }
     </script>
-
 </body>
 </html>
