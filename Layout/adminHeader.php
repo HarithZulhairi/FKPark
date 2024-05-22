@@ -246,7 +246,7 @@
         });
 
         document.getElementById('proceedButton').addEventListener('click', function() {
-            window.location.href = 'Logout.php';  // Navigate to the logout page
+            window.location.href = '../Manage Login/Logout.php';  // Navigate to the logout page
         });
 
         document.getElementById('cancelButton').addEventListener('click', function() {

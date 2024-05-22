@@ -154,6 +154,7 @@
         </div>
     </header>
 
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Booking dropdown toggle
@@ -183,6 +184,7 @@
                 }
             });
         });
+
     </script>
 
 </body>
