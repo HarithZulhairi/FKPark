@@ -35,15 +35,21 @@ main {
     margin-bottom: 15px;
 }
 
+.form-group input,
+.form-group select,
+.form-group option {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
 .form-group label {
     display: block;
     margin-bottom: 5px;
 }
 
-.form-group input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
+.form-group option {
+    font-size: 14px;
 }
 
 .confirm-button {
