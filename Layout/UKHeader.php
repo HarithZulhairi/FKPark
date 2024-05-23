@@ -99,7 +99,7 @@
         .dropdown {
             display: none;
             position: absolute;
-            background-color: #333;
+            background-color: #463FA7;
             min-width: 160px;
             box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
             z-index: 1;
@@ -113,7 +113,7 @@
         }
 
         .dropdown a:hover {
-            background-color: #575757;
+            background-color: #5B3E98;
         }
 
         .profile a {
@@ -127,7 +127,7 @@
         .profile-dropdown {
             display: none;
             position: absolute;
-            background-color: #333;
+            background-color: #463FA7;
             right: 0;
             min-width: 160px;
             box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
@@ -142,7 +142,8 @@
         }
 
         .profile-dropdown a:hover {
-            background-color: #575757;
+            background-color: #5B3E98;
+            color:black;
         }
 
         main {

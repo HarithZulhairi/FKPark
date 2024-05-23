@@ -21,7 +21,6 @@
 
         header {
             background-color: #BE8A62;
-            color: white;
             padding: 10px 0;
         }
 
@@ -50,20 +49,16 @@
         }
 
         nav ul li a {
-            color: white;
-            text-decoration: none;
+            color: black;
             padding: 10px 20px;
             display: block;
         }
 
-        nav ul li a:hover {
-            background-color: #575757;
-        }
 
         .dropdown {
             display: none;
             position: absolute;
-            background-color: #333;
+            background-color: #BE8A62;
             min-width: 160px;
             box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
             z-index: 1;
@@ -77,7 +72,9 @@
         }
 
         .dropdown a:hover {
-            background-color: #575757;
+            color: black; /* Change text color on hover */
+            border-bottom: 2px solid #BE8A62; /* Add underline on hover */
+            background-color:#E5CCA8;
         }
 
         .profile a {
@@ -91,7 +88,7 @@
         .profile-dropdown {
             display: none;
             position: absolute;
-            background-color: #333;
+            background-color: #BE8A62;
             right: 0;
             min-width: 160px;
             box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
@@ -106,7 +103,9 @@
         }
 
         .profile-dropdown a:hover {
-            background-color: #575757;
+            background-color: #E5CCA8;
+            color:black;
+
         }
 
         main {
@@ -115,6 +114,10 @@
 
         li a{
             font-size:16px;
+        }
+
+        .menu{
+            
         }
     </style>
 </head>
@@ -126,7 +129,8 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="../LandingPage/HomePage.php">Home</a>
+                        <a href="../LandingPage/adminHomePage.php">Home</a>
+                    
                     </li>
                     <li>
                         <a href="../ManageRegistration/RegistrationVehicle.php">Vehicle Registration</a>
