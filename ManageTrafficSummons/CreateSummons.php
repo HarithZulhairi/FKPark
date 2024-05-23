@@ -11,22 +11,29 @@
 
     <main>
         <div class="booking-form-container">
-            <h1>Parking Booking Form</h1>
-            <p style="text-align: center;">Parking Spot: <?php echo htmlspecialchars($_GET['parkingSpot']); ?></p>
+            <h1>Summons Form</h1>
             <form action="QRBooking.php" method="POST">
                 <div class="form-group">
-                    <label for="date">Date:</label>
-                    <input type="date" id="date" name="date" required>
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
                 </div>
                 <div class="form-group">
-                    <label for="startTime">Start Time:</label>
-                    <input type="time" id="startTime" name="startTime" required>
+                    <label for="violation">Violation:</label>
+                    <select id="violation" name="violation" required>
+                        <option value=""></option>
+                        <option value="speed">Speeding</option>
+                        <option value="nocomply">Not Complying</option>
+                        <option value="accident">Accident</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="endTime">End Time:</label>
-                    <input type="time" id="endTime" name="endTime" required>
+                <label for="vehicleNumPlate">Vehicle Number Plate:</label>
+                <input type="vehicleNumPlate" id="vehicleNumPlate" name="vehicleNumPlate" required>
                 </div>
-                <input type="hidden" id="parkingSpot" name="parkingSpot" value="<?php echo htmlspecialchars($_GET['parkingSpot']); ?>">
+                <div class="form-group">
+                <label for="ukID">Staff ID:</label>
+                <input type="ukID" id="ukID" name="ukID" required>
+                </div>
                 <button type="submit" class="confirm-button">Confirm Booking</button>
             </form>
         </div>
