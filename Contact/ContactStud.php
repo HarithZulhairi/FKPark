@@ -15,7 +15,7 @@
             justify-content: center;
             height: 100vh;
         }
-        .container {
+        .container-contact-us {
             width: 80%;
             max-width: 1200px;
             margin: 0 auto;
@@ -31,7 +31,7 @@
             padding: 20px;
             text-align: center;
         }
-        img {
+        .our-image {
             border-radius: 50%;
         }
         @media (max-width: 600px) {
@@ -53,13 +53,13 @@
 <body>
 <?php include '../Layout/studentHeader.php'; ?>
 
-    <div class="container">
+    <div class="container-contact-us">
         <table>
             <tr>
-                <th><img src="../resource/Syariffudin.jpg" alt="akmal" width="100" height="100"></th>
-                <th><img src="../resource/ArifAzlan.jpg" alt="arif" width="100" height="100"></th>
-                <th><img src="../resource/Harith.jpg" alt="harith" width="100" height="100"></th>
-                <th><img src="../resource/Azam.jpg" alt="Azam" width="100" height="100"></th>
+                <th><img src="../resource/Syariffudin.jpg" alt="akmal" width="100" height="100" class="our-image"></th>
+                <th><img src="../resource/ArifAzlan.jpg" alt="arif" width="100" height="100" class="our-image"></th>
+                <th><img src="../resource/Harith.jpg" alt="harith" width="100" height="100" class="our-image"></th>
+                <th><img src="../resource/Azam.jpg" alt="Azam" width="100" height="100" class="our-image"></th>
             </tr>
             <tr>
                 <td>CB22071</td>
