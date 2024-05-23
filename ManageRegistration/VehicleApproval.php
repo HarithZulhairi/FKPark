@@ -7,6 +7,8 @@
     <title>VehicleApproval</title>
 </head>
 <body>
+	<?php include '../Layout/UKHeader.php'; ?>
+
     <table border="1">
 		<tr1>
 			<th>No.</th>
@@ -120,5 +122,8 @@
 		
 			
 	</table>
+
+	<?php include '../Layout/allUserFooter.php'; ?>
+
 </body>
 </html>
