@@ -128,30 +128,41 @@
             height: 100%;
             overflow: auto;
             background-color: rgba(0, 0, 0, 0.4);
-            justify-content: center;
-            align-items: center;
         }
 
-        .modal-content1 {
-            background-color: #fff;
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fefefe;
             padding: 20px;
             border: 1px solid #888;
-            width: 300px;
-            border-radius: 10px;
+            width: 80%;
+            max-width: 300px;
             text-align: center;
         }
 
-        .modal1 .btn {
-            margin: 5px;
+        .modal-content1 h2 {
+            margin: 0;
+            padding-bottom: 15px;
+        }
+
+        .btn {
             padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
         }
 
         .btn-cancel {
-            background-color: #ccc;
-        }
-
-        .btn-cancel:hover {
-            background-color: #999;
+            background-color: #6c757d;
+            color: white;
         }
     </style>
 </head>
@@ -177,11 +188,12 @@
                 <div class="profile-dropdown">
                     <a href="../Profile/AdminProfile.php">Profile</a>
                     <a href="#">Settings</a>
-                    <a href="../Manage Login/Logout.php" id="logoutLink">Logout</a>
+                    <a href="#" id="logoutLink">Logout</a>
                 </div>
             </div>
         </div>
     </header>
+
     <!-- The Modal -->
     <div id="logoutModal" class="modal1">
         <div class="modal-content">
@@ -192,16 +204,19 @@
             </div>
         </div>
     </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var dropdowns = document.querySelectorAll('.dropdown');
-            var dropdownToggles = document.querySelectorAll('.dropdown-toggle-parking, .dropdown-toggle-reports');
+            var dropdownToggles = document.querySelectorAll('.dropdown-toggle-parking, .dropdown-toggle-dashboard');
             var profileToggle = document.querySelector('.profile-toggle');
+            
             function closeAllDropdowns() {
                 dropdowns.forEach(function (dropdown) {
                     dropdown.style.display = 'none';
                 });
             }
+            
             dropdownToggles.forEach(function (toggle) {
                 toggle.addEventListener('click', function (event) {
                     event.preventDefault();
@@ -210,33 +225,44 @@
                     dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
                 });
             });
+            
             profileToggle.addEventListener('click', function (event) {
                 event.preventDefault();
                 closeAllDropdowns();
                 var dropdown = this.nextElementSibling;
                 dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
             });
+            
             document.addEventListener('click', function (event) {
-                if (!event.target.matches('.dropdown-toggle-parking, .dropdown-toggle-reports, .profile-toggle')) {
+                if (!event.target.matches('.dropdown-toggle-parking, .dropdown-toggle-dashboard, .profile-toggle')) {
                     closeAllDropdowns();
                 }
             });
-        });
-        document.getElementById('logoutLink').addEventListener('click', function(event) {
-            event.preventDefault();
-            document.getElementById('logoutModal').style.display = 'flex';
-        });
-        document.getElementById('proceedButton').addEventListener('click', function() {
-            window.location.href = '../Manage Login/Logout.php';
-        });
-        document.getElementById('cancelButton').addEventListener('click', function() {
-            document.getElementById('logoutModal').style.display = 'none';
-        });
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('logoutModal')) {
-                document.getElementById('logoutModal').style.display = 'none';
+
+            var logoutLink = document.getElementById('logoutLink');
+            var logoutModal = document.getElementById('logoutModal');
+            var proceedButton = document.getElementById('proceedButton');
+            var cancelButton = document.getElementById('cancelButton');
+
+            logoutLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                logoutModal.style.display = 'flex';
+            });
+
+            proceedButton.addEventListener('click', function() {
+                window.location.href = '../Manage Login/Logout.php';
+            });
+
+            cancelButton.addEventListener('click', function() {
+                logoutModal.style.display = 'none';
+            });
+
+            window.onclick = function(event) {
+                if (event.target == logoutModal) {
+                    logoutModal.style.display = 'none';
+                }
             }
-        }
+        });
     </script>
 </body>
 </html>
