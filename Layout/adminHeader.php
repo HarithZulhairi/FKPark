@@ -172,7 +172,7 @@
             <div class="logo"><img src="../resource/FKPark1.jpeg" alt="FKPark" width="170" height="70"></div>
             <nav>
                 <ul>
-                    <li><a href="../Home/homeAdmin.php">Home</a></li>
+                    <li><a href="">Home</a></li>
                     <li><a class="dropdown-toggle-parking">Parking</a>
                         <div class="dropdown dropdown-parking">
                             <a href="../ManageParkingArea/viewParking.php">List</a>

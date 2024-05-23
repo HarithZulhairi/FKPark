@@ -129,7 +129,7 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="../LandingPage/adminHomePage.php">Home</a>
+                        <a href="">Home</a>
                     
                     </li>
                     <li>

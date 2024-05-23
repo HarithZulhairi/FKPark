@@ -165,7 +165,7 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="../LandingPage/ukHomePage.php">Home</a>
+                        <a href="">Home</a>
                     </li>
                     <li>
                         <a class="dropdown-toggle-parking">Summon</a>
