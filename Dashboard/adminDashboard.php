@@ -81,7 +81,7 @@
 
 <!-- Scripts -->
 <!-- ApexCharts -->
-<!--script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
 <!-- Custom JS -->
 <script src="../Dashboard/scripts.js"></script>
 <?php include '../Layout/allUserFooter.php'; ?>

@@ -130,7 +130,7 @@
             background-color: rgba(0, 0, 0, 0.4);
         }
 
-        .modal-content {
+        .modal-content1 {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -179,7 +179,7 @@
                             <a href="../ManageParkingArea/ManageParking.php">Manage</a>
                         </div>
                     </li>
-                    <li><a href="../Dashboard/adminDashboard.php" class="dropdown-toggle-dashboard">Dashboard</a></li>
+                    <li><a href="../Dashboard/adminDashboard.php">Dashboard</a></li>
                     <li><a href="../ManageRegistration/StudentRegistration.php">User Registration</a></li>
                 </ul>
             </nav>
@@ -196,7 +196,7 @@
 
     <!-- The Modal -->
     <div id="logoutModal" class="modal1">
-        <div class="modal-content">
+        <div class="modal-content1">
             <div class="modal-content1">
                 <h2>Are you sure?</h2>
                 <button id="proceedButton" class="btn btn-primary">Proceed</button>
