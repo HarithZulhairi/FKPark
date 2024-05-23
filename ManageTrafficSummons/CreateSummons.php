@@ -20,6 +20,7 @@
                 <div class="form-group">
                     <label for="violation">Violation:</label>
                     <select id="violation" name="violation" required>
+                        <option value=""></option>
                         <option value="speed">Speeding</option>
                         <option value="nocomply">Not Complying</option>
                         <option value="accident">Accident</option>
