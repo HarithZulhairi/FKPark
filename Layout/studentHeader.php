@@ -126,7 +126,7 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="../Home/homeStudent.php">Home</a>
+                        <a href="../LandingPage/HomePage.php">Home</a>
                     </li>
                     <li>
                         <a href="../ManageRegistration/RegistrationVehicle.php">Vehicle Registration</a>
