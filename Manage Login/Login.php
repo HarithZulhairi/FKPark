@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $userType = $_POST['userType'];
 
-    // Connect to the database
+    
     $con = new mysqli("localhost", "root", "", "fkpark");
 
     if ($con->connect_error) {
@@ -22,26 +22,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $con->real_escape_string($password);
     $userType = $con->real_escape_string($userType);
 
-    // Adjust the query based on user type
     if ($userType == 'student') {
         $sql = "SELECT * FROM Student WHERE student_username='$username' AND student_password='$password'";
-        $userIDColumn = "student_ID"; // Adjust the column name accordingly
+        $userIDColumn = "student_ID";
+        $userProfileColumn = "student_profile"; // Add this line
     } else if ($userType == 'administrator') {
         $sql = "SELECT * FROM Administrator WHERE administrator_username='$username' AND administrator_password='$password'";
-        $userIDColumn = "administrator_ID"; // Adjust the column name accordingly
+        $userIDColumn = "administrator_ID";
     } else if ($userType == 'unit_staff') {
         $sql = "SELECT * FROM UnitKeselamatanStaff WHERE uk_username='$username' AND uk_password='$password'";
-        $userIDColumn = "uk_ID"; // Adjust the column name accordingly
+        $userIDColumn = "uk_ID";
     }
 
     $result = $con->query($sql);
 
-    if ($result === false) {
-        echo json_encode(["success" => false, "message" => "Error: " . $con->error]);
-    } else if ($result->num_rows == 1) {
+    if ($result->num_rows == 1) {
         // Successful login
         $row = $result->fetch_assoc();
         $_SESSION['userID'] = $row[$userIDColumn]; // Store userID in session
+        $_SESSION['userProfile'] = $row['student_profile']; // Store user profile path in session
+
+        // Set cookies for username and userType
+        setcookie('username', $username, time() + (86400 * 30), "/"); // 86400 = 1 day
+        setcookie('userType', $userType, time() + (86400 * 30), "/");
 
         // Determine redirect URL based on user type
         $redirectURL = '';
@@ -58,6 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Failed login
         echo json_encode(["success" => false, "message" => "Incorrect username or password. Please try again."]);
     }
+
 
     $con->close();
 }
