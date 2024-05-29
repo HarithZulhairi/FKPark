@@ -39,7 +39,7 @@ session_start();
         .center-table h1 {
             margin: 0;
             padding: 20px;
-            background-color: #333;
+            background-color: #BE8A62;
             color: #fff;
             text-align: center;
         }
@@ -137,28 +137,29 @@ session_start();
             </tr>
             <tr>
                 <td colspan="2">
-                    <form action="RegistrationVehicle.php" method="post" enctype="multipart/form-data">
-                        <div class="center-middle">
-                            <p>Select Vehicle Type</p>
-                            <div class="radio-group">
-                                <input type="radio" id="car" name="vehicleType" value="Car" required>
-                                <label for="car">Car</label>
-                                <input type="radio" id="motorcycle" name="vehicleType" value="Motorcycle" required>
-                                <label for="motorcycle">Motorcycle</label>
-                            </div>
-                            <label for="numPlate">Number Plate:</label>
-                            <input type="text" id="numPlate" name="numPlate" required>
-                            <label for="brand">Brand:</label>
-                            <input type="text" id="brand" name="brand" required>
-                            <label for="trans">Transmission:</label>
-                            <input type="text" id="trans" name="trans" required>
-                            <label for="grantFile">Upload Grant File:</label>
-                            <input type="file" id="grantFile" name="grantFile" required>
+                <form action="RegistrationVehicle.php" method="post" enctype="multipart/form-data">
+                    <div class="center-middle">
+                        <p>Select Vehicle Type</p>
+                        <div class="radio-group">
+                            <input type="radio" id="car" name="vehicleType" value="Car" required>
+                            <label for="car">Car</label>
+                            <input type="radio" id="motorcycle" name="vehicleType" value="Motorcycle" required>
+                            <label for="motorcycle">Motorcycle</label>
                         </div>
-                        <div class="submit-btn">
-                            <input type="submit" value="Submit">
-                        </div>
-                    </form>
+                        <label for="numPlate">Number Plate:</label>
+                        <input type="text" id="numPlate" name="numPlate" required>
+                        <label for="brand">Brand:</label>
+                        <input type="text" id="brand" name="brand" required>
+                        <label for="trans">Transmission:</label>
+                        <input type="text" id="trans" name="trans" required>
+                        <label for="grantFile">Upload Grant File:</label>
+                        <input type="file" id="grantFile" name="grantFile" required>
+                    </div>
+                    <div class="submit-btn">
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+
                 </td>
             </tr>
         </table>
@@ -177,11 +178,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     mysqli_select_db($con, "fkpark") or die(mysqli_error($con));
 
-    $vehicleType = $_POST["vehicleType"];
-    $numPlate = $_POST["numPlate"];
-    $brand = $_POST["brand"];
-    $trans = $_POST["trans"];
-    $studentID = isset($_SESSION['userID']) ? $_SESSION['userID'] : null; // Retrieve student ID from session
+    $vehicleType = $_POST["vehicle_type"];
+    $numPlate = $_POST["vehicle_numPlate"];
+    $brand = $_POST["vehicle_brand"];
+    $trans = $_POST["vehicle_transmission"];
+    $studentID = isset($_SESSION['student_ID']) ? $_SESSION['student_ID'] : null; // Retrieve student ID from session
+
+    // Retrieve the event_IDs for the newly inserted events
+        $query_get_event1_id = "SELECT student_ID FROM student WHERE student_ID='$_SESSION'";
+
+        $result_event1_id = mysqli_query($con, $query_get_event1_id);
+
+        $event1_id = mysqli_fetch_assoc($result_event1_id)['event_ID'];
 
     if ($studentID === null) {
         die('Student ID not found in session. Please login again.');
@@ -200,7 +208,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Upload file to server
         if (move_uploaded_file($grantFile["tmp_name"], $targetFilePath)) {
             // Insert form data into the database
-            $strSQL = "INSERT INTO Vehicle(vehicle_numPlate, vehicle_type, vehicle_brand, vehicle_transmission, student_ID, vehicle_grant) VALUES('$numPlate','$vehicleType','$brand','$trans','$studentID','$targetFilePath')";
+            $strSQL = "INSERT INTO vehicle(vehicle_numPlate, vehicle_type, vehicle_brand, vehicle_transmission, student_ID, vehicle_grant) VALUES('$numPlate','$vehicleType','$brand','$trans','$studentID','$targetFilePath')";
 
             if (mysqli_query($con, $strSQL)) {
                 echo "<script>alert('Vehicle registration successful!');</script>";
@@ -217,3 +225,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_close($con);
 }
 ?>
+
+
+
