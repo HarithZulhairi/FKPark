@@ -44,6 +44,18 @@ const barChartOptions = {
     barChartOptions
   );
   barChart.render();
+
+  // Function to update bar chart data
+function updateBarChartData(newData) {
+  barChart.updateSeries([{
+      data: newData
+  }]);
+}
+
+// Example of updating bar chart data after 3 seconds
+setTimeout(() => {
+  updateBarChartData([15, 12, 10, 8, 5]);
+}, 3000);
   
   // AREA CHART
   const areaChartOptions = {
