@@ -12,7 +12,25 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../Dashboard/styles.css">
+    <link rel="stylesheet" href="../Dashboard/adminDashboard.css">
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .grid-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-container {
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
 
@@ -30,7 +48,7 @@
             <div class="card">
                 <div class="card-inner">
                     <p class="text-primary">TOTAL PARKING SPACES</p>
-                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/parking.png" alt="Parking"></span>
+                    <span ><img class="colored_image" style="width:50px; height:50px;" src="../resource/parking.png" alt="Parking"></span>
                 </div>
                 <span class="text-primary font-weight-bold">249</span>
             </div>
@@ -83,7 +101,7 @@
 <!-- ApexCharts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
 <!-- Custom JS -->
-<script src="../Dashboard/scripts.js"></script>
+<script src="../Dashboard/adminDashboard.js"></script>
 <?php include '../Layout/allUserFooter.php'; ?>
 </body>
 </html>
