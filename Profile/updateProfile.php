@@ -207,3 +207,8 @@
 
 
 
+<p><span class="label">Email:</span> <?php echo $row['student_email']; ?></p>
+                <p><span class="label">Age:</span> <?php echo $row['student_age']; ?></p>
+                <p><span class="label">Phone Number:</span> <?php echo $row['student_phoneNum']; ?></p>
+                <p><span class="label">Gender:</span> <?php echo $row['student_gender']; ?></p>
+                <p><span class="label">Birthdate:</span> <?php echo $row['student_birthdate']; ?></p>

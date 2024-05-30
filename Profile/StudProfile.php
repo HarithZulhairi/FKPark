@@ -83,15 +83,40 @@ if (isset($_SESSION['studentId'])) {
             <?php endif; ?>
         </div>
 
-        <div class="profile-info">
-            <h2><?php echo $row['student_username']; ?></h2>
-                <p><span class="label">Email:</span> <?php echo $row['student_email']; ?></p>
-                <p><span class="label">Age:</span> <?php echo $row['student_age']; ?></p>
-                <p><span class="label">Phone Number:</span> <?php echo $row['student_phoneNum']; ?></p>
-                <p><span class="label">Gender:</span> <?php echo $row['student_gender']; ?></p>
-                <p><span class="label">Birthdate:</span> <?php echo $row['student_birthdate']; ?></p>
-
-        </div>
+        <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label class="labels">Username</label>
+                        <input type="text" class="form-control" placeholder="First Name" value="">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="labels">Password</label>
+                        <input type="password" class="form-control" placeholder="Surname" value="">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="labels">Email</label>
+                        <input type="email" class="form-control" placeholder="Surname" value="">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="labels">Age</label>
+                        <input type="text" class="form-control" placeholder="Surname" value="">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="labels">Phone Number</label>
+                        <input type="text" class="form-control" placeholder="Surname" value="">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="labels">Gender</label>
+                        <input type="radio" id="male" name="Gender" value="Male" required>
+                        <label for="male">Male</label>
+                        <input type="radio" id="female" name="Gender" value="Female" required>
+                        <label for="female">Female</label>
+                    </div><br>
+                    <div class="col-md-6">
+                        <label class="labels">Birthdate</label>
+                        <input type="date" class="form-control" placeholder="Surname" value="">
+                    </div>
+                </var>
+                </div>
 
         <div class="button-container">
             <a href="../ManageRegistration/updateRegistration">
