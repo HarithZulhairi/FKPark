@@ -11,7 +11,7 @@ if (isset($_GET['student_ID'])) {
     $result = mysqli_query($con, $query);
 
     if (!$result) {
-        die("Query failed: " . mysqli_error($con));
+        die("Query failed:".mysqli_error($con));
     } else {
         $row = mysqli_fetch_assoc($result);
     }
@@ -19,74 +19,95 @@ if (isset($_GET['student_ID'])) {
 ?>
 
 <?php
-if (isset($_POST['updateRegister'])) {
-    $student_username = $_POST['student_username'];
-    $student_password = $_POST['student_password'];
-    $student_email = $_POST['student_email'];
-    $student_age = $_POST['student_age'];
-    $student_phoneNum = $_POST['student_phoneNum'];
-    $student_gender = $_POST['student_gender'];
-    $student_birthdate = $_POST['student_birthdate'];
-    $student_profile = $_POST['student_profile'];
+if (isset($_POST['saves_changes'])) {
+
+    if(isset($_GET['student_ID_new'])){
+        $student_ID_new = $_GET['student_ID_new'];
+    }
+
+    $username = $_POST['student_username'];
+    $password = $_POST['student_password'];
+    $email = $_POST['student_email'];
+    $age = $_POST['student_age'];
+    $phoneNum = $_POST['student_phoneNum'];
+    $gender = $_POST['student_gender'];
+    $birthdate = $_POST['student_birthdate'];
+    $targetFilePath = $_POST['student_profile'];
 
     $updateQuery = "UPDATE student SET 
-                    student_username = '$student_username', 
-                    student_password = '$student_password', 
-                    student_email = '$student_email', 
-                    student_age = '$student_age', 
-                    student_phoneNum = '$student_phoneNum', 
-                    student_gender = '$student_gender', 
-                    student_birthdate = '$student_birthdate', 
-                    student_profile = '$student_profile' 
-                    WHERE student_ID = '$student_ID'";
+                    student_username = '$username', 
+                    student_password = '$password', 
+                    student_email = '$email', 
+                    student_age = '$age', 
+                    student_phoneNum = '$phoneNum', 
+                    student_gender = '$gender', 
+                    student_birthdate = '$birthdate', 
+                    student_profile = '$targetFilePath' 
+                    WHERE student_ID = '$student_ID_new'";
 
     $updateResult = mysqli_query($con, $updateQuery);
 
     if (!$updateResult) {
-        die("Query failed: " . mysqli_error($con));
+        die("Query failed:".mysqli_error($con));
     } else {
-        header('Location: viewRegistration.php?update_msg=You have successfully updated the data');
+            header('location:viewRegistration.php?update_msg=Your data has updated successfully');
         exit;
     }
 }
 ?>
 
-<form method="post" action="updateRegistration.php?student_ID=<?php echo $student_ID; ?>">
-    <div class="form-group">
-        <label for="student_username">Username</label>
-        <input type="text" name="student_username" class="form-control" value="<?php echo $row['student_username']; ?>">
-    </div>
-    <div class="form-group">
-        <label for="student_password">Password</label>
-        <input type="password" name="student_password" class="form-control" value="<?php echo $row['student_password']; ?>">
-    </div>
-    <div class="form-group">
-        <label for="student_email">Email</label>
-        <input type="email" name="student_email" class="form-control" value="<?php echo $row['student_email']; ?>">
-    </div>
-    <div class="form-group">
-        <label for="student_age">Age</label>
-        <input type="text" name="student_age" class="form-control" value="<?php echo $row['student_age']; ?>">
-    </div>
-    <div class="form-group">
-        <label for="student_phoneNum">Phone Number</label>
-        <input type="text" name="student_phoneNum" class="form-control" value="<?php echo $row['student_phoneNum']; ?>">
-    </div>
-    <div class="form-group">
-        <label for="student_gender">Gender</label>
-        <input type="checkbox" name="student_gender" class="form-control" value="<?php echo $row['student_gender']; ?>">
-    </div>
-    <div class="form-group">
-        <label for="student_birthdate">Birthday</label>
-        <input type="date" name="student_birthdate" class="form-control" value="<?php echo $row['student_birthdate']; ?>">
-    </div>
-    <div class="form-group">
-        <label for="student_profile">Student Profile</label>
-        <input type="text" name="student_profile" class="form-control" value="<?php echo $row['student_profile']; ?>">
-    </div>
+        <!-- Modal -->
+        <form action="viewRegistration.php?student_ID_new=<?php echo $student_ID; ?>" method="post">
 
-    <input type="submit" class="btn btn-success" name="updateRegister" value="UPDATE">
-</form>
+        <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateModalLabel">Update Student Information</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="updateForm" method="post" action="viewRegistration.php">
+                            <input type="hidden" id="updateStudentId" name="student_ID">
+                            <div class="mb-3">
+                                <label for="updateUsername" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="updateUsername" name="student_username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updatePassword" class="form-label">Password</label>
+                                <input type="text" class="form-control" id="updatePassword" name="student_password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="updateEmail" name="student_email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateAge" class="form-label">Age</label>
+                                <input type="number" class="form-control" id="updateAge" name="student_age" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updatePhoneNumber" class="form-label">Phone Number</label>
+                                <input type="text" class="form-control" id="updatePhoneNumber" name="student_phoneNum" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateGender" class="form-label">Gender</label>
+                                <input type="text" class="form-control" id="updateGender" name="student_gender" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateBirthday" class="form-label">Birthday</label>
+                                <input type="date" class="form-control" id="updateBirthday" name="student_birthdate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="updateProfilePicture" class="form-label">Profile Picture</label>
+                                <input type="file" class="form-control" accept="image/*" id="updateProfilePicture" name="student_profile" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" name="saves_changes" value="submit">Save changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
 <?php include '../Layout/allUserFooter.php'; ?>
 

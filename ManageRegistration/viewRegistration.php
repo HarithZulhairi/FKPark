@@ -57,12 +57,11 @@
                             <td><?php echo htmlspecialchars($row['student_birthdate']); ?></td>
                             <td><?php echo htmlspecialchars($row['student_profile']); ?></td>
                             <td><button type="button" class="btn btn-success update-button" data-id="<?php echo htmlspecialchars($row['student_ID']); ?>" data-bs-toggle="modal" data-bs-target="#updateModal">Update</button></td>
-                            <td><a href="deleteRegistration.php?id=<?php echo htmlspecialchars($row['student_ID']); ?>" class="btn btn-danger">Delete</a></td>
+                            <td><a href="viewRegistration.php?delete_student_id=<?php echo htmlspecialchars($row['student_ID']); ?>" class="btn btn-danger">Delete</a></td>
                         </tr>
                     <?php
                             }
                         }
-                        mysqli_close($con);
                     ?>
                 </tbody>
             </table>
@@ -79,6 +78,75 @@
                 echo "<h6>" . htmlspecialchars($_GET['insert_msg']) . "</h6>";
             }
         ?>
+		
+		<?php
+
+// Handle form submission for updating student information
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['saves_changes'])) {
+    // Retrieve student ID from the hidden input
+    $student_ID_new = $_POST['student_ID'];
+
+    // Retrieve form data
+    $username = $_POST['student_username'];
+    $password = $_POST['student_password'];
+    $email = $_POST['student_email'];
+    $age = $_POST['student_age'];
+    $phoneNum = $_POST['student_phoneNum'];
+    $gender = $_POST['student_gender'];
+    $birthdate = $_POST['student_birthdate'];
+
+    // Handle file upload
+    if (isset($_FILES['student_profile']) && $_FILES['student_profile']['error'] == 0) {
+        $targetDir = "uploads/";
+        $targetFilePath = $targetDir . basename($_FILES['student_profile']['name']);
+        move_uploaded_file($_FILES['student_profile']['tmp_name'], $targetFilePath);
+    } else {
+        $targetFilePath = $_POST['student_profile'];
+    }
+
+    // Construct the SQL update query
+    $updateQuery = "UPDATE student SET 
+                    student_username = '$username', 
+                    student_password = '$password', 
+                    student_email = '$email', 
+                    student_age = '$age', 
+                    student_phoneNum = '$phoneNum', 
+                    student_gender = '$gender', 
+                    student_birthdate = '$birthdate', 
+                    student_profile = '$targetFilePath' 
+                    WHERE student_ID = '$student_ID_new'";
+
+    // Execute the update query
+    $updateResult = mysqli_query($con, $updateQuery);
+
+    // Check if the query was successful
+    if (!$updateResult) {
+        // If query fails, display error message
+        die("Query failed: " . mysqli_error($con));
+    } else {
+        // If query succeeds, redirect to viewRegistration.php with success message
+        header('Location:../ManageRegistration/viewRegistration.php?update_msg=Your data has updated successfully');
+        exit;
+    }
+}
+
+// Handle deletion of student record
+if (isset($_GET['delete_student_id'])) {
+    $student_ID_to_delete = $_GET['delete_student_id'];
+    $deleteQuery = "DELETE FROM student WHERE student_ID = '$student_ID_to_delete'";
+    $deleteResult = mysqli_query($con, $deleteQuery);
+    
+    if (!$deleteResult) {
+        // If deletion fails, display error message
+        die("Deletion failed: " . mysqli_error($con));
+    } else {
+       
+    }
+}
+mysqli_close($con);
+
+?>
+
 
         <!-- Modal -->
         <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
@@ -89,7 +157,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="updateForm" method="POST" action="updateStudent.php" enctype="multipart/form-data">
+                        <form id="updateForm" method="post" enctype="multipart/form-data" action="viewRegistration.php?student_ID_new=<?php echo $student_ID; ?>">
                             <input type="hidden" id="updateStudentId" name="student_ID">
                             <div class="mb-3">
                                 <label for="updateUsername" class="form-label">Username</label>
@@ -123,13 +191,13 @@
                                 <label for="updateProfilePicture" class="form-label">Profile Picture</label>
                                 <input type="file" class="form-control" accept="image/*" id="updateProfilePicture" name="student_profile" required>
                             </div>
-                            <button type="submit" class="btn btn-primary" name="save_changes">Save changes</button>
+                            <button type="submit" class="btn btn-primary" name="saves_changes" value="submit">Save changes</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    
 
     <?php include '../Layout/allUserFooter.php'; ?>
 
@@ -142,7 +210,7 @@
                     var studentId = this.getAttribute('data-id');
 
                     // Fetch the student data using studentId
-                    fetch(`getStudentData.php?id=${student_Id}`)
+                    fetch(`getStudentData.php?id=${studentId}`)
                         .then(response => response.json())
                         .then(data => {
                             document.getElementById('updateStudentId').value = data.student_ID;
@@ -157,7 +225,30 @@
                         });
                 });
             });
+
+            document.getElementById('updateForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                // Implement the form submission to update student data
+                var formData = new FormData(this);
+                fetch('viewRegistration.php?student_ID_new=' + document.getElementById('updateStudentId').value, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Student updated successfully!');
+                        location.reload();
+                    } else {
+                        alert('Failed to update student.');
+                    }
+                });
+            });
         });
     </script>
 </body>
 </html>
+
+
+
