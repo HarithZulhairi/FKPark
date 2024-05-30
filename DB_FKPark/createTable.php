@@ -27,14 +27,14 @@ if (mysqli_query($con, $query1)) {
     echo "Error creating table: " . mysqli_error($con);
 }
 
-// Now create the parking table with the foreign key
-$query2 = 'CREATE TABLE parking( ' .
-          'parking_ID INT NOT NULL AUTO_INCREMENT, ' .
-          'parking_area VARCHAR(100) NOT NULL, ' .
-          'parking_status VARCHAR(100) NOT NULL, ' .
-          'parking_availability INT NOT NULL, ' .
+// Now create the parkingArea table with the foreign key
+$query2 = 'CREATE TABLE parkingArea( ' .
+          'parkingArea_ID INT NOT NULL AUTO_INCREMENT, ' .
+          'parkingArea_name VARCHAR(100) NOT NULL, ' .
+          'parkingArea_status VARCHAR(100) NOT NULL, ' .
+          'parkingArea_availability INT NOT NULL, ' .
           'event_ID INT, ' .
-          'PRIMARY KEY(parking_ID), ' .
+          'PRIMARY KEY(parkingArea_ID), ' .
           'FOREIGN KEY (event_ID) REFERENCES event(event_ID))';
 
 if (mysqli_query($con, $query2)) {
@@ -44,6 +44,23 @@ if (mysqli_query($con, $query2)) {
     echo "Error creating table: " . mysqli_error($con);
 }
 
+// Create the parkingSlot table 
+$query10 = 'CREATE TABLE parkingSlot( ' .
+          'parkingSlot_ID INT NOT NULL AUTO_INCREMENT, ' .
+          'parkingSlot_name VARCHAR(100) NOT NULL, ' .
+          'parkingSlot_status VARCHAR(100) NOT NULL, ' .
+          'parkingArea_ID INT,'.
+          'PRIMARY KEY(parkingSlot_ID), ' .
+          'FOREIGN KEY (parkingArea_ID) REFERENCES parkingArea(parkingArea_ID))';
+
+if (mysqli_query($con, $query10)) {
+    echo "<h3>Your parking table has been created !!!</h3>";
+} else {
+    echo "<br>";
+    echo "Error creating table: " . mysqli_error($con);
+}
+
+
 // Now create the booking table with the foreign key
 $query3 = 'CREATE TABLE booking( ' .
           'booking_ID INT NOT NULL AUTO_INCREMENT, ' .
@@ -51,9 +68,9 @@ $query3 = 'CREATE TABLE booking( ' .
           'booking_endTime TIME NOT NULL, ' .
           'booking_date DATE NOT NULL, ' .
           'booking_QRCode VARCHAR(255) NOT NULL, ' .
-          'parking_ID INT, ' .
+          'parkingSlot_ID INT, ' .
           'PRIMARY KEY(booking_ID), ' .
-          'FOREIGN KEY (parking_ID) REFERENCES parking(parking_ID))';
+          'FOREIGN KEY (parkingSlot_ID) REFERENCES parkingSlot(parkingSlot_ID))';
 
 if (mysqli_query($con, $query3)) {
     echo "<h3>Your booking table has been created !!!</h3>";
