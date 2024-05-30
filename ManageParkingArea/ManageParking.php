@@ -166,8 +166,18 @@
                 }
             ?>
 
-    </div>
+        <?php
+        if (isset($_GET['insert_msg'])) {
+            echo "<h6>" . $_GET['insert_msg'] . "</h6>";
+            if (isset($_GET['qr_image'])) {
+                echo "<h6>QR Code:</h6>";
+                echo "<img src='../resource/" . $_GET['qr_image'] . "'>";
+            }
+        }
+        ?>
 
+    </div>
+                
 
 
     

@@ -129,7 +129,7 @@
             <nav>
                 <ul>
                     <li>
-                        <a href="">Home</a>
+                        <a href="../Home/studentHomePage.php">Home</a>
                     
                     </li>
                     <li>

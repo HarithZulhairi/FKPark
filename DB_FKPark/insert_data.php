@@ -1,5 +1,6 @@
 <?php
     include 'dbcon.php';
+    include '../phpqrcode/qrlib.php';
 
     if(isset($_POST['add_parking'])){
         
@@ -11,9 +12,17 @@
             header('location:../ManageParkingArea/ManageParking.php?message=You need to fill in the parking area! ');
         }
         else{
+             // QR code generation
+            $path = '../resource';
+            $qrimage = time() . ".png";
+            $qrcode = $path . $qrimage;
+            $qrtext = "Parking Area: " . $p_area . "\nAvailability: " . $p_availability;
 
-            $query = "insert into `parking` (`parking_area`, `parking_availability`, `parking_status` ) value
-            ('$p_area', '$p_availability', '$p_status')";
+            // Generate QR code
+            QRcode::png($qrtext, $qrcode, 'H', 4, 4);
+
+            $query = "INSERT INTO `parking` (`parking_area`, `parking_availability`, `parking_status`, `parking_qr`) 
+            VALUES ('$p_area', '$p_availability', '$p_status', '$qrimage')";
 
             $result = mysqli_query($con, $query);
 
@@ -22,7 +31,7 @@
             }
 
             else{
-                header('location:../ManageParkingArea/ManageParking.php?message=You data has been added successfully! ');
+                header('location:../ManageParkingArea/ManageParking.php?message=You data has been added successfully!&qr_image=' . $qrimage);
             }
             
         }

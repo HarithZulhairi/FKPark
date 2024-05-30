@@ -33,6 +33,7 @@ $query2 = 'CREATE TABLE parking( ' .
           'parking_area VARCHAR(100) NOT NULL, ' .
           'parking_status VARCHAR(100) NOT NULL, ' .
           'parking_availability INT NOT NULL, ' .
+          'parking_qr VARCHAR(100) NOT NULL, ' .
           'event_ID INT, ' .
           'PRIMARY KEY(parking_ID), ' .
           'FOREIGN KEY (event_ID) REFERENCES event(event_ID))';
