@@ -21,7 +21,7 @@
             // Generate QR code
             QRcode::png($qrtext, $qrcode, 'H', 4, 4);
 
-            $query = "INSERT INTO `parking` (`parking_area`, `parking_availability`, `parking_status`, `parking_qr`) 
+            $query = "INSERT INTO `parking` (`parkingArea_name`, `parkingArea_availability`, `parkingArea_status`, `parkingArea_qr`) 
             VALUES ('$p_area', '$p_availability', '$p_status', '$qrimage')";
 
             $result = mysqli_query($con, $query);
