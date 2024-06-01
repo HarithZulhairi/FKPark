@@ -104,7 +104,7 @@
                             <td><?php echo htmlspecialchars($row['student_phoneNum']); ?></td>
                             <td><?php echo htmlspecialchars($row['student_gender']); ?></td>
                             <td><?php echo htmlspecialchars($row['student_birthdate']); ?></td>
-                            <td><?php echo htmlspecialchars($row['student_profile']); ?></td>
+                            <td><img src="<?php echo htmlspecialchars($row['student_profile']); ?>" alt="Student Profile" width="100"></td>
                             <td><button type="button" class="btn btn-success update-button" data-id="<?php echo htmlspecialchars($row['student_ID']); ?>" data-bs-toggle="modal" data-bs-target="#updateModal">Update</button></td>
                             <td><a href="viewRegistration.php?delete_student_id=<?php echo htmlspecialchars($row['student_ID']); ?>" class="btn btn-danger">Delete</a></td>
                         </tr>
