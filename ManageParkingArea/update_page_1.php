@@ -36,7 +36,7 @@ ob_start(); // Start output buffering
 
             if(isset($_GET['id'])){
                 $p_area = $_GET['id'];
-                $query = "SELECT * FROM `parking` WHERE `parking_ID` = '$p_area'"; // Fixed variable name typo '$id' to '$p_area'
+                $query = "SELECT * FROM `parkingArea` WHERE `parkingArea_ID` = '$p_area'"; // Fixed variable name typo '$id' to '$p_area'
 
                 $result = mysqli_query($con, $query);
 
@@ -52,15 +52,7 @@ ob_start(); // Start output buffering
                             <td>
                                 <div class="form-group">
                                     <label for="p_area">Parking Area</label>
-                                    <input type="text" name="p_area" class="form-control" value="<?php echo $row['parking_area']?>" >
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-group">
-                                    <label for="p_availability">Parking Availability</label>
-                                    <input type="text" name="p_availability" class="form-control" value="<?php echo $row['parking_availability']?>">
+                                    <input type="text" name="p_area" class="form-control" value="<?php echo $row['parkingArea_name']?>" >
                                 </div>
                             </td>
                         </tr>
@@ -68,7 +60,7 @@ ob_start(); // Start output buffering
                             <td>
                                 <div class="form-group">
                                     <label for="p_status">Parking Status</label>
-                                    <input type="text" name="p_status" class="form-control" value="<?php echo $row['parking_status']?>">
+                                    <input type="text" name="p_status" class="form-control" value="<?php echo $row['parkingArea_status']?>">
                                 </div>
                             </td>
                         </tr>
@@ -86,14 +78,12 @@ ob_start(); // Start output buffering
             // Check if the form is submitted
             if(isset($_POST['update_parking'])){
                 $update_p_area = $_POST['p_area'];
-                $update_p_availability = $_POST['p_availability'];
                 $update_p_status = $_POST['p_status'];
 
                 // Perform the database update
-                $query = "UPDATE `parking` SET `parking_area` = '$update_p_area', 
-                                                `parking_availability` = '$update_p_availability', 
-                                                `parking_status` = '$update_p_status' 
-                          WHERE `parking_ID` = '$p_area'"; // Changed `$id_new` to `$p_area`
+                $query = "UPDATE `parkingArea` SET `parkingArea_name` = '$update_p_area', 
+                                                `parkingArea_status` = '$update_p_status' 
+                          WHERE `parkingArea_ID` = '$p_area'"; // Changed `$id_new` to `$p_area`
 
                 $result = mysqli_query($con, $query);
 

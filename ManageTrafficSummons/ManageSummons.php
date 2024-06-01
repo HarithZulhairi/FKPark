@@ -49,11 +49,11 @@
                                                     </a>
                                                 </div>
 
-                                                <a href="../ManageParkingArea/update_page_1.php?id=<?php echo$row['parking_ID']; ?>" class="btn btn-success" style="margin-right:40px;" >Update</a>
-                                                <a href="../ManageParkingArea/delete_page.php?id=<?php echo$row['parking_ID']; ?>" class="btn btn-danger">Delete</a>
+                                                <a href="../ManageParkingArea/update_page_1.php?id=<?php echo$row['parkingArea_ID']; ?>" class="btn btn-success" style="margin-right:40px;" >Update</a>
+                                                <a href="../ManageParkingArea/delete_page.php?id=<?php echo$row['parkingArea_ID']; ?>" class="btn btn-danger">Delete</a>
                                                     
                                         </td>
-                                        <td><?php echo$row['parking_status']; ?></td>
+                                        <td><?php echo$row['parkingArea_status']; ?></td>
                                     </tr>
                                 <?php
                             }

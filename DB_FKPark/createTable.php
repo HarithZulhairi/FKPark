@@ -32,14 +32,13 @@ $query2 = 'CREATE TABLE parkingArea( ' .
           'parkingArea_ID INT NOT NULL AUTO_INCREMENT, ' .
           'parkingArea_name VARCHAR(100) NOT NULL, ' .
           'parkingArea_status VARCHAR(100) NOT NULL, ' .
-          'parkingArea_availability INT NOT NULL, ' .
           'parkingArea_qr VARCHAR(100) NOT NULL, ' .
           'event_ID INT, ' .
           'PRIMARY KEY(parkingArea_ID), ' .
           'FOREIGN KEY (event_ID) REFERENCES event(event_ID))';
 
 if (mysqli_query($con, $query2)) {
-    echo "<h3>Your parking table has been created !!!</h3>";
+    echo "<h3>Your parking Area table has been created !!!</h3>";
 } else {
     echo "<br>";
     echo "Error creating table: " . mysqli_error($con);
@@ -55,8 +54,8 @@ $query10 = 'CREATE TABLE parkingSlot( ' .
           'FOREIGN KEY (parkingArea_ID) REFERENCES parkingArea(parkingArea_ID))';
 
 if (mysqli_query($con, $query10)) {
-    echo "<h3>Your parking table has been created !!!</h3>";
-} else {
+    echo "<h3>Your parking Slot table has been created !!!</h3>";
+} else { 
     echo "<br>";
     echo "Error creating table: " . mysqli_error($con);
 }

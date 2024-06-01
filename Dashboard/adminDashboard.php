@@ -57,7 +57,7 @@
                     include '../DB_FKPark/dbcon.php'; // Include dbcon.php to establish database connection
 
                     // Fetch count of parking spaces from the database
-                    $query = "SELECT COUNT(*) AS total_booking FROM parking";
+                    $query = "SELECT COUNT(*) AS total_booking FROM parkingArea";
                     $result = mysqli_query($con, $query);
 
                     // Initialize a variable to store the count of parking spaces

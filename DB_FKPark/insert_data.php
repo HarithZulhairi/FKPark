@@ -1,11 +1,10 @@
 <?php
     include 'dbcon.php';
-    include '../phpqrcode/qrlib.php';
+    //include '../phpqrcode/qrlib.php';
 
     if(isset($_POST['add_parking'])){
         
         $p_area = $_POST['p_area'];
-        $p_availability = $_POST['p_availability'];
         $p_status = $_POST['p_status'];
 
         if($p_area == "" || empty($p_area)){
@@ -13,16 +12,16 @@
         }
         else{
              // QR code generation
-            $path = '../resource';
+            /*$path = '../resource';
             $qrimage = time() . ".png";
             $qrcode = $path . $qrimage;
-            $qrtext = "Parking Area: " . $p_area . "\nAvailability: " . $p_availability;
+            $qrtext = "Parking Area: " . $p_area;
 
             // Generate QR code
-            QRcode::png($qrtext, $qrcode, 'H', 4, 4);
+            QRcode::png($qrtext, $qrcode, 'H', 4, 4);*/
 
-            $query = "INSERT INTO `parking` (`parkingArea_name`, `parkingArea_availability`, `parkingArea_status`, `parkingArea_qr`) 
-            VALUES ('$p_area', '$p_availability', '$p_status', '$qrimage')";
+            $query = "INSERT INTO `parkingArea` (`parkingArea_name`, `parkingArea_status`) 
+            VALUES ('$p_area', '$p_status')";
 
             $result = mysqli_query($con, $query);
 
