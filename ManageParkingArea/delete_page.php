@@ -28,7 +28,7 @@ ob_start(); // Start output buffering
             $p_area = $_GET['id']; // Get the id from the URL.
         }
 
-        $query = "delete from `parking` where `parking_ID` = '$p_area'";
+        $query = "delete from `parkingArea` where `parkingArea_ID` = '$p_area'";
 
         $result = mysqli_query($con, $query);
 

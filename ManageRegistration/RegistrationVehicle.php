@@ -178,22 +178,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     mysqli_select_db($con, "fkpark") or die(mysqli_error($con));
 
-    $vehicleType = $_POST["vehicle_type"];
-    $numPlate = $_POST["vehicle_numPlate"];
-    $brand = $_POST["vehicle_brand"];
-    $trans = $_POST["vehicle_transmission"];
-    $studentID = isset($_SESSION['student_ID']) ? $_SESSION['student_ID'] : null; // Retrieve student ID from session
-
-    // Retrieve the event_IDs for the newly inserted events
-        $query_get_event1_id = "SELECT student_ID FROM student WHERE student_ID='$_SESSION'";
-
-        $result_event1_id = mysqli_query($con, $query_get_event1_id);
-
-        $event1_id = mysqli_fetch_assoc($result_event1_id)['event_ID'];
+    // Retrieve student ID from session
+    $studentID = isset($_SESSION['userID']) ? $_SESSION['userID'] : null;
 
     if ($studentID === null) {
         die('Student ID not found in session. Please login again.');
     }
+
+    // Retrieve other form data
+    $vehicleType = $_POST["vehicleType"];
+    $numPlate = $_POST["numPlate"];
+    $brand = $_POST["brand"];
+    $trans = $_POST["trans"];
 
     // Handle file upload
     $grantFile = $_FILES["grantFile"];

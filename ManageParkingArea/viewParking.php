@@ -131,12 +131,11 @@
             <table class="table table-hover table-bordered table-striped" >
                 <tr>
                     <th style="width:500px;" >Parking Area</th>
-                    <th style="width:200px;">Availability</th>
                     <th style="width:100px;padding-left:15px;">Action</th>
                 </tr>
                 <tbody>
                     <?php
-                        $query = "select * from `parking`";
+                        $query = "select * from `parkingArea`";
 
                         $result = mysqli_query($con, $query);
 
@@ -148,8 +147,7 @@
 
                                 ?>
                                     <tr>
-                                        <td><?php echo$row['parking_area']; ?></td>
-                                        <td><?php echo$row['parking_availability']; ?></td>
+                                        <td><?php echo$row['parkingArea_name']; ?></td>
                                         <td>
                                             <div style="margin-top:5px; margin-bottom:5px; " class="button-container">
                                                 <a href="view-link-here" >

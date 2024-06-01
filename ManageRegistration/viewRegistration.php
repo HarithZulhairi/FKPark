@@ -7,6 +7,55 @@
     <link rel="stylesheet" href="viewRegistration.css">
     <title>List of Registration</title>
 </head>
+<style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1;
+        }
+        footer {
+            background: #333;
+            color: #fff;
+            padding: 20px 0;
+        }
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        footer .container div {
+            flex: 1;
+            padding: 0 50px;
+            text-align: center;
+        }
+        footer h5 {
+            margin-top: 0;
+
+        }
+        footer ul {
+            list-style: none;
+            padding: 0;
+
+        }
+        footer ul li {
+            margin: 5px 0;
+
+        }
+        footer ul li a {
+            color: #fff;
+            text-decoration: none;
+
+        }
+        footer ul li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
 
 <body>
     <?php include '../Layout/adminHeader.php'; ?>
@@ -198,9 +247,6 @@ mysqli_close($con);
             </div>
         </div>
     
-
-    <?php include '../Layout/allUserFooter.php'; ?>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -247,6 +293,28 @@ mysqli_close($con);
             });
         });
     </script>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div>
+                <h5>About FKPark</h5>
+                <p>FKPark is a premier parking management system providing seamless and efficient parking solutions.</p>
+            </div>
+            <div>
+                <h5>Quick Links</h5>
+                <ul>
+                    <li><a href="../Home/adminHomePage">Home</a></li>
+                    <li><a href="../ManageBooking/createBooking.php">Booking</a></li>
+                    <li><a href="../Contact/ContactStud.php">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5>Contact Us</h5>
+                <p>Email: info@fkpark.com<br>Phone: +123 456 7890</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
 

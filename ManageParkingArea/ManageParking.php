@@ -103,7 +103,7 @@
 
             <tbody>
             <?php
-                        $query = "select * from `parking`";
+                        $query = "select * from `parkingArea`";
 
                         $result = mysqli_query($con, $query);
 
@@ -115,7 +115,7 @@
 
                                 ?>
                                     <tr>
-                                        <td><?php echo$row['parking_area']; ?></td>
+                                        <td><?php echo$row['parkingArea_name']; ?></td>
                                         <td style="border-collapse: collapse;display: flex; align-items: center;">
                                                 <div style="margin:10px 10px;" class="button-container">
                                                     <a href="event-link-here" >
@@ -123,11 +123,11 @@
                                                     </a>
                                                 </div>
 
-                                                <a href="../ManageParkingArea/update_page_1.php?id=<?php echo$row['parking_ID']; ?>" class="btn btn-success" style="margin-right:40px;" >Update</a>
-                                                <a href="../ManageParkingArea/delete_page.php?id=<?php echo$row['parking_ID']; ?>" class="btn btn-danger">Delete</a>
+                                                <a href="../ManageParkingArea/update_page_1.php?id=<?php echo$row['parkingArea_ID']; ?>" class="btn btn-success" style="margin-right:40px;" >Update</a>
+                                                <a href="../ManageParkingArea/delete_page.php?id=<?php echo$row['parkingArea_ID']; ?>" class="btn btn-danger">Delete</a>
                                                     
                                         </td>
-                                        <td><?php echo$row['parking_status']; ?></td>
+                                        <td><?php echo$row['parkingArea_status']; ?></td>
                                     </tr>
                                 <?php
                             }
@@ -166,8 +166,18 @@
                 }
             ?>
 
-    </div>
+        <?php
+        if (isset($_GET['insert_msg'])) {
+            echo "<h6>" . $_GET['insert_msg'] . "</h6>";
+            if (isset($_GET['qr_image'])) {
+                echo "<h6>QR Code:</h6>";
+                echo "<img src='../resource/" . $_GET['qr_image'] . "'>";
+            }
+        }
+        ?>
 
+    </div>
+                
 
 
     
@@ -193,13 +203,13 @@
       <div class="modal-body">
         
             <div class="form-group">
-                <label for="p_area" >Parking Area</label>
+                <label for="p_area" >Parking Area Name</label>
                 <input type="text" name="p_area" class="form-control">
             </div>
-            <div class="form-group">
+            <!--div class="form-group">
                 <label for="p_availability" >Parking Availability</label>
                 <input type="text" name="p_availability" class="form-control">
-            </div>
+            </div-->
             <div class="form-group">
                 <label for="p_status" >Parking Status</label>
                 <input type="text" name="p_status" class="form-control">
