@@ -49,9 +49,14 @@
         }
 
         nav ul li a {
-            color: black;
+            color: white;
+            text-decoration: none;
             padding: 10px 20px;
             display: block;
+        }
+
+        nav ul li a:hover {
+            background-color: #575757;
         }
 
 

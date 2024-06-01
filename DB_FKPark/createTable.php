@@ -9,6 +9,27 @@ if (!$con) {
 
 mysqli_select_db($con, "fkpark") or die(mysqli_error($con));
 
+// Now create the student table
+$query6 = 'CREATE TABLE Student( ' .
+          'student_ID INT NOT NULL AUTO_INCREMENT, ' .
+          'student_username VARCHAR(100) NOT NULL, ' .
+          'student_password VARCHAR(100) NOT NULL, ' .
+          'student_email VARCHAR(100) NOT NULL, ' .
+          'student_age INT NOT NULL, ' .
+          'student_phoneNum VARCHAR(15) NOT NULL, ' .
+          'student_gender VARCHAR(10) NOT NULL, ' .
+          'student_birthdate DATE NOT NULL, ' .
+          'student_profile VARCHAR(255) NOT NULL, ' .
+          'PRIMARY KEY(student_ID))';
+
+if (mysqli_query($con, $query6)) {
+    echo "<h3>Your student table has been created !!!</h3>";
+} else {
+    echo "<br>";
+    echo "Error creating table: " . mysqli_error($con);
+}
+
+
 // Create the event table first
 $query1 = 'CREATE TABLE event( ' .
           'event_ID INT NOT NULL AUTO_INCREMENT, ' .
@@ -69,8 +90,10 @@ $query3 = 'CREATE TABLE booking( ' .
           'booking_date DATE NOT NULL, ' .
           'booking_QRCode VARCHAR(255) NOT NULL, ' .
           'parkingSlot_ID INT, ' .
+          'student_ID INT, ' .
           'PRIMARY KEY(booking_ID), ' .
-          'FOREIGN KEY (parkingSlot_ID) REFERENCES parkingSlot(parkingSlot_ID))';
+          'FOREIGN KEY (parkingSlot_ID) REFERENCES parkingSlot(parkingSlot_ID), ' . 
+          'FOREIGN KEY (student_ID) REFERENCES student(student_ID))'; 
 
 if (mysqli_query($con, $query3)) {
     echo "<h3>Your booking table has been created !!!</h3>";
@@ -78,6 +101,7 @@ if (mysqli_query($con, $query3)) {
     echo "<br>";
     echo "Error creating table: " . mysqli_error($con);
 }
+
 
 // Now create the administrator table
  $query4 = 'CREATE TABLE Administrator( ' .
@@ -111,25 +135,6 @@ if (mysqli_query($con, $query5)) {
     echo "Error creating table: " . mysqli_error($con);
 }
 
-// Now create the student table
-$query6 = 'CREATE TABLE Student( ' .
-          'student_ID INT NOT NULL AUTO_INCREMENT, ' .
-          'student_username VARCHAR(100) NOT NULL, ' .
-          'student_password VARCHAR(100) NOT NULL, ' .
-          'student_email VARCHAR(100) NOT NULL, ' .
-          'student_age INT NOT NULL, ' .
-          'student_phoneNum VARCHAR(15) NOT NULL, ' .
-          'student_gender VARCHAR(10) NOT NULL, ' .
-          'student_birthdate DATE NOT NULL, ' .
-          'student_profile VARCHAR(255) NOT NULL, ' .
-          'PRIMARY KEY(student_ID))';
-
-if (mysqli_query($con, $query6)) {
-    echo "<h3>Your student table has been created !!!</h3>";
-} else {
-    echo "<br>";
-    echo "Error creating table: " . mysqli_error($con);
-}
 
 // Now create the registration table
 $query7 = 'CREATE TABLE approval( ' .

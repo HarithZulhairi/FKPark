@@ -89,7 +89,7 @@ $studentID = $_SESSION['userID'];
 
     <main>
         <div class="booking-form-container">
-            <h1>Parking Booking Form</h1>
+            <h1>Edit Booking Form</h1>
             <p style="text-align: center;">Parking Spot: <?php echo $parkingSpot; ?></p>
             <?php if (isset($error)) { echo '<p style="color: red; text-align: center;">' . $error . '</p>'; } ?>
             <form id="bookingForm" action="" method="POST">

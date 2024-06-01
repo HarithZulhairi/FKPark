@@ -16,13 +16,14 @@
                 <tr class="view-table-header">
                     <th>No</th>
                     <th>Parking slot</th>
-                    <th colspan="2">Action</th>
+                    <th colspan="3">Action</th>
                 </tr>
                 <tr class="view-table-content">
                     <td>1</td>
                     <td>B113</td>
                     <td><a href="#" class="action-btn">Edit</a></td>
-                    <td><a href="#" class="action-btn">Delete</a></td>
+                    <td><a href="#" class="action-btn">View QR</a></td>
+                    <td><a href="#" class="action-btn">Cancel</a></td>
                 </tr>
             </table>
         </div>
