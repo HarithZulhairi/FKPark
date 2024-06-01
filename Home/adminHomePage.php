@@ -30,6 +30,9 @@
             <h1>FKPARK</h1>
             <p>You Control Everything.</p>
             <button onclick="window.location.href='../ManageRegistration/StudentRegistration.php'">Register</button>
+            <button onclick="window.location.href='../ManageRegistration/viewRegistration.php'">List of Registration</button>
+
+
         </section>
         <section class="image-section">
             <div class="swiper-container">
@@ -39,7 +42,6 @@
                     <div class="swiper-slide"><img src="../resource/parkingFkom3.jpg" alt="Parking lot 3 at FKPARK"></div>
                 </div>
                 <!-- Add Pagination -->
-                <div class="swiper-pagination"></div>
                 <!-- Add Navigation -->
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>

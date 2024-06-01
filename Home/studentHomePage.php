@@ -39,7 +39,6 @@
                     <div class="swiper-slide"><img src="../resource/parkingFkom3.jpg" alt="Parking lot 3 at FKPARK"></div>
                 </div>
                 <!-- Add Pagination -->
-                <div class="swiper-pagination"></div>
                 <!-- Add Navigation -->
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
