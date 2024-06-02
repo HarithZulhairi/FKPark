@@ -77,7 +77,11 @@ document.addEventListener('DOMContentLoaded', function () {
                             window.location.href = response.redirectURL;
                         } else {
                             // Fallback redirect if userType is not recognized
-                            window.location.href = "../Home/defaultHomePage.php";
+                            if (userType === 'student') {
+                                window.location.href = "../Home/studentHomePage.php";
+                            } else {
+                                window.location.href = "../Home/defaultHomePage.php";
+                            }
                         }
                     } else {
                         document.getElementById('error-message').textContent = response.message;
