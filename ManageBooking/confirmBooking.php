@@ -1,17 +1,13 @@
 <?php
-// Start output buffering
-session_start();
-ob_start();
+    session_start();
+    ob_start();
 
-// Check if the student ID is set in the session
-if (!isset($_SESSION['userID'])) {
-    // Redirect the user to the login page or display an error message
-    header("Location: ../Manage Login/login.html");
-    exit;
-}
+    if (!isset($_SESSION['userID'])) {
+        header("Location: ../Manage Login/login.html");
+        exit;
+    }
 
-// Now you can safely use $_SESSION['student_ID'] in your code
-$studentID = $_SESSION['userID'];
+    $studentID = $_SESSION['userID'];
 ?>
 
 <!DOCTYPE html>
@@ -26,16 +22,12 @@ $studentID = $_SESSION['userID'];
     <?php 
         include '../Layout/studentHeader.php'; 
 
-        // Connect to the database
         $con = mysqli_connect("localhost", "root", "", "fkpark");
         if (!$con) {
             die('Could not connect: ' . mysqli_connect_error());
         }
 
-        // Get the parking slot name from the query parameter
         $parkingSpot = htmlspecialchars($_GET['parkingSpot']);
-
-        // Retrieve the parking slot ID based on the parking slot name
         $query = "SELECT parkingSlot_ID FROM parkingSlot WHERE parkingSlot_name='$parkingSpot'";
         $result = mysqli_query($con, $query);
 
@@ -52,12 +44,10 @@ $studentID = $_SESSION['userID'];
             $startTime = $_POST['startTime'];
             $endTime = $_POST['endTime'];
 
-            // Calculate booking duration
             $startDateTime = new DateTime($date . ' ' . $startTime);
             $endDateTime = new DateTime($date . ' ' . $endTime);
             $bookingDuration = $startDateTime->diff($endDateTime)->h;
 
-            // Check if the student has already booked for the selected date
             $existingBookingQuery = "SELECT * FROM booking WHERE booking_date = ? AND student_ID = ?";
             $stmt = mysqli_prepare($con, $existingBookingQuery);
             mysqli_stmt_bind_param($stmt, 'si', $date, $studentID);
@@ -69,14 +59,14 @@ $studentID = $_SESSION['userID'];
             } elseif ($bookingDuration > 10) {
                 $error = "You can only book a maximum of 10 hours per day.";
             } else {
-                // No existing booking and duration is within limit, proceed with booking
-                $qrCode = 'Generated QR Code'; // You need to generate the QR code
+                $qrCode = 'Generated QR Code'; // Generate the QR code
                 $bookingQuery = "INSERT INTO booking (booking_startTime, booking_endTime, booking_date, booking_QRCode, parkingSlot_ID, student_ID) VALUES (?, ?, ?, ?, ?, ?)";
                 $stmt = mysqli_prepare($con, $bookingQuery);
                 mysqli_stmt_bind_param($stmt, 'ssssii', $startTime, $endTime, $date, $qrCode, $parkingSlotID, $studentID);
 
                 if (mysqli_stmt_execute($stmt)) {
-                    header('Location: QRBooking.php');
+                    $bookingID = mysqli_insert_id($con); // Get the last inserted booking ID
+                    header("Location: QRBooking.php?bookingID=$bookingID"); // Redirect to QRBooking.php with the booking ID
                     exit;
                 } else {
                     $error = "Error booking the parking spot: " . mysqli_error($con);
@@ -133,6 +123,5 @@ $studentID = $_SESSION['userID'];
 </html>
 
 <?php
-// End output buffering and flush output
-ob_end_flush();
+    ob_end_flush();
 ?>
