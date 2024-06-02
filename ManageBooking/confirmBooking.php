@@ -1,13 +1,13 @@
 <?php
-    session_start();
-    ob_start();
+session_start();
+ob_start();
 
-    if (!isset($_SESSION['userID'])) {
-        header("Location: ../Manage Login/login.html");
-        exit;
-    }
+if (!isset($_SESSION['userID'])) {
+    header("Location: ../Manage Login/login.html");
+    exit;
+}
 
-    $studentID = $_SESSION['userID'];
+$studentID = $_SESSION['userID'];
 ?>
 
 <!DOCTYPE html>
@@ -48,14 +48,14 @@
             $endDateTime = new DateTime($date . ' ' . $endTime);
             $bookingDuration = $startDateTime->diff($endDateTime)->h;
 
-            $existingBookingQuery = "SELECT * FROM booking WHERE booking_date = ? AND student_ID = ?";
+            $existingBookingQuery = "SELECT * FROM booking WHERE booking_date = ? AND parkingSlot_ID = ? AND (booking_startTime < ? AND booking_endTime > ?)";
             $stmt = mysqli_prepare($con, $existingBookingQuery);
-            mysqli_stmt_bind_param($stmt, 'si', $date, $studentID);
+            mysqli_stmt_bind_param($stmt, 'siss', $date, $parkingSlotID, $endTime, $startTime);
             mysqli_stmt_execute($stmt);
             $existingBookingResult = mysqli_stmt_get_result($stmt);
 
             if (mysqli_num_rows($existingBookingResult) > 0) {
-                $error = "You have already booked a parking spot for the selected date.";
+                $error = "This parking spot is already booked for the selected time.";
             } elseif ($bookingDuration > 10) {
                 $error = "You can only book a maximum of 10 hours per day.";
             } else {
@@ -123,5 +123,5 @@
 </html>
 
 <?php
-    ob_end_flush();
+ob_end_flush();
 ?>
