@@ -138,45 +138,13 @@
 
   </div>
 
-  // BAR CHART
-  const barChartOptions = {
-    series: [
-      {
-        name: 'Demerit Total',
-        data: [], // Initialize with empty data
-      },
-    ],
-    chart: {
-      type: 'bar',
-      height: 350,
-      toolbar: {
-        show: false,
-      },
-    },
-    colors: ['#246dec'],
-    plotOptions: {
-      bar: {
-        distributed: true,
-        borderRadius: 4,
-        horizontal: false,
-        columnWidth: '40%',
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    legend: {
-      show: false,
-    },
-    xaxis: {
-      categories: ['Demerit Total'],
-    },
-    yaxis: {
-      title: {
-        text: 'Count',
-      },
-    },
-  };
+  <!-- Scripts -->
+  <!-- ApexCharts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
+  <!-- Custom JS -->
+  <script>
+    // ---------- CHARTS ----------
+
     // BAR CHART
     const barChartOptions = {
       series: [
@@ -190,85 +158,6 @@
         height: 350,
         toolbar: {
           show: false,
-        },
-      },
-      colors: ['#246dec'],
-      plotOptions: {
-        bar: {
-          distributed: true,
-          borderRadius: 4,
-          horizontal: false,
-        
-          columnWidth: '40%',
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      legend: {
-        show: false,
-      },
-      xaxis: {
-        categories: ['Total Parking Spaces'],
-      },
-      yaxis: {
-        title: {
-          text: 'Count',
-        },
-      },
-    };
-
-  const barChart = new ApexCharts(
-    document.querySelector('#bar-chart'),
-    barChartOptions
-  );
-  barChart.render();
-
-  // Function to update bar chart data with demerit total count
-  function updateBarChartData(totalSpacesCount) {
-    console.log('Updating bar chart data with total parking spaces count:', totalSpacesCount); // Debugging line
-    barChart.updateSeries([{
-      data: [totalSpacesCount] // Update with the total parking spaces count
-    }]);
-  }
-
-  // Call the function to update bar chart data with total parking spaces count
-  updateBarChartData(<?php echo $totalSpacesCount; ?>);
-
-// AREA CHART
-const areaChartOptions = {
-    series: [
-      {
-        name: 'Purchase Orders',
-        data: [0, 0, 0, 0, 0, 0, 0],
-      },
-      {
-        name: 'Sales Orders',
-        data: [0, 0, 0, 0, 0, 0, 0],
-      },
-    ],
-    chart: {
-      height: 350,
-      type: 'area',
-      toolbar: {
-        show: false,
-      },
-    },
-    colors: ['#4f35a1', '#246dec'],
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      curve: 'smooth',
-    },
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-    markers: {
-      size: 0,
-    },
-    yaxis: [
-      {
-        title: {
-          text: 'Purchase Orders',
         },
       },
       colors: ['#246dec'],
