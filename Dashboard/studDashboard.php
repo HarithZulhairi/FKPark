@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Student Dashboard</title>
 
     <!-- Montserrat Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -45,77 +44,105 @@
         </div>
 
         <div class="main-cards">
-
+            <!-- Demerit Total Card -->
             <div class="card">
                 <div class="card-inner">
-                    <p class="text-primary">TOTAL BOOKING PER DAY</p>
-                    <span ><img class="colored_image" style="width:50px; height:50px;" src="../resource/book_online.png" alt="Parking"></span>
+                    <p class="text-primary">DEMERIT TOTAL</p>
+                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/book_online.png" alt="Demerit Total"></span>
                 </div>
-                <!-- Update the total parking spaces count with PHP -->
                 <span class="text-primary font-weight-bold">
                     <?php
-                    include '../DB_FKPark/dbcon.php'; // Include dbcon.php to establish database connection
+                    include '../DB_FKPark/dbcon.php';
 
-                    // Fetch count of parking spaces from the database
-                    $query = "SELECT COUNT(*) AS total_booking FROM parking";
+                    // Fetch total demerit points from the database
+                    $query = "SELECT SUM(summons_demerit) AS total_demerit FROM summons";
                     $result = mysqli_query($con, $query);
-
-                    // Initialize a variable to store the count of parking spaces
-                    $totalSpacesCount = 0;
-
-                    // Check if the query was successful and fetch the count
+                    $totalDemerit = 0;
                     if ($result && mysqli_num_rows($result) > 0) {
                         $row = mysqli_fetch_assoc($result);
-                        $totalSpacesCount = (int)$row['total_booking'];
+                        $totalDemerit = (int)$row['total_demerit'];
                     }
-
-                    echo $totalSpacesCount; // Output the total parking spaces count
+                    echo $totalDemerit;
                     ?>
                 </span>
             </div>
 
+            <!-- Vehicle Registered Card -->
             <div class="card">
                 <div class="card-inner">
-                    <p class="text-primary">OCCUPIED PARKING </p>
-                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/unavailable.png" alt="Occupied"></span>
+                    <p class="text-primary">VEHICLE REGISTERED</p>
+                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/unavailable.png" alt="Vehicle Registered"></span>
                 </div>
-                <span class="text-primary font-weight-bold">83</span>
+                <span class="text-primary font-weight-bold">
+                    <?php
+                    // Fetch count of distinct vehicle types from the database
+                    $query = "SELECT COUNT(DISTINCT vehicle_type) AS vehicle_count FROM vehicle";
+                    $result = mysqli_query($con, $query);
+                    $vehicleCount = 0;
+                    if ($result && mysqli_num_rows($result) > 0) {
+                        $row = mysqli_fetch_assoc($result);
+                        $vehicleCount = (int)$row['vehicle_count'];
+                    }
+                    echo $vehicleCount;
+                    ?>
+                </span>
             </div>
 
+            <!-- Registration Status Card -->
             <div class="card">
                 <div class="card-inner">
-                    <p class="text-primary">AVAILABLE PARKING</p>
-                    <span><img  class="colored_image" style="width:50px; height:50px;" src="../resource/check.png" alt="Available"></span>
+                    <p class="text-primary">REGISTRATION STATUS</p>
+                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/check.png" alt="Registration Status"></span>
                 </div>
-                <span class="text-primary font-weight-bold">79</span>
+                <span class="text-primary font-weight-bold">
+                    <?php
+                    // Fetch count of approved registrations from the database
+                    $query = "SELECT COUNT(*) AS approved_count FROM approval WHERE approval_status = 'Approved'";
+                    $result = mysqli_query($con, $query);
+                    $approvedCount = 0;
+                    if ($result && mysqli_num_rows($result) > 0) {
+                        $row = mysqli_fetch_assoc($result);
+                        $approvedCount = (int)$row['approved_count'];
+                    }
+                    echo $approvedCount;
+                    ?>
+                </span>
             </div>
 
+            <!-- Total Booking Card -->
             <div class="card">
                 <div class="card-inner">
-                    <p class="text-primary">EVENT TODAY</p>
-                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/event.png" alt="QR Code"></span>
+                    <p class="text-primary">TOTAL BOOKING</p>
+                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/event.png" alt="Total Booking"></span>
                 </div>
-                <span class="text-primary font-weight-bold">56</span>
+                <span class="text-primary font-weight-bold">
+                    <?php
+                    // Fetch count of total bookings made by students
+                    $query = "SELECT COUNT(*) AS total_booking FROM booking";
+                    $result = mysqli_query($con, $query);
+                    $totalBooking = 0;
+                    if ($result && mysqli_num_rows($result) > 0) {
+                        $row = mysqli_fetch_assoc($result);
+                        $totalBooking = (int)$row['total_booking'];
+                    }
+                    echo $totalBooking;
+                    ?>
+                </span>
             </div>
-
         </div>
 
         <div class="charts">
-
             <div class="charts-card">
-                <p class="chart-title">OCCUPIED PARKING PER AREA</p>
+                <p class="chart-title">TOTAL BOOKING</p>
                 <div id="bar-chart"></div>
             </div>
-
             <div class="charts-card">
-                <p class="chart-title">BOOKED PARKING</p>
+                <p class="chart-title">DEMERIT TOTAL</p>
                 <div id="area-chart"></div>
             </div>
-
         </div>
     </main>
     <!-- End Main -->
-
 </div>
 
 <!-- Scripts -->
@@ -123,14 +150,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
 <!-- Custom JS -->
 <script>
-  // ---------- CHARTS ----------
-
   // BAR CHART
   const barChartOptions = {
     series: [
       {
         name: 'Total Parking Spaces',
-        data: [], // Initialize with empty data
+        data: [],
       },
     ],
     chart: {
@@ -171,19 +196,16 @@
   );
   barChart.render();
 
-  // Function to update bar chart data with total parking spaces count
   function updateBarChartData(totalSpacesCount) {
-    console.log('Updating bar chart data with total parking spaces count:', totalSpacesCount); // Debugging line
     barChart.updateSeries([{
-      data: [totalSpacesCount] // Update with the total parking spaces count
+      data: [totalSpacesCount]
     }]);
   }
 
-  // Call the function to update bar chart data with total parking spaces count
   updateBarChartData(<?php echo $totalSpacesCount; ?>);
 
-// AREA CHART
-const areaChartOptions = {
+  // AREA CHART
+  const areaChartOptions = {
     series: [
       {
         name: 'Purchase Orders',
@@ -237,22 +259,17 @@ const areaChartOptions = {
   );
   areaChart.render();
 
-  // Function to update area chart data
   function updateAreaChartData(newPurchaseData, newSalesData) {
-    console.log('Updating area chart data to:', newPurchaseData, newSalesData); // Debugging line
     areaChart.updateSeries([
       { data: newPurchaseData },
       { data: newSalesData }
     ]);
   }
 
-  // Example of updating area chart data after 3 seconds
   setTimeout(() => {
     updateAreaChartData([31, 40, 28, 51, 42, 109, 100], [40, 32, 45, 32, 34, 52, 41]);
   }, 3000);
 </script>
-
-
-
+<script src="studDashboard.js"></script>
 </body>
 </html>

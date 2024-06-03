@@ -1,6 +1,47 @@
+<?php
+// Include the database connection
+include '../Layout/UKHeader.php'; 
+include '../DB_FKPark/dbcon.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['approve_vehicle_numPlate'])) {
+        $vehicle_numPlate_to_approve = $_POST['approve_vehicle_numPlate'];
+        $student_ID = $_POST['student_ID'];
+        
+        // Update the approval status to 'Successful'
+        $approveQuery = "INSERT INTO approval (vehicle_grant, approval_status, student_ID)
+                         VALUES ('$vehicle_numPlate_to_approve', 'Successful', '$student_ID')
+                         ON DUPLICATE KEY UPDATE approval_status='Successful'";
+        $approveResult = mysqli_query($con, $approveQuery);
+
+        if (!$approveResult) {
+            die("Approval failed: " . mysqli_error($con));
+        } else {
+            header('Location: VehicleApproval.php?message=Vehicle has been approved successfully');
+            
+        }
+    } elseif (isset($_POST['cancel_student_ID'])) {
+        $student_ID = $_POST['cancel_student_ID'];
+        
+        // Update the approval status to 'Unsuccessful'
+        $cancelQuery = "INSERT INTO approval (student_ID, approval_status)
+                        VALUES ('$student_ID', 'Unsuccessful')
+                        ON DUPLICATE KEY UPDATE approval_status='Unsuccessful'";
+        $cancelResult = mysqli_query($con, $cancelQuery);
+
+        if (!$cancelResult) {
+            die("Cancellation failed: " . mysqli_error($con));
+        } else {
+            header('Location: VehicleApproval.php?message=Vehicle registration has been cancelled');
+            exit;
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta tags and CSS links -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -53,18 +94,18 @@
         footer ul li a:hover {
             text-decoration: underline;
         }
+
+        .view-container {
+            text-align: center;
+            padding: 50px;
+        }
     </style>
 </head>
 <body>
-    <?php include '../Layout/adminHeader.php'; ?>
-    <?php include '../DB_FKPark/dbcon.php'; ?>
 
     <main>
         <h1 id="main_title">List Of Vehicles</h1>
-
         <div class="view-container">
-         
-
             <table class="table table-hover table-bordered table-striped">
                 <thead>
                     <tr class="view-table-header">
@@ -75,73 +116,80 @@
                         <th>Grant</th>
                         <th>Student ID</th>
                         <th>Approve</th>
+                        <th>Decline</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                        $query = "SELECT * FROM `Vehicle`";
-                        $result = mysqli_query($con, $query);
+                    $query = "SELECT * FROM Vehicle";
+                    $result = mysqli_query($con, $query);
 
-                        if(!$result){
-                            die("Query failed: " . mysqli_error($con));
-                        } else {
-                            while($row = mysqli_fetch_assoc($result)){
-                    ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['vehicle_numPlate']); ?></td>
-                            <td><?php echo htmlspecialchars($row['vehicle_type']); ?></td>
-                            <td><?php echo htmlspecialchars($row['vehicle_brand']); ?></td>
-                            <td><?php echo htmlspecialchars($row['vehicle_transmission']); ?></td>
-                            <td><img src="<?php echo htmlspecialchars($row['vehicle_grant']); ?>" alt="Vehicle Grant" width="100"></td>
-                            <td><?php echo htmlspecialchars($row['student_ID']); ?></td>
-                            <td><button type="button" class="btn btn-success approve-button" data-id="<?php echo htmlspecialchars($row['vehicle_numPlate']); ?>">Approve</button></td>
-                        </tr>
-                    <?php
-                            }
+                    if (!$result) {
+                        die("Query failed: " . mysqli_error($con));
+                    } else {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo '<tr>';
+                            echo '<td>' . htmlspecialchars($row['vehicle_numPlate']) . '</td>';
+                            echo '<td>' . htmlspecialchars($row['vehicle_type']) . '</td>';
+                            echo '<td>' . htmlspecialchars($row['vehicle_brand']) . '</td>';
+                            echo '<td>' . htmlspecialchars($row['vehicle_transmission']) . '</td>';
+                            echo '<td><img src="' . htmlspecialchars($row['vehicle_grant']) . '" alt="Vehicle Grant" width="100"></td>';
+                            echo '<td>' . htmlspecialchars($row['student_ID']) . '</td>';
+                            echo '<td><button type="button" class="btn btn-success approve-button" data-id="' . htmlspecialchars($row['vehicle_numPlate']) . '" data-student="' . htmlspecialchars($row['student_ID']) . '">Approve</button></td>';
+                            echo '<td><button type="button" class="btn btn-danger cancel-button" data-student="' . htmlspecialchars($row['student_ID']) . '">Decline</button></td>';
+                            echo '</tr>';
                         }
-                    ?>
+                    }
+                    mysqli_close($con);
+
+                   ?>
                 </tbody>
             </table>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var approveButtons = document.querySelectorAll('.approve-button');
+                approveButtons.forEach(function(button) {
+                    button.addEventListener('click', function() {
+                        var vehicleNumPlate = this.getAttribute('data-id');
+                        var studentID = this.getAttribute('data-student');
+                        var form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = 'VehicleApproval.php';
+                        var input1 = document.createElement('input');
+                        input1.type = 'hidden';
+                        input1.name = 'approve_vehicle_numPlate';
+                        input1.value = vehicleNumPlate;
+                        form.appendChild(input1);
+                        var input2 = document.createElement('input');
+                        input2.type = 'hidden';
+                        input2.name = 'student_ID';
+                        input2.value = studentID;
+                        form.appendChild(input2);
+                        document.body.appendChild(form);
+                        form.submit();
+                    });
+                });
 
-        <?php
-            if (isset($_GET['message'])) {
-                echo "<h6>" . htmlspecialchars($_GET['message']) . "</h6>";
-            }
-        ?>
-
-        <?php
-            if (isset($_GET['insert_msg'])) {
-                echo "<h6>" . htmlspecialchars($_GET['insert_msg']) . "</h6>";
-            }
-        ?>
-
-        <?php
-        // Handle approval of vehicle
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['approve_vehicle_numPlate'])) {
-            // Retrieve vehicle number plate from the POST data
-            $vehicle_numPlate_to_approve = $_POST['approve_vehicle_numPlate'];
-
-            // Construct the SQL update query to approve the vehicle (example: setting a status column to 'approved')
-            $approveQuery = "UPDATE Vehicle SET status = 'approved' WHERE vehicle_numPlate = '$vehicle_numPlate_to_approve'";
-
-            // Execute the approve query
-            $approveResult = mysqli_query($con, $approveQuery);
-
-            // Check if the query was successful
-            if (!$approveResult) {
-                // If query fails, display error message
-                die("Approval failed: " . mysqli_error($con));
-            } else {
-                // If query succeeds, redirect to viewRegistration.php with success message
-                header('Location:../ManageRegistration/viewRegistration.php?approve_msg=Vehicle has been approved successfully');
-                exit;
-            }
-        }
-        mysqli_close($con);
-        ?>
+                var cancelButtons = document.querySelectorAll('.cancel-button');
+                cancelButtons.forEach(function(button) {
+                    button.addEventListener('click', function() {
+                        var studentID = this.getAttribute('data-student');
+                        var form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = 'VehicleApproval.php';
+                        var input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'cancel_student_ID';
+                        input.value = studentID;
+                        form.appendChild(input);
+                        document.body.appendChild(form);
+                        form.submit();
+                    });
+                });
+            });
+        </script>
     </main>
-
     <footer>
         <div class="container">
             <div>
@@ -161,32 +209,5 @@
                 <p>Email: info@fkpark.com<br>Phone: +123 456 7890</p>
             </div>
         </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var approveButtons = document.querySelectorAll('.approve-button');
-            approveButtons.forEach(function(button) {
-                button.addEventListener('click', function() {
-                    var vehicleNumPlate = this.getAttribute('data-id');
-                    
-                    // Create a form and submit it
-                    var form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = 'viewRegistration.php';
-
-                    var input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = 'approve_vehicle_numPlate';
-                    input.value = vehicleNumPlate;
-
-                    form.appendChild(input);
-                    document.body.appendChild(form);
-                    form.submit();
-                });
-            });
-        });
-    </script>
-</body>
+    </footer></body>
 </html>

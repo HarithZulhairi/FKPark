@@ -129,7 +129,7 @@
   const barChartOptions = {
     series: [
       {
-        name: 'Total Parking Spaces',
+        name: 'Demerit Total',
         data: [], // Initialize with empty data
       },
     ],
@@ -156,7 +156,7 @@
       show: false,
     },
     xaxis: {
-      categories: ['Total Parking Spaces'],
+      categories: ['Demerit Total'],
     },
     yaxis: {
       title: {
@@ -171,7 +171,7 @@
   );
   barChart.render();
 
-  // Function to update bar chart data with total parking spaces count
+  // Function to update bar chart data with demerit total count
   function updateBarChartData(totalSpacesCount) {
     console.log('Updating bar chart data with total parking spaces count:', totalSpacesCount); // Debugging line
     barChart.updateSeries([{

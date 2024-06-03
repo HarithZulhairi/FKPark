@@ -136,7 +136,7 @@ if (mysqli_query($con, $query5)) {
 }
 
 
-// Now create the registration table
+// Now create the approval table
 $query7 = 'CREATE TABLE approval( ' .
           'approval_ID INT NOT NULL AUTO_INCREMENT, ' .
           'vehicle_grant VARCHAR(100) NOT NULL, ' .

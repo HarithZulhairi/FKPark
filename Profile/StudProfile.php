@@ -134,3 +134,6 @@ if (!$result) {
 
 </body>
 </html>
+
+<?php mysqli_close($con); ?>
+

@@ -1,3 +1,31 @@
+<?php 
+session_start();
+include '../Layout/UKHeader.php'; 
+include '../DB_FKPark/dbcon.php'; // Ensure the database connection is included
+
+// Check if the user is logged in and retrieve user data
+if (isset($_SESSION['userID']) && isset($_SESSION['userProfile'])) {
+    $student_ID = $_SESSION['userID'];
+    $profilePath = $_SESSION['userProfile'];
+
+    // Fetch the student's name from the database
+    $query = "SELECT student_username FROM Student WHERE student_ID = ?";
+    if ($stmt = $con->prepare($query)) {
+        $stmt->bind_param("i", $student_ID);
+        $stmt->execute();
+        $stmt->bind_result($student_username);
+        $stmt->fetch();
+        $stmt->close();
+    } else {
+        die("Error preparing statement: " . $con->error);
+    }
+} else {
+    // Redirect to login page if not logged in
+    header("Location: ../Login/Login.html");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,29 +36,15 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 </head>
 <body>
-    <?php 
-    session_start();
-    include '../Layout/UKHeader.php'; 
-    ?>
-
     <div class="profile">
-        <?php
-        if(isset($_SESSION['userProfile'])) {
-            $profileImage = $_SESSION['userProfile'];
-        } else {
-            $profileImage = '../resource/defaultProfile.jpg'; // Default profile image
-        }
-        ?>
-        <img src="<?php echo $profileImage; ?>" alt="User Profile Picture" class="profile-picture">
-        <span class="username">Welcome, User!</span>
+        <span class="username">Welcome, <?php echo htmlspecialchars($student_username); ?>!</span>
     </div>
 
     <main class="container">
         <section class="text-section">
             <h1>FKPARK</h1>
-            <p>They Are Waiting For You.</p>
-            <p>Approve Now.</p>
-            <button onclick="window.location.href='../ManageRegistration/VehicleApproval.php'">Approve</button>
+            <p>We made it easier for you to park your vehicle.</p>
+            <button onclick="window.location.href='../ManageBooking/createBooking.php'">Book Now</button>
         </section>
         <section class="image-section">
             <div class="swiper-container">
@@ -39,8 +53,6 @@
                     <div class="swiper-slide"><img src="../resource/FKPark_Map.png" alt="Parking lot 2 at FKPARK"></div>
                     <div class="swiper-slide"><img src="../resource/parkingFkom3.jpg" alt="Parking lot 3 at FKPARK"></div>
                 </div>
-                <!-- Add Pagination -->
-                <!-- Add Navigation -->
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
@@ -63,8 +75,6 @@
             },
             loop: true,
         });
-
-        
     </script>
 </body>
 </html>

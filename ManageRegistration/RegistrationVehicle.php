@@ -170,7 +170,9 @@ session_start();
 </html>
 
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $con = mysqli_connect("localhost", "root", "", "fkpark");
     if (!$con) {
         die('Could not connect: ' . mysqli_connect_error());
@@ -180,16 +182,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Retrieve student ID from session
     $studentID = isset($_SESSION['userID']) ? $_SESSION['userID'] : null;
-
     if ($studentID === null) {
         die('Student ID not found in session. Please login again.');
     }
 
     // Retrieve other form data
-    $vehicleType = $_POST["vehicleType"];
-    $numPlate = $_POST["numPlate"];
-    $brand = $_POST["brand"];
-    $trans = $_POST["trans"];
+    $vehicleType = mysqli_real_escape_string($con, $_POST["vehicleType"]);
+    $numPlate = mysqli_real_escape_string($con, $_POST["numPlate"]);
+    $brand = mysqli_real_escape_string($con, $_POST["brand"]);
+    $trans = mysqli_real_escape_string($con, $_POST["trans"]);
 
     // Handle file upload
     $grantFile = $_FILES["grantFile"];
@@ -201,15 +202,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Allow certain file formats
     $allowTypes = array('jpg', 'png', 'jpeg', 'pdf');
     if (in_array($fileType, $allowTypes)) {
-        // Upload file to server
         if (move_uploaded_file($grantFile["tmp_name"], $targetFilePath)) {
-            // Insert form data into the database
-            $strSQL = "INSERT INTO vehicle(vehicle_numPlate, vehicle_type, vehicle_brand, vehicle_transmission, student_ID, vehicle_grant) VALUES('$numPlate','$vehicleType','$brand','$trans','$studentID','$targetFilePath')";
+            // Check if the vehicle_numPlate already exists
+            $checkQuery = "SELECT * FROM vehicle WHERE vehicle_numPlate = '$numPlate'";
+            $checkResult = mysqli_query($con, $checkQuery);
 
-            if (mysqli_query($con, $strSQL)) {
-                echo "<script>alert('Vehicle registration successful!');</script>";
+            if (mysqli_num_rows($checkResult) > 0) {
+                // If a record with the same vehicle_numPlate exists, update the record
+                $updateQuery = "UPDATE vehicle SET 
+                    vehicle_type='$vehicleType', 
+                    vehicle_brand='$brand', 
+                    vehicle_transmission='$trans', 
+                    student_ID='$studentID', 
+                    vehicle_grant='$targetFilePath' 
+                    WHERE vehicle_numPlate='$numPlate'";
+                
+                if (mysqli_query($con, $updateQuery)) {
+                    echo "<script>alert('Vehicle record updated successfully');</script>";
+                } else {
+                    echo "Update failed: " . mysqli_error($con);
+                }
             } else {
-                echo "Error: " . mysqli_error($con);
+                // If no record with the same vehicle_numPlate exists, insert the new record
+                $insertQuery = "INSERT INTO vehicle(vehicle_numPlate, vehicle_type, vehicle_brand, vehicle_transmission, student_ID, vehicle_grant) VALUES('$numPlate','$vehicleType','$brand','$trans','$studentID','$targetFilePath')";
+                
+                if (mysqli_query($con, $insertQuery)) {
+                    echo "<script>alert('Vehicle registration successful!');</script>";
+                } else {
+                    echo "Insertion failed: " . mysqli_error($con);
+                }
             }
         } else {
             echo "Sorry, there was an error uploading your file.";
