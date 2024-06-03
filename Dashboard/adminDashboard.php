@@ -79,7 +79,17 @@
                           $totalSpacesCount = (int)$row1['total_booking'];
                       }
 
-                      echo $totalSpacesCount; // Output the total parking spaces count
+                      $query2 = "SELECT COUNT(*) AS total_parking FROM parkingSlot";
+                      $result2 = mysqli_query($con, $query2);
+
+                      $totalParkingCount = 0;
+
+                      if ($result2 && mysqli_num_rows($result2) > 0){
+                        $row2 = mysqli_fetch_assoc($result2);
+                        $totalParkingCount = (int)$row2['total_parking'];
+                      }
+
+                      echo $totalParkingCount;
                       ?>
                   </span>
               </div>
