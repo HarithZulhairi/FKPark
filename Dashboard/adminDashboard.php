@@ -49,6 +49,7 @@
 
           <div class="main-cards">
 
+<<<<<<< Updated upstream
               <div class="card">
                   <div class="card-inner">
                       <p class="text-primary">TOTAL PARKING AREA</p>
@@ -57,6 +58,17 @@
                   <!-- Update the total parking spaces count with PHP -->
                   <span class="text-primary font-weight-bold">
                       <?php
+=======
+            <div class="card">
+                <div class="card-inner">
+                    <p class="text-primary">TOTAL PARKING AREA</p>
+                    <span ><img class="colored_image" style="width:50px; height:50px;" src="../resource/book_online.png" alt="Parking"></span>
+                </div>
+                <!-- Update the total parking spaces count with PHP -->
+                <span class="text-primary font-weight-bold">
+                    <?php
+                    include '../DB_FKPark/dbcon.php'; // Include dbcon.php to establish database connection
+>>>>>>> Stashed changes
 
                       // Connect to Database
                       $con = mysqli_connect("localhost", "root", "");
@@ -79,15 +91,55 @@
                           $totalSpacesCount = (int)$row1['total_booking'];
                       }
 
+<<<<<<< Updated upstream
                       $query2 = "SELECT COUNT(*) AS total_parking FROM parkingSlot";
                       $result2 = mysqli_query($con, $query2);
+=======
+            <div class="card">
+                <div class="card-inner">
+                    <p class="text-primary">TOTAL EVENT </p>
+                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/event.png" alt="Occupied"></span>
+                </div>
+                <!-- Update the total parking spaces count with PHP -->
+                <span class="text-primary font-weight-bold">
+                    <?php
+                    
+
+                    // Fetch count of parking spaces from the database
+                    $query = "SELECT COUNT(*) AS total_event FROM event";
+                    $result = mysqli_query($con, $query);
+
+                    // Initialize a variable to store the count of parking spaces
+                    $totalEvent = 0;
+
+                    // Check if the query was successful and fetch the count
+                    if ($result && mysqli_num_rows($result) > 0) {
+                        $row = mysqli_fetch_assoc($result);
+                        $totalEvent = (int)$row['total_event'];
+                    }
+
+                    echo $totalEvent; // Output the total parking spaces count
+                    ?>
+                </span>
+            </div>
+>>>>>>> Stashed changes
 
                       $totalParkingCount = 0;
 
+<<<<<<< Updated upstream
                       if ($result2 && mysqli_num_rows($result2) > 0){
                         $row2 = mysqli_fetch_assoc($result2);
                         $totalParkingCount = (int)$row2['total_parking'];
                       }
+=======
+            <div class="card">
+                <div class="card-inner">
+                    <p class="text-primary">TEXT</p>
+                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/event.png" alt="QR Code"></span>
+                </div>
+                <span class="text-primary font-weight-bold">56</span>
+            </div>
+>>>>>>> Stashed changes
 
                       echo $totalParkingCount;
                       ?>
@@ -102,6 +154,7 @@
                   <span class="text-primary font-weight-bold">83</span>
               </div>
 
+<<<<<<< Updated upstream
               <div class="card">
                   <div class="card-inner">
                       <p class="text-primary">AVAILABLE PARKING</p>
@@ -109,6 +162,12 @@
                   </div>
                   <span class="text-primary font-weight-bold">79</span>
               </div>
+=======
+            <div class="charts-card">
+                <p class="chart-title">PARKING UTILIZATION PER AREA</p>
+                <div id="bar-chart"></div>
+            </div>
+>>>>>>> Stashed changes
 
               <div class="card">
                   <div class="card-inner">
@@ -127,10 +186,52 @@
                   <div id="bar-chart"></div>
               </div>
 
+<<<<<<< Updated upstream
               <div class="charts-card">
                   <p class="chart-title">BOOKED PARKING</p>
                   <div id="area-chart"></div>
               </div>
+=======
+  // BAR CHART
+  const barChartOptions = {
+    series: [
+      {
+        name: 'Parking Utilization per Area',
+        data: [], // Initialize with empty data
+      },
+    ],
+    chart: {
+      type: 'bar',
+      height: 350,
+      toolbar: {
+        show: false,
+      },
+    },
+    colors: ['#246dec', '#ff7f0e', '#2ca02c', '#d62728'],
+    plotOptions: {
+      bar: {
+        distributed: true,
+        borderRadius: 4,
+        horizontal: false,
+        columnWidth: '20%',
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    legend: {
+      show: false,
+    },
+    xaxis: {
+      categories: ['B1', 'B2', 'B3', 'M1'], // Add new categories
+    },
+    yaxis: {
+      title: {
+        text: 'Count',
+      },
+    },
+  };
+>>>>>>> Stashed changes
 
           </div>
       </main>
@@ -288,9 +389,13 @@
       updateAreaChartData(<?php echo json_encode($carBookingsData); ?>, <?php echo json_encode($motorcycleBookingsData); ?>);
 
 
+<<<<<<< Updated upstream
   </script>
 
   <?php include '../Layout/allUserFooter.php'; ?>
 
+=======
+<?php include '../Layout/allUserFooter.php'; ?>
+>>>>>>> Stashed changes
 </body>
 </html>

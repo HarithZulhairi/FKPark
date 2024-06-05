@@ -133,14 +133,6 @@
                     <h2>About FKPark</h2>
                     <p>FKPark is a premier parking management system providing seamless and efficient parking solutions.</p>
                 </div>
-                <div class="footer-section links">
-                    <h2>Quick Links</h2>
-                    <ul>
-                        <li style="margin-bottom: 8px;"><a href="#">Home</a></li>
-                        <li style="margin-bottom: 8px;"><a href="#">Booking</a></li>
-                        <li style="margin-bottom: 8px;"><a href="#">Contact</a></li>
-                    </ul>
-                </div>
                 <div class="footer-section contact">
                     <h2>Contact Us</h2>
                     <p>Email: info@fkpark.com</p>

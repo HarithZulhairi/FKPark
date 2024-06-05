@@ -52,7 +52,12 @@ ob_start(); // Start output buffering
                             <td>
                                 <div class="form-group">
                                     <label for="p_area">Parking Area</label>
-                                    <input type="text" name="p_area" class="form-control" value="<?php echo $row['parkingArea_name']?>" >
+                                    <select name="p_area" class="form-control">
+                                        <option value="B1" <?php echo ($row['parkingArea_name'] == 'B1') ? 'selected' : ''; ?>>B1</option>
+                                        <option value="B2" <?php echo ($row['parkingArea_name'] == 'B2') ? 'selected' : ''; ?>>B2</option>
+                                        <option value="B3" <?php echo ($row['parkingArea_name'] == 'B3') ? 'selected' : ''; ?>>B3</option>
+                                        <option value="M1" <?php echo ($row['parkingArea_name'] == 'M1') ? 'selected' : ''; ?>>M1</option>
+                                    </select>
                                 </div>
                             </td>
                         </tr>
@@ -60,7 +65,10 @@ ob_start(); // Start output buffering
                             <td>
                                 <div class="form-group">
                                     <label for="p_status">Parking Status</label>
-                                    <input type="text" name="p_status" class="form-control" value="<?php echo $row['parkingArea_status']?>">
+                                    <select name="p_status" class="form-control">
+                                        <option value="AVAILABLE" <?php echo ($row['parkingArea_status'] == 'AVAILABLE') ? 'selected' : ''; ?>>AVAILABLE</option>
+                                        <option value="UNAVAILABLE" <?php echo ($row['parkingArea_status'] == 'UNAVAILABLE') ? 'selected' : ''; ?>>UNAVAILABLE</option>
+                                    </select>
                                 </div>
                             </td>
                         </tr>

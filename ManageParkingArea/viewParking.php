@@ -12,12 +12,6 @@
           margin-right: auto;
         }
 
-        img {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            }
-
             h1{
                 text-align: center;
             }
@@ -62,31 +56,15 @@
                 background-color: #0000FF;
             }
 
-            #ParkingList{
-                
-               
-            }
-
             main{
                 padding-bottom:20px;
             }
-            #promote{
-                background-color:#254D98;
-                height:100px;
-                width: 100%;
-                margin-bottom:40px;
-            }
+
             th{
                 font-size:20px;
                 text-align:left;
             }
-
-            #promote{
-                color:white;
-                font-size:24px;
-                justify-content: center; /* Center text horizontally */
-                gap: 160px; /* Adjust space between paragraphs as needed */
-            }
+            
 
     </style>
 </head>
@@ -97,41 +75,12 @@
    
     <main>
 
-    <h1>Welcome to FKPark</h1>
-
-    <div id="welcome" >
-        <table class="center" style="margin-top:0px;" >
-            <tr>
-                <td style="padding-right:50px;"><img src="../resource/illustration.jpg" alt="illustration" width="370" height="400"></td>
-                <td>
-                <div class="square">
-                    <h3>Book Now</h3>
-                    <p>You are only 60 seconds from reserving a parking space!</p>
-                    <div class="button-container">
-                    <a href="book-link-here" >
-                              <button type="book">BOOK NOW</button>
-                          </a>
-                    </div>
-                    
-                </div>
-                </td>
-
-            </tr>
-        </table>
-    </div>
-
-    <div id="promote" style="display: flex; align-items: center;">
-            <p><i>Effortless Parking, Every Time!</i></p>
-            <p><i>Swift Parking, Seamless Experience!</i></p>
-            <p><i>Park with Ease, Leave with Peace!</i></p>
-    </div>
-
     <div id="ParkingList">
         <div class="container">
             <table class="table table-hover table-bordered table-striped" >
                 <tr>
-                    <th style="width:500px;" >Parking Area</th>
-                    <th style="width:100px;padding-left:15px;">Action</th>
+                    <th style="text-align:center;">Parking Area</th>
+                    <th style="text-align:center;" >Action</th>
                 </tr>
                 <tbody>
                     <?php
@@ -147,7 +96,7 @@
 
                                 ?>
                                     <tr>
-                                        <td><?php echo$row['parkingArea_name']; ?></td>
+                                        <td style="text-align:center;"><?php echo$row['parkingArea_name']; ?></td>
                                         <td>
                                             <div style="margin-top:5px; margin-bottom:5px; " class="button-container">
                                                 <a href="view-link-here" >

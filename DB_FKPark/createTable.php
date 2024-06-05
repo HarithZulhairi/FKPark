@@ -72,7 +72,7 @@ $query10 = 'CREATE TABLE parkingSlot( ' .
           'parkingSlot_status VARCHAR(100) NOT NULL, ' .
           'parkingArea_ID INT,'.
           'PRIMARY KEY(parkingSlot_ID), ' .
-          'FOREIGN KEY (parkingArea_ID) REFERENCES parkingArea(parkingArea_ID))';
+          'FOREIGN KEY (parkingArea_ID) REFERENCES parkingArea(parkingArea_ID) ON DELETE CASCADE)';
 
 if (mysqli_query($con, $query10)) {
     echo "<h3>Your parking Slot table has been created !!!</h3>";

@@ -5,6 +5,7 @@ mysqli_select_db($con, "fkpark") or die(mysqli_error($con));
 
 // Insert data into the event table
 $query3 = "INSERT INTO event (event_name, event_date, event_startTime, event_endTime, event_place, event_description) VALUES 
+('NO EVENT', '0000-00-00', '00:00:00', '00:00:00', '--', '--'), 
 ('JAMUAN RAYA', '2005-12-04', '12:00:00', '13:00:00', 'FKOM', 'MAKAN'), 
 ('MENTOR MENTEE', '2005-07-18', '22:00:00', '23:00:00', 'ASTKAK', 'DISCUSSION')";
 
@@ -17,14 +18,17 @@ if ($result1) {
 }
 
 // Retrieve the event_IDs for the newly inserted events
-$query_get_event1_id = "SELECT event_ID FROM event WHERE event_name='JAMUAN RAYA'";
-$query_get_event2_id = "SELECT event_ID FROM event WHERE event_name='MENTOR MENTEE'";
+$query_get_event1_id = "SELECT event_ID FROM event WHERE event_name='NO EVENT'";
+$query_get_event2_id = "SELECT event_ID FROM event WHERE event_name='JAMUAN RAYA'";
+$query_get_event3_id = "SELECT event_ID FROM event WHERE event_name='MENTOR MENTEE'";
 
 $result_event1_id = mysqli_query($con, $query_get_event1_id);
 $result_event2_id = mysqli_query($con, $query_get_event2_id);
+$result_event3_id = mysqli_query($con, $query_get_event3_id);
 
 $event1_id = mysqli_fetch_assoc($result_event1_id)['event_ID'];
 $event2_id = mysqli_fetch_assoc($result_event2_id)['event_ID'];
+$event3_id = mysqli_fetch_assoc($result_event3_id)['event_ID'];
 
 // Prepare the base query
 $query4 = "
@@ -34,7 +38,7 @@ $query4 = "
     ('A3', 'AVAILABLE', $event2_id),
     ('A4', 'AVAILABLE', $event2_id),
     ('A5', 'AVAILABLE', $event2_id),
-    ('B1', 'AVAILABLE', $event2_id),
+    ('B1', 'AVAILABLE', $event3_id),
     ('B2', 'AVAILABLE', $event2_id),
     ('B3', 'AVAILABLE', $event2_id),
     ('M1', 'AVAILABLE', $event2_id),

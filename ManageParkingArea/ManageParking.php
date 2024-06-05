@@ -115,7 +115,7 @@
 
                                 ?>
                                     <tr>
-                                        <td><?php echo$row['parkingArea_name']; ?></td>
+                                        <td style="padding-top:30px;" ><?php echo$row['parkingArea_name']; ?></td>
                                         <td style="border-collapse: collapse;display: flex; align-items: center;">
                                                 <div style="margin:10px 10px;" class="button-container">
                                                     <a href="event-link-here" >
@@ -124,10 +124,10 @@
                                                 </div>
 
                                                 <a href="../ManageParkingArea/update_page_1.php?id=<?php echo$row['parkingArea_ID']; ?>" class="btn btn-success" style="margin-right:40px;" >Update</a>
-                                                <a href="../ManageParkingArea/delete_page.php?id=<?php echo$row['parkingArea_ID']; ?>" class="btn btn-danger">Delete</a>
+                                                <a href="../ManageParkingArea/delete_page.php?id=<?php echo$row['parkingArea_ID']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
                                                     
                                         </td>
-                                        <td><?php echo$row['parkingArea_status']; ?></td>
+                                        <td style="padding-top:30px;" ><?php echo$row['parkingArea_status']; ?></td>
                                     </tr>
                                 <?php
                             }
@@ -203,16 +203,29 @@
       <div class="modal-body">
         
             <div class="form-group">
-                <label for="p_area" >Parking Area Name</label>
-                <input type="text" name="p_area" class="form-control">
+            <label for="p_area">Parking Area Name</label>
+                <select name="p_area" class="form-control">
+                    <option value="B1">B1</option>
+                    <option value="B2">B2</option>
+                    <option value="B3">B3</option>
+                    <option value="M1">M1</option>
+                </select>
             </div>
             <!--div class="form-group">
                 <label for="p_availability" >Parking Availability</label>
                 <input type="text" name="p_availability" class="form-control">
             </div-->
             <div class="form-group">
-                <label for="p_status" >Parking Status</label>
-                <input type="text" name="p_status" class="form-control">
+                <label for="event_name" >Event Name</label>
+                <select name="event_name" id="event_name" class="form-control" onchange="updateParkingStatus()">
+                    <?php foreach ($events as $event): ?>
+                        <option value="<?php echo $event['event_name']; ?>"><?php echo $event['event_name']; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="p_status">Parking Status</label>
+                <input type="text" name="p_status" id="p_status" class="form-control" readonly>
             </div>
         
       </div>
@@ -262,10 +275,6 @@
                 <label for="event_description" >Event Description</label>
                 <input type="text" name="event_description" class="form-control">
             </div>
-            <div class="form-group">
-                <label for="p_area" >Parking Area</label>
-                <input type="text" name="p_area" class="form-control">
-            </div>
                 
             
         
@@ -278,6 +287,18 @@
   </div>
 </div>
 </form>
+<script>
+  function updateParkingStatus() {
+    var eventName = document.getElementById('event_name').value;
+    var parkingStatus = document.getElementById('p_status');
+    
+    if (eventName === 'NO EVENT') {
+      parkingStatus.value = 'AVAILABLE';
+    } else {
+      parkingStatus.value = 'UNAVAILABLE';
+    }
+  }
+</script>
 </body>
 
 
