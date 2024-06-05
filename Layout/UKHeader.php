@@ -61,7 +61,7 @@
             padding: 10px 0;
         }
 
-        .container {
+        .container-UK {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -160,7 +160,7 @@
 <body>
     
     <header>
-        <div class="container">
+        <div class="container-UK">
             <div class="logo"><img src="../resource/FKPark1.jpeg" alt="FKPark" width="170" height="70"></div>
             <nav>
                 <ul>

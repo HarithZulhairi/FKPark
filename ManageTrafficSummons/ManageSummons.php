@@ -3,32 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="ManageSummons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="ManageSummons.css" rel="stylesheet">
+    <title>Manage Summons Page</title>
+    <style>
+        .container {
+            display: block;  /* Explicitly setting display to block */
+            width: 100%;
+            padding: 20px 0;
+        }
+        
+        table.center {
+            margin-left: auto; 
+            margin-right: auto;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 5px;
+                
+        }
+
+        .button-container button {
+            margin: 0 10px;
+            padding: 10px 10px;
+            font-size: 16px;
+            background-color:  #17252A;
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+        .button-container button[type="submit"]:hover {
+            background-color: green;
+        }
+
+        .button-container button[type="view"] {
+            background-color: #0000FF;
+            width:70px;
+            height:40px;
+            margin-right:40px;
+            font-weight: normal;
+        }
+
+        #list{
+            margin-top:30px;
+
+        }
+        td{
+            justify-content:center;
+            text-align:center;
+            
+        }
+        th{
+            text-align:center;
+        }
+        
+        .box1 h2{
+            float:left;
+        }
+        .box1 button{
+            float:right;
+        }
+
+        h6{
+            text-align:center;
+            color:red;
+        }
+
+    </style>
 </head>
 
 <body>
+
     <?php include '../Layout/UKHeader.php'; ?>
-    
+    <?php include '../DB_FKPark/dbcon.php'; ?>
+
+    <main>
     <div class="logoUK">
-        <img src="../resource/logUK1.png" alt="Logo Unit Keselamatan">
+        <img src="../resource/logUK1.png" alt="Logo Unit Keselamatan UMPSA">
     </div>
-    
-    <div class="button-container"></div>
-    
-    <div class="button-container"><a href="destination.php" class="button">CREATE SUMMONS</a></div>    
-    <div class="table-container">
-        
-        <table>
+
+    <div class="container">
+        <div><h1>Hello World</h1></div>
+        <div><h1>Hello World</h1></div>
+    </div>
+
+
+    <div class="container">
+        <div class="box1">
+            <h2>List of Parking</h2>
+            <div class="button-container" >
+                <button type="submit" class="button btn-primary "data-bs-toggle="modal" data-bs-target="#parkingexampleModal">Add New Parking</button>
+            </div>
+        </div>
+
+
+        <div id="list">
+        <table class="table table-hover table-bordered table-striped" >
             <tr>
-                <th style="width:150px;" >Summons ID</th>
-                <th style="width:500px;">Summons Violation</th>
-                <th style="width:200px">Vehicle Plate Number</th>
-                <th style="width:200px;">Action</th>
+                <th style="width:280px;">Area</th>
+                <th style="width:300px;">Action</th>
+                <th style="width:180px;">Status</th>
             </tr>
+
             <tbody>
             <?php
-                        $query = "select * from `summons`";
+                        $query = "select * from `parkingArea`";
 
                         $result = mysqli_query($con, $query);
 
@@ -40,8 +126,7 @@
 
                                 ?>
                                     <tr>
-                                        <td><?php echo$row['summons_ID']; ?></td>
-                                        <td><?php echo$row['summons_ID']; ?></td>
+                                        <td><?php echo$row['parkingArea_name']; ?></td>
                                         <td style="border-collapse: collapse;display: flex; align-items: center;">
                                                 <div style="margin:10px 10px;" class="button-container">
                                                     <a href="event-link-here" >
@@ -62,19 +147,149 @@
 
             </tbody>
 
-                
-                   
+        </table>
 
+           
 
-        
-    </table>
+        </div>
+
+        <?php
+                if(isset($_GET['message'])){
+                    echo "<h6>" .$_GET['message'] . "</h6>";
+                }
+            ?>
+
+        <?php
+                if(isset($_GET['insert_msg'])){
+                    echo "<h6>" .$_GET['insert_msg'] . "</h6>";
+                }
+            ?>
+
+        <?php
+                if(isset($_GET['update_msg'])){
+                    echo "<h6>" .$_GET['update_msg'] . "</h6>";
+                }
+            ?>
+
+        <?php
+                if(isset($_GET['delete_msg'])){
+                    echo "<h6>" .$_GET['delete_msg'] . "</h6>";
+                }
+            ?>
+
+        <?php
+        if (isset($_GET['insert_msg'])) {
+            echo "<h6>" . $_GET['insert_msg'] . "</h6>";
+            if (isset($_GET['qr_image'])) {
+                echo "<h6>QR Code:</h6>";
+                echo "<img src='../resource/" . $_GET['qr_image'] . "'>";
+            }
+        }
+        ?>
+
     </div>
-    
+                
 
+
+    
+    </main>
 
 
     <?php include '../Layout/allUserFooter.php'; ?>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
+ <!-- Modal -->
+ <form action="../DB_FKPark/insert_data.php" method="post" >
+ <div class="modal fade" id="parkingexampleModal" tabindex="-1" role="dialog" aria-labelledby="parkingexampleModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" >Add New Parking</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         
+        </button>
+      </div>
+      <div class="modal-body">
+        
+            <div class="form-group">
+                <label for="p_area" >Parking Area Name</label>
+                <input type="text" name="p_area" class="form-control">
+            </div>
+            <!--div class="form-group">
+                <label for="p_availability" >Parking Availability</label>
+                <input type="text" name="p_availability" class="form-control">
+            </div-->
+            <div class="form-group">
+                <label for="p_status" >Parking Status</label>
+                <input type="text" name="p_status" class="form-control">
+            </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-success" name="add_parking" value="ADD">
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+ <!-- Modal -->
+ <form action="../DB_FKPark/insert_data.php" method="post">
+ <div class="modal fade" id="eventexampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" >Add Event</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         
+        </button>
+      </div>
+      <div class="modal-body">
+        
+            <div class="form-group">
+                <label for="event_name" >Event Name</label>
+                <input type="text" name="event_name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="event_date" >Event Date</label>
+                <input type="date" name="event_date" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="event_start" >Event Start</label>
+                <input type="time" name="event_start" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="event_end" >Event End</label>
+                <input type="time" name="event_end" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="event_place" >Event Place</label>
+                <input type="text" name="event_place" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="event_description" >Event Description</label>
+                <input type="text" name="event_description" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="p_area" >Parking Area</label>
+                <input type="text" name="p_area" class="form-control">
+            </div>
+                
+            
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-success" name="add_event" value="ADD">
+      </div>
+    </div>
+  </div>
+</div>
+</form>
 </body>
+
+
 </html>

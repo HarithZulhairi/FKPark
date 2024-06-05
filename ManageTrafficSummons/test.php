@@ -3,42 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Example</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Minimal Example</title>
     <style>
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 8px;
-            margin: 4px 0;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .form-group label {
+        .container {
             display: block;
-            margin-bottom: 8px;
+            width: 100%;
+            padding: 20px 0;
+        }
+        .box1 h2 {
+            float: left;
+        }
+        .box1 .button-container {
+            float: right;
         }
     </style>
 </head>
 <body>
-    <form>
-        <div class="form-group">
-            <label for="date">Date:</label>
-            <input type="date" id="date" name="date" required>
+    <div class="container">
+        <div class="box1">
+            <h2>List of Parking</h2>
+            <div class="button-container">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#parkingexampleModal">Add New Parking</button>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="violation">Violation:</label>
-            <select id="violation" name="violation" required>
-                <option value="speed">Speeding</option>
-                <option value="nocomply">Not Complying</option>
-                <option value="accident">Accident</option>
-            </select>
+        <div id="list">
+            <table class="table table-hover table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Area</th>
+                        <th>Action</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Area 1</td>
+                        <td>Action 1</td>
+                        <td>Status 1</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="form-group">
-            <label for="startTime">Start Time:</label>
-            <input type="time" id="startTime" name="startTime" required>
-        </div>
-    </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
