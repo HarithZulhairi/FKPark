@@ -108,7 +108,7 @@
                         $result = mysqli_query($con, $query);
 
                         if(!$result){
-                            die("query Failed".mysqli_error());
+                            die("query Failed".mysqli_error($con));
                         }
                         else{
                             while($row = mysqli_fetch_assoc($result)){
