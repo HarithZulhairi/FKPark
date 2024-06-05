@@ -14,19 +14,16 @@
     <?php include '../Layout/studentHeader.php'; ?>
 
     <main>
-        <div class="booking-search">
-            <div class="search-bar">
-                <i class="fa-solid fa-magnifying-glass fa-2x" style="padding-top: 5px"></i>
-                <input type="text" placeholder="Search parking spot name">
-                <button><i class="fa-solid fa-filter" style="padding-right: 8px"></i>Show Vacant</button>
-                <button>QR</button>
-            </div>
-        </div>
-
         <div class="create-booking">
             <div class="parking-layout">
                 <h1>Select Your Parking</h1>
                 <img src="../resource/FKPark_Map.png" alt="Parking Layout">
+            </div>
+
+            <div class="booking-filter">
+                <div class="filter-bar">
+                    <button><i class="fa-solid fa-filter" style="padding-right: 8px"></i>Show Vacant Today</button>
+                </div>
             </div>
 
             <div class="tabs">
