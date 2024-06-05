@@ -1,62 +1,62 @@
-view registration
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="viewRegistration.css">
     <title>List of Registration</title>
-</head>
-<style>
-    html, body {
-        height: 100%;
-        margin: 0;
-    }
-    body {
-        display: flex;
-        flex-direction: column;
-    }
-    main {
-        flex: 1;
-    }
-    footer {
-        background: #333;
-        color: #fff;
-        padding: 20px 0;
-    }
-    footer .container {
-        display: flex;
-        justify-content: space-between;
-    }
-    footer .container div {
-        flex: 1;
-        padding: 0 50px;
-        text-align: center;
-    }
-    footer h5 {
-        margin-top: 0;
-    }
-    footer ul {
-        list-style: none;
-        padding: 0;
-    }
-    footer ul li {
-        margin: 5px 0;
-    }
-    footer ul li a {
-        color: #fff;
-        text-decoration: none;
-    }
-    footer ul li a:hover {
-        text-decoration: underline;
-    }
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1;
+        }
+        footer {
+            background: #333;
+            color: #fff;
+            padding: 20px 0;
+            margin-top: auto;
+        }
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        footer .container div {
+            flex: 1;
+            padding: 0 20px;
+            text-align: center;
+        }
+        footer h5 {
+            margin-top: 0;
+        }
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+        footer ul li {
+            margin: 5px 0;
+        }
+        footer ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        footer ul li a:hover {
+            text-decoration: underline;
+        }
+        .view-container {
+            text-align: center;
+        }
 
-    .view-container {
-        text-align: center;
-    }
-</style>
+      
+    </style>
+</head>
 <body>
     <?php include '../Layout/adminHeader.php'; ?>
     <?php include '../DB_FKPark/dbcon.php'; ?>
@@ -117,81 +117,65 @@ view registration
         </div>
 
         <?php
-        if (isset($_GET['message'])) {
-            echo "<h6>" . htmlspecialchars($_GET['message']) . "</h6>";
-        }
+ob_start();
 
-        if (isset($_GET['insert_msg'])) {
-            echo "<h6>" . htmlspecialchars($_GET['insert_msg']) . "</h6>";
-        }
+if (isset($_GET['message'])) {
+    echo "<h6>" . htmlspecialchars($_GET['message']) . "</h6>";
+}
 
-        // Handle form submission for updating student information
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_changes'])) {
-            // Retrieve student ID from the hidden input
-            $student_ID_new = $_POST['student_ID'];
+if (isset($_GET['insert_msg'])) {
+    echo "<h6>" . htmlspecialchars($_GET['insert_msg']) . "</h6>";
+}
 
-            // Retrieve form data
-            $username = $_POST['student_username'];
-            $password = $_POST['student_password'];
-            $email = $_POST['student_email'];
-            $age = $_POST['student_age'];
-            $phoneNum = $_POST['student_phoneNum'];
-            $gender = $_POST['student_gender'];
-            $birthdate = $_POST['student_birthdate'];
+// Handle form submission for updating student info
+if (isset($_POST['update'])) {
+    $id = $_POST['student_ID'];
+    $username = $_POST['student_username'];
+    $password = $_POST['student_password'];
+    $email = $_POST['student_email'];
+    $age = $_POST['student_age'];
+    $phoneNum = $_POST['student_phoneNum'];
+    $gender = $_POST['student_gender'];
+    $birthdate = $_POST['student_birthdate'];
+    $profile = $_POST['student_profile'];
 
-            // Handle file upload
-            if (isset($_FILES['student_profile']) && $_FILES['student_profile']['error'] == 0) {
-                $targetDir = "uploads/";
-                $targetFilePath = $targetDir . basename($_FILES['student_profile']['name']);
-                move_uploaded_file($_FILES['student_profile']['tmp_name'], $targetFilePath);
-            } else {
-                $targetFilePath = $_POST['student_profile'];
-            }
+    $query = "UPDATE Student SET student_username='$username', student_password='$password', student_email='$email', student_age=$age, student_phoneNum='$phoneNum', student_gender='$gender', student_birthdate='$birthdate', student_profile='$profile' WHERE student_ID=$id";
+    if (mysqli_query($con, $query)) {
+        header("Location: viewRegistration.php?message=Record updated successfully");
+        exit;
+    } else {
+        echo "Error updating record: " . mysqli_error($con);
+    }
+}
 
-            // Construct the SQL update query
-            $updateQuery = "UPDATE student SET 
-                            student_username = '$username', 
-                            student_password = '$password', 
-                            student_email = '$email', 
-                            student_age = '$age', 
-                            student_phoneNum = '$phoneNum', 
-                            student_gender = '$gender', 
-                            student_birthdate = '$birthdate', 
-                            student_profile = '$targetFilePath' 
-                            WHERE student_ID = '$student_ID_new'";
+// Handle form submission for deleting student
+if (isset($_POST['delete'])) {
+    $id = $_POST['student_ID'];
+    $query = "DELETE FROM Student WHERE student_ID=:student_id";
+    $stmt = mysqli_prepare($con, $query);
+    mysqli_stmt_bind_param($stmt, ":student_id", $id);
+    if (mysqli_stmt_execute($stmt)) {
+        header("Location: viewRegistration.php?message=Record deleted successfully");
+        exit; // Add exit to stop further execution
+    } else {
+        echo "Error deleting record: " . mysqli_error($con);
+    }
+    mysqli_stmt_close($stmt); // Close the prepared statement
+}
 
-            // Execute the update query
-            $updateResult = mysqli_query($con, $updateQuery);
 
-            // Check if the query was successful
-            if (!$updateResult) {
-                // If query fails, display error message
-                die("Query failed: " . mysqli_error($con));
-            } else {
-                // If query succeeds, redirect to viewRegistration.php with success message
-                header('Location: viewRegistration.php?update_msg=Your data has been updated successfully');
-                exit;
-            }
-        }
+// Fetch students to display
+$query = "SELECT * FROM Student";
+$result = mysqli_query($con, $query);
 
-        // Handle deletion of student record
-        if (isset($_GET['delete_student_id'])) {
-            $student_ID_to_delete = $_GET['delete_student_id'];
-            $deleteQuery = "DELETE FROM student WHERE student_ID = '$student_ID_to_delete'";
-            $deleteResult = mysqli_query($con, $deleteQuery);
 
-            if (!$deleteResult) {
-                // If deletion fails, display error message
-                die("Deletion failed: " . mysqli_error($con));
-            } else {
-                // If deletion succeeds, redirect to viewRegistration.php with success message
-                header('Location: viewRegistration.php?delete_msg=Student has been deleted successfully');
-                exit;
-            }
-        }
 
-        mysqli_close($con);
-        ?>
+mysqli_close($con);
+ob_end_flush();
+?>
+
+
+        
 
         <!-- Modal -->
         <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
@@ -206,35 +190,35 @@ view registration
                             <input type="hidden" id="updateStudentId" name="student_ID">
                             <div class="mb-3">
                                 <label for="updateUsername" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="updateUsername" name="student_username" required>
+                                <input type="text" class="form-control" placeholder="Enter username" id="updateUsername" name="student_username" required>
                             </div>
                             <div class="mb-3">
                                 <label for="updatePassword" class="form-label">Password</label>
-                                <input type="text" class="form-control" id="updatePassword" name="student_password" required>
+                                <input type="text" class="form-control" placeholder="Enter password" id="updatePassword" name="student_password" required>
                             </div>
                             <div class="mb-3">
                                 <label for="updateEmail" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="updateEmail" name="student_email" required>
+                                <input type="email" class="form-control" placeholder="Enter email" id="updateEmail" name="student_email" required>
                             </div>
                             <div class="mb-3">
                                 <label for="updateAge" class="form-label">Age</label>
-                                <input type="number" class="form-control" id="updateAge" name="student_age" required>
+                                <input type="number" class="form-control" placeholder="Enter age" id="updateAge" name="student_age" required>
                             </div>
                             <div class="mb-3">
                                 <label for="updatePhoneNumber" class="form-label">Phone Number</label>
-                                <input type="text" class="form-control" id="updatePhoneNumber" name="student_phoneNum" required>
+                                <input type="text" class="form-control" placeholder="Enter phone number" id="updatePhoneNumber" name="student_phoneNum" required>
                             </div>
                             <div class="mb-3">
                                 <label for="updateGender" class="form-label">Gender</label>
-                                <input type="text" class="form-control" id="updateGender" name="student_gender" required>
+                                <input type="text" class="form-control" placeholder="Enter gender" id="updateGender" name="student_gender" required>
                             </div>
                             <div class="mb-3">
-                                <label for="updateBirthday" class="form-label">Birthday</label>
-                                <input type="date" class="form-control" id="updateBirthday" name="student_birthdate" required>
+                                <label for="updateBirthday" class="form-label">Birthdate</label>
+                                <input type="date" class="form-control" placeholder="Enter Birthdate" id="updateBirthday" name="student_birthdate" required>
                             </div>
                             <div class="mb-3">
                                 <label for="updateProfilePicture" class="form-label">Profile Picture</label>
-                                <input type="file" class="form-control" accept="image/*" id="updateProfilePicture" name="student_profile" required>
+                                <input type="file" class="form-control" accept="image/*" id="updateProfilePicture" name="student_profile">
                             </div>
                             <button type="submit" class="btn btn-primary" name="save_changes" value="submit">Save changes</button>
                         </form>
@@ -242,34 +226,16 @@ view registration
                 </div>
             </div>
         </div>
+        
     </main>
 
-    <footer>
-        <div class="container">
-            <div>
-                <h5>About FKPark</h5>
-                <p>FKPark is a premier parking management system providing seamless and efficient parking solutions.</p>
-            </div>
-            <div>
-                <h5>Quick Links</h5>
-                <ul>
-                    <li><a href="../Home/adminHomePage">Home</a></li>
-                    <li><a href="../ManageBooking/createBooking.php">Booking</a></li>
-                    <li><a href="../Contact/ContactStud.php">Contact</a></li>
-                </ul>
-            </div>
-            <div>
-                <h5>Contact Us</h5>
-                <p>Email: info@fkpark.com<br>Phone: +123 456 7890</p>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+    <?php include '../Layout/allUserFooter.php'; ?>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
             var updateButtons = document.querySelectorAll('.update-button');
             updateButtons.forEach(function(button) {
                 button.addEventListener('click', function() {
@@ -287,7 +253,6 @@ document.addEventListener('DOMContentLoaded', function () {
                             document.getElementById('updatePhoneNumber').value = data.student_phoneNum;
                             document.getElementById('updateGender').value = data.student_gender;
                             document.getElementById('updateBirthday').value = data.student_birthdate;
-                            // Assuming you are dealing with the file in a specific way
                         });
                 });
             });
@@ -297,27 +262,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Implement the form submission to update student data
                 var formData = new FormData(this);
-                fetch('viewRegistration.php?student_ID_new=' + document.getElementById('updateStudentId').value, {
+                fetch('viewRegistration.php', {
                     method: 'POST',
                     body: formData
                 })
-                .then(response => response.json())
+                .then(response => response.text())
                 .then(data => {
-                    if (data.success) {
-                        alert('Student updated successfully!');
-                        location.reload();
-                    } else {
-                        alert('Failed to update student.');
-                    }
+                    alert('Student updated successfully!');
+                    location.reload();
+                })
+                .catch(error => {
+                    alert('Failed to update student.');
+                    console.error('Error:', error);
                 });
             });
         });
 
-</script>
 
-
-
-
-
-
-onclick="return confirm('Are you sure you want to delete this student?');"
+    </script>
+</body>
+</html>

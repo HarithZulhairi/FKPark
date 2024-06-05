@@ -24,6 +24,15 @@ if (!$result) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Profile</title>
 </head>
+<style>
+    .card-body{
+        padding-bottom: 30px;
+    }
+
+    .container {
+        align-items: center;
+    }
+</style>
 <body>
 <?php include '../Layout/studentHeader.php'; ?>
 <?php include '../DB_FKPark/dbcon.php'; ?>
@@ -52,7 +61,8 @@ if (!$result) {
                                         Student ID: <?= htmlspecialchars($row['student_ID']); ?>
                                     </div>
                                     <div class="card-body">
-                                        <p><img src="../ManageRegistration/uploads/<?= htmlspecialchars($row['student_profile']); ?>" alt="Profile Picture" class="img-thumbnail img-fluid"></p>
+                                        <p><img src="../ManageRegistration/uploads/<?= htmlspecialchars($row['student_profile']); ?>" alt="Profile Picture" width="100" height="100" class="rounded-circle mx-auto d-block"></p>
+
                                         <p class="card-text p-2 m-1 rounded" style="border:1px solid #0275d8;"><b>Name: </b><?= htmlspecialchars($row['student_username']); ?></p>
                                         <p class="card-text p-2 m-1 rounded" style="border:1px solid #0275d8;"><b>Password: </b><?= htmlspecialchars($row['student_password']); ?></p>
                                         <p class="card-text p-2 m-1 rounded" style="border:1px solid #0275d8;"><b>Email: </b><?= htmlspecialchars($row['student_email']); ?></p>

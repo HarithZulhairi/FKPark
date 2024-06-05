@@ -25,12 +25,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "SELECT * FROM Student WHERE student_username='$username' AND student_password='$password'";
         $userIDColumn = "student_ID";
         $userProfileColumn = "student_profile"; // Profile column for the student
+        $usernameColumn = "student_username"; // Username column for the student
     } else if ($userType == 'administrator') {
         $sql = "SELECT * FROM Administrator WHERE administrator_username='$username' AND administrator_password='$password'";
         $userIDColumn = "administrator_ID";
-    } else if ($userType == 'unit_staff') {
+        $usernameColumn = "administrator_username"; // Username column for the administrator
+    } else if ($userType == 'Unit Keselamatan Staff') {
         $sql = "SELECT * FROM UnitKeselamatanStaff WHERE uk_username='$username' AND uk_password='$password'";
         $userIDColumn = "uk_ID";
+        $usernameColumn = "uk_username"; // Username column for the unit staff
     }
 
     $result = $con->query($sql);
@@ -39,22 +42,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Successful login
         $row = $result->fetch_assoc();
         $_SESSION['userID'] = $row[$userIDColumn]; // Store userID in session
-        if ($userType == 'student') {
-            $_SESSION['userProfile'] = $row['student_profile']; // Store user profile path in session for students
-        }
 
-        // Set cookies for username and userType
-        setcookie('username', $username, time() + (86400 * 30), "/"); // 86400 = 1 day
-        setcookie('userType', $userType, time() + (86400 * 30), "/");
+        // Fetch the username
+        $loggedInUsername = $row[$usernameColumn];
+
+        // Store username in session
+        $_SESSION['username'] = $loggedInUsername;
 
         // Determine redirect URL based on user type
         $redirectURL = '';
         if ($userType == 'student') {
-            $redirectURL = "../Home/studentHomePage.php"; // Ensure this matches your actual file
+            $redirectURL = "../Home/studentHomePage.php";
         } else if ($userType == 'administrator') {
-            $redirectURL = "../Home/homeAdmin.php";
+            $redirectURL = "../Home/adminHomePage.php";
         } else if ($userType == 'unit_staff') {
-            $redirectURL = "../Home/homeUK.php";
+            $redirectURL = "../Home/ukHomePage.php";
         }
 
         echo json_encode(["success" => true, "redirectURL" => $redirectURL]);

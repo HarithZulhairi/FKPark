@@ -20,7 +20,7 @@ $query6 = 'CREATE TABLE Student( ' .
           'student_gender VARCHAR(10) NOT NULL, ' .
           'student_birthdate DATE NOT NULL, ' .
           'student_profile VARCHAR(255) NOT NULL, ' .
-          'PRIMARY KEY(student_ID))';
+          'PRIMARY KEY(student_ID)) ENGINE=InnoDB;';
 
 if (mysqli_query($con, $query6)) {
     echo "<h3>Your student table has been created !!!</h3>";
@@ -93,7 +93,7 @@ $query3 = 'CREATE TABLE booking( ' .
           'student_ID INT, ' .
           'PRIMARY KEY(booking_ID), ' .
           'FOREIGN KEY (parkingSlot_ID) REFERENCES parkingSlot(parkingSlot_ID), ' . 
-          'FOREIGN KEY (student_ID) REFERENCES student(student_ID))'; 
+          'FOREIGN KEY (student_ID) REFERENCES student(student_ID) ON DELETE CASCADE ON UPDATE CASCADE)'; 
 
 if (mysqli_query($con, $query3)) {
     echo "<h3>Your booking table has been created !!!</h3>";
@@ -143,7 +143,7 @@ $query7 = 'CREATE TABLE approval( ' .
           'approval_status VARCHAR(10) NOT NULL, ' .
           'student_ID INT, ' .
           'PRIMARY KEY(approval_ID), ' .
-          'FOREIGN KEY (student_ID) REFERENCES student(student_ID))';
+          'FOREIGN KEY (student_ID) REFERENCES student(student_ID) ON DELETE CASCADE ON UPDATE CASCADE)';
 
 if (mysqli_query($con, $query7)) {
     echo "<h3>Your registration table has been created !!!</h3>";
@@ -161,7 +161,7 @@ $query8 = 'CREATE TABLE Vehicle( ' .
           'vehicle_grant VARCHAR(255), ' .
           'student_ID INT, ' .
           'PRIMARY KEY(vehicle_numPlate), ' .
-          'FOREIGN KEY (student_ID) REFERENCES student(student_ID))';
+          'FOREIGN KEY (student_ID) REFERENCES student(student_ID) ON DELETE CASCADE ON UPDATE CASCADE)';
 
 if (mysqli_query($con, $query8)) {
     echo "<h3>Your vehicle table has been created !!!</h3>";

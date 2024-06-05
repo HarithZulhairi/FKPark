@@ -1,4 +1,5 @@
 <?php 
+ob_start();
 session_start();
 include '../Layout/studentHeader.php'; 
 include '../DB_FKPark/dbcon.php'; // Ensure the database connection is included
@@ -21,7 +22,8 @@ if (isset($_SESSION['userID']) && isset($_SESSION['userProfile'])) {
     }
 } else {
     // Redirect to login page if not logged in
-    header("Location: ../Login/Login.html");
+    header("Location:../Manage Login/Login.html");
+    ob_end_flush();
     exit();
 }
 ?>
@@ -35,6 +37,35 @@ if (isset($_SESSION['userID']) && isset($_SESSION['userProfile'])) {
     <link rel="stylesheet" href="HomePage.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 </head>
+<style>
+    /* Modal styles */
+.modal1 {
+    display: none;
+    position: fixed;
+    z-index: 1000; /* Ensure it's above other content */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+    z-index: 1001; /* Ensure it's above the modal backdrop */
+}
+
+</style>
 <body>
     <div class="profile">
         <span class="username">Welcome, <?php echo htmlspecialchars($student_username); ?>!</span>
@@ -78,3 +109,4 @@ if (isset($_SESSION['userID']) && isset($_SESSION['userProfile'])) {
     </script>
 </body>
 </html>
+

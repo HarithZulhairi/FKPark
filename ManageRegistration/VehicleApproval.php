@@ -1,5 +1,6 @@
 <?php
 // Include the database connection
+ob_start();
 include '../Layout/UKHeader.php'; 
 include '../DB_FKPark/dbcon.php';
 
@@ -17,22 +18,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!$approveResult) {
             die("Approval failed: " . mysqli_error($con));
         } else {
-            header('Location: VehicleApproval.php?message=Vehicle has been approved successfully');
-            
+            header('Location: ../ManageRegistration/VehicleApproval.php?message=Vehicle has been approved successfully');
+            exit;
         }
-    } elseif (isset($_POST['cancel_student_ID'])) {
-        $student_ID = $_POST['cancel_student_ID'];
+    } elseif (isset($_POST['cancel_vehicle_numPlate'])) {
+        $vehicle_numPlate_to_cancel = $_POST['cancel_vehicle_numPlate'];
+        $student_ID = $_POST['student_ID'];
         
         // Update the approval status to 'Unsuccessful'
-        $cancelQuery = "INSERT INTO approval (student_ID, approval_status)
-                        VALUES ('$student_ID', 'Unsuccessful')
+        $cancelQuery = "INSERT INTO approval (vehicle_grant, approval_status, student_ID)
+                        VALUES ('$vehicle_numPlate_to_cancel', 'Unsuccessful', '$student_ID')
                         ON DUPLICATE KEY UPDATE approval_status='Unsuccessful'";
         $cancelResult = mysqli_query($con, $cancelQuery);
 
         if (!$cancelResult) {
             die("Cancellation failed: " . mysqli_error($con));
         } else {
-            header('Location: VehicleApproval.php?message=Vehicle registration has been cancelled');
+            header('Location: ../ManageRegistration/VehicleApproval.php?message=Vehicle registration has been cancelled');
             exit;
         }
     }
@@ -136,12 +138,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             echo '<td><img src="' . htmlspecialchars($row['vehicle_grant']) . '" alt="Vehicle Grant" width="100"></td>';
                             echo '<td>' . htmlspecialchars($row['student_ID']) . '</td>';
                             echo '<td><button type="button" class="btn btn-success approve-button" data-id="' . htmlspecialchars($row['vehicle_numPlate']) . '" data-student="' . htmlspecialchars($row['student_ID']) . '">Approve</button></td>';
-                            echo '<td><button type="button" class="btn btn-danger cancel-button" data-student="' . htmlspecialchars($row['student_ID']) . '">Decline</button></td>';
+                            echo '<td><button type="button" class="btn btn-danger cancel-button" data-id="' . htmlspecialchars($row['vehicle_numPlate']) . '" data-student="' . htmlspecialchars($row['student_ID']) . '">Decline</button></td>';
                             echo '</tr>';
                         }
                     }
                     mysqli_close($con);
-
                    ?>
                 </tbody>
             </table>
@@ -174,15 +175,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 var cancelButtons = document.querySelectorAll('.cancel-button');
                 cancelButtons.forEach(function(button) {
                     button.addEventListener('click', function() {
+                        var vehicleNumPlate = this.getAttribute('data-id');
                         var studentID = this.getAttribute('data-student');
                         var form = document.createElement('form');
                         form.method = 'POST';
                         form.action = 'VehicleApproval.php';
-                        var input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = 'cancel_student_ID';
-                        input.value = studentID;
-                        form.appendChild(input);
+                        var input1 = document.createElement('input');
+                        input1.type = 'hidden';
+                        input1.name = 'cancel_vehicle_numPlate';
+                        input1.value = vehicleNumPlate;
+                        form.appendChild(input1);
+                        var input2 = document.createElement('input');
+                        input2.type = 'hidden';
+                        input2.name = 'student_ID';
+                        input2.value = studentID;
+                        form.appendChild(input2);
                         document.body.appendChild(form);
                         form.submit();
                     });

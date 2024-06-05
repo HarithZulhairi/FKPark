@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,60 +42,65 @@
   </div>
 </div>
 
+
+
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('loginForm').addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent the default form submission
-
-        console.log("Form submission intercepted");
-
-        // Get the form values
-        var username = document.getElementById('username').value.trim();
-        var password = document.getElementById('password').value.trim();
-        var userType = document.getElementById('userType').value;
-
-        console.log("Form values:", { username, password, userType });
-
-        // Perform validation
-        if (username === '' || password === '') {
-            alert('Please fill in all the fields.');
-            return;
-        }
-
-        // Send an AJAX request to the PHP script
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "Login.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                console.log("AJAX request completed with status:", xhr.status);
-                if (xhr.status === 200) {
-                    console.log("Response:", xhr.responseText);
-                    var response = JSON.parse(xhr.responseText);
-                    if (response.success) {
-                        // Redirect based on userType
-                        if (response.redirectURL) {
-                            window.location.href = response.redirectURL;
-                        } else {
-                            // Fallback redirect if userType is not recognized
-                            if (userType === 'student') {
-                                window.location.href = "../Home/studentHomePage.php";
-                            } else {
-                                window.location.href = "../Home/defaultHomePage.php";
-                            }
-                        }
-                    } else {
-                        document.getElementById('error-message').textContent = response.message;
-                    }
-                } else {
-                    document.getElementById('error-message').textContent = "Error: " + xhr.status;
-                }
-            }
-        };
-        xhr.send("username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password) + "&userType=" + encodeURIComponent(userType));
-    });
-});
+  document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('loginForm').addEventListener('submit', function (event) {
+          event.preventDefault(); // Prevent the default form submission
+  
+          console.log("Form submission intercepted");
+  
+          // Get the form values
+          var username = document.getElementById('username').value.trim();
+          var password = document.getElementById('password').value.trim();
+          var userType = document.getElementById('userType').value;
+  
+          console.log("Form values:", { username, password, userType });
+  
+          // Perform validation
+          if (username === '' || password === '') {
+              alert('Please fill in all the fields.');
+              return;
+          }
+  
+          // Send an AJAX request to the PHP script
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", "Login.php", true);
+          xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+          xhr.onreadystatechange = function () {
+              if (xhr.readyState === 4) {
+                  console.log("AJAX request completed with status:", xhr.status);
+                  if (xhr.status === 200) {
+                      console.log("Response:", xhr.responseText);
+                      var response = JSON.parse(xhr.responseText);
+                      if (response.success) {
+                          // Redirect based on userType
+                          if (response.redirectURL) {
+                              window.location.href = response.redirectURL;
+                          } else {
+                              // Fallback redirect if userType is not recognized
+                              if (userType === 'student') {
+                                  window.location.href = "../Home/studentHomePage.php";
+                              } else if (userType === 'administrator') {
+                                  window.location.href = "../Home/adminHomePage.php";
+                              } else if (userType === 'unit_staff') {
+                                  window.location.href = "../Home/ukHomePage.php";
+                              } else {
+                                  window.location.href = "../Home/defaultHomePage.php";
+                              }
+                          }
+                      } else {
+                          document.getElementById('error-message').textContent = response.message;
+                      }
+                  } else {
+                      document.getElementById('error-message').textContent = "Error: " + xhr.status;
+                  }
+              }
+          };
+          xhr.send("username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password) + "&userType=" + encodeURIComponent(userType));
+      });
+  });
 </script>
-
 </body>
 </html>

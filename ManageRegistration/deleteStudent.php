@@ -1,14 +1,50 @@
 <?php
-include '../DB_FKPark/dbcon.php';
+ob_start(); // Start output buffering
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>List of Registration</title>
+    <style>
+        table.center {
+            margin-left: auto; 
+            margin-right: auto;
+            width: 900px;
+            margin-top: 70px;
+        }
+    </style>
+</head>
+    <body>
+    <?php include '../Layout/adminHeader.php'; ?>
+    <?php include '../DB_FKPark/dbcon.php'; // Include the database connection file. ?>
 
-if (isset($_GET['id'])) {
-    $student_ID = $_GET['id'];
-    $query = "DELETE FROM student WHERE student_ID = '$student_ID'";
 
-    if (mysqli_query($con, $query)) {
-        header('Location: viewRegistration.php?message=Student deleted successfully');
-    } else {
-        header('Location: viewRegistration.php?message=Error deleting student: ' . mysqli_error($con));
-    }
-}
+    <?php 
+
+        if(isset($_GET['id'])){
+            $studentID = $_GET['id']; // Get the id from the URL.
+        }
+
+        $query = "delete from `student` where `student_ID` = '$studentID'";
+
+        $result = mysqli_query($con, $query);
+
+        if(!$result){
+            die("Query Failed".mysqli_error());
+        }
+        else{
+            header('location:../ManageRegistration/viewRegistration.php?delete_msg=You deleted the data!');
+        }
+
+    ?>
+
+    <?php include '../Layout/allUserFooter.php'; ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </body>
+</html>
+<?php
+ob_end_flush(); // Flush the output buffer and send the output to the browser
 ?>

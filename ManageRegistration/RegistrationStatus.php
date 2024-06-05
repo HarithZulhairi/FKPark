@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <!-- Meta tags and CSS links -->
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="viewRegistration.css">
@@ -58,10 +58,10 @@
             text-decoration: underline;
         }
 
-		.view-container {
-			text-align: center;
-			padding: 50px;
-		}
+        .view-container {
+            text-align: center;
+            padding: 50px;
+        }
     </style>
 
 </head>
@@ -69,6 +69,11 @@
     <main>
         <h1 id="main_title">Vehicle Registration Status</h1>
         <div class="view-container">
+            <?php
+            if (isset($_GET['message'])) {
+                echo '<div class="alert alert-success">' . htmlspecialchars($_GET['message']) . '</div>';
+            }
+            ?>
             <table class="table table-hover table-bordered table-striped">
                 <thead>
                     <tr class="view-table-header">
@@ -103,6 +108,7 @@
                             echo '</tr>';
                         }
                     }
+                    mysqli_close($con);
                     ?>
                 </tbody>
             </table>
@@ -130,4 +136,3 @@
     </footer>
 </body>
 </html>
-<?php mysqli_close($con); ?>
