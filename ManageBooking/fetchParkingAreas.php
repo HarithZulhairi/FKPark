@@ -34,5 +34,4 @@
     foreach ($parkingAreas as &$area) {
         $area['todayBookings'] = $todayBookings;
     }
-
 ?>

@@ -58,38 +58,38 @@
                   <span class="text-primary font-weight-bold">
                       <?php
 
-                      // Connect to Database
-                      $con = mysqli_connect("localhost", "root", "");
-                      if (!$con) {
-                          die('Could not connect: ' . mysqli_connect_error());
-                      }
-                      
-                      mysqli_select_db($con, "fkpark") or die(mysqli_error($con));
+                        // Connect to Database
+                        $con = mysqli_connect("localhost", "root", "");
+                        if (!$con) {
+                            die('Could not connect: ' . mysqli_connect_error());
+                        }
+                        
+                        mysqli_select_db($con, "fkpark") or die(mysqli_error($con));
 
-                      // Fetch count of parking spaces from the database
-                      $query1 = "SELECT COUNT(*) AS total_booking FROM parkingArea";
-                      $result1 = mysqli_query($con, $query1);
+                        // Fetch count of parking spaces from the database
+                        $query1 = "SELECT COUNT(*) AS total_booking FROM parkingArea";
+                        $result1 = mysqli_query($con, $query1);
 
-                      // Initialize a variable to store the count of parking spaces
-                      $totalSpacesCount = 0;
+                        // Initialize a variable to store the count of parking spaces
+                        $totalSpacesCount = 0;
 
-                      // Check if the query was successful and fetch the count
-                      if ($result1 && mysqli_num_rows($result1) > 0) {
-                          $row1 = mysqli_fetch_assoc($result1);
-                          $totalSpacesCount = (int)$row1['total_booking'];
-                      }
+                        // Check if the query was successful and fetch the count
+                        if ($result1 && mysqli_num_rows($result1) > 0) {
+                            $row1 = mysqli_fetch_assoc($result1);
+                            $totalSpacesCount = (int)$row1['total_booking'];
+                        }
 
-                      $query2 = "SELECT COUNT(*) AS total_parking FROM parkingSlot";
-                      $result2 = mysqli_query($con, $query2);
+                        $query2 = "SELECT COUNT(*) AS total_parking FROM parkingSlot";
+                        $result2 = mysqli_query($con, $query2);
 
-                      $totalParkingCount = 0;
+                        $totalParkingCount = 0;
 
-                      if ($result2 && mysqli_num_rows($result2) > 0){
-                        $row2 = mysqli_fetch_assoc($result2);
-                        $totalParkingCount = (int)$row2['total_parking'];
-                      }
+                        if ($result2 && mysqli_num_rows($result2) > 0){
+                            $row2 = mysqli_fetch_assoc($result2);
+                            $totalParkingCount = (int)$row2['total_parking'];
+                        }
 
-                      echo $totalSpacesCount;
+                        echo $totalSpacesCount;
                       ?>
                   </span>
               </div>
@@ -254,8 +254,21 @@
 
       <?php
           // Fetch car and motorcycle bookings for each month
-          $carBookingsQuery = "SELECT COUNT(*) AS car_bookings, MONTH(booking_date) AS month FROM booking WHERE parkingSlot_ID BETWEEN 1 AND 160 GROUP BY MONTH(booking_date)";
-          $motorcycleBookingsQuery = "SELECT COUNT(*) AS motorcycle_bookings, MONTH(booking_date) AS month FROM booking WHERE parkingSlot_ID BETWEEN 161 AND 240 GROUP BY MONTH(booking_date)";
+          $carBookingsQuery = "SELECT COUNT(*) AS car_bookings, 
+                                MONTH(booking_date) AS month 
+                                FROM booking 
+                                INNER JOIN parkingSlot ON booking.parkingSlot_ID = parkingSlot.parkingSlot_ID
+                                WHERE parkingSlot.parkingSlot_name LIKE 'B1%' OR parkingSlot.parkingSlot_name LIKE 'B2%' OR parkingSlot.parkingSlot_name LIKE 'B3%'
+                                GROUP BY MONTH(booking_date)
+                                ";
+
+          $motorcycleBookingsQuery = "SELECT COUNT(*) AS motorcycle_bookings, 
+                                    MONTH(booking_date) AS month 
+                                    FROM booking 
+                                    INNER JOIN parkingSlot ON booking.parkingSlot_ID = parkingSlot.parkingSlot_ID
+                                    WHERE parkingSlot.parkingSlot_name LIKE 'M1%'
+                                    GROUP BY MONTH(booking_date)
+                                    ";
 
           $carBookingsResult = mysqli_query($con, $carBookingsQuery);
           $motorcycleBookingsResult = mysqli_query($con, $motorcycleBookingsQuery);
@@ -291,6 +304,7 @@
   </script>
 
   <?php include '../Layout/allUserFooter.php'; ?>
+
 
 </body>
 </html>
