@@ -29,6 +29,7 @@
 
         .main-container {
             flex: 1;
+            padding: 20px;
         }
     </style>
 </head>
@@ -45,6 +46,7 @@
 
         <div class="main-cards">
 
+<<<<<<< Updated upstream
             <div class="card">
                 <div class="card-inner">
                     <p class="text-primary">TOTAL PARKING SLOT</p>
@@ -54,6 +56,16 @@
                 <span class="text-primary font-weight-bold">
                     <?php
                     include '../DB_FKPark/dbcon.php'; // Include dbcon.php to establish database connection
+=======
+              <div class="card">
+                  <div class="card-inner">
+                      <p class="text-primary">TOTAL PARKING SLOT</p>
+                      <span ><img class="colored_image" style="width:50px; height:50px;" src="../resource/book_online.png" alt="Parking"></span>
+                  </div>
+                  <!-- Update the total parking spaces count with PHP -->
+                  <span class="text-primary font-weight-bold">
+                      <?php
+>>>>>>> Stashed changes
 
 <<<<<<< Updated upstream
                         // Connect to Database
@@ -87,7 +99,7 @@
                             $totalParkingCount = (int)$row2['total_parking'];
                         }
 
-                        echo $totalSpacesCount;
+                        echo $totalParkingCount;
                       ?>
                   </span>
               </div>
@@ -97,6 +109,7 @@
                     $query = "SELECT COUNT(*) AS total_parking FROM parkingSlot";
                     $result = mysqli_query($con, $query);
 
+<<<<<<< Updated upstream
                     // Initialize a variable to store the count of parking spaces
                     $totalSpacesCount = 0;
 
@@ -188,6 +201,116 @@
       {
         name: 'Total Parking Spaces',
         data: [], // Initialize with empty data
+=======
+              <div class="card">
+                  <div class="card-inner">
+                      <p class="text-primary">TOTAL EVENT </p>
+                      <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/unavailable.png" alt="Occupied"></span>
+                  </div>
+                  <span class="text-primary font-weight-bold">
+                    <?php
+                        $query3 = "SELECT COUNT(*) AS total_event FROM event";
+                        $result3 = mysqli_query($con, $query3);
+
+                        $totalEventCount = 0;
+
+                        if ($result3 && mysqli_num_rows($result3) > 0){
+                            $row3 = mysqli_fetch_assoc($result3);
+                            $totalEventCount = (int)$row3['total_event'];
+                        }
+
+                        echo $totalEventCount;
+                    ?>
+                  </span>
+              </div>
+
+              <div class="card">
+                  <div class="card-inner">
+                      <p class="text-primary">TOTAL BOOKING MADE</p>
+                      <span><img  class="colored_image" style="width:50px; height:50px;" src="../resource/check.png" alt="Available"></span>
+                  </div>
+                  <span class="text-primary font-weight-bold">
+                    <?php
+                            $query4 = "SELECT COUNT(*) AS total_booking FROM booking";
+                            $result4 = mysqli_query($con, $query4);
+
+                            $totalBookingCount = 0;
+
+                            if ($result4 && mysqli_num_rows($result4) > 0){
+                                $row4 = mysqli_fetch_assoc($result4);
+                                $totalBookingCount = (int)$row4['total_booking'];
+                            }
+
+                            echo $totalBookingCount;
+                    ?>
+                  </span>
+              </div>
+
+              <div class="card">
+                  <div class="card-inner">
+                      <p class="text-primary">TOTAL AVAILABLE PARKING</p>
+                      <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/event.png" alt="QR Code"></span>
+                  </div>
+                  <span class="text-primary font-weight-bold">
+                    <?php
+                        $query5 = "SELECT COUNT(*) AS total_available FROM parkingSlot WHERE parkingSlot_status = 'AVAILABLE'";
+                        $result5 = mysqli_query($con, $query5);
+
+                        $totalAvailableCount = 0;
+
+                        if ($result5 && mysqli_num_rows($result5) > 0){
+                            $row5 = mysqli_fetch_assoc($result5);
+                            $totalAvailableCount = (int)$row5['total_available'];
+                        }
+
+                        echo $totalAvailableCount;
+                    ?>
+
+                  </span>
+              </div>
+
+        </div>
+
+        <div class="charts">
+
+              <div class="charts-card">
+                  <p class="chart-title">TOTAL PARKING SLOT</p>
+                  <div id="bar-chart"></div>
+              </div>
+
+            <div class="charts-card">
+                <p class="chart-title">BOOKED PARKING</p>
+                <div id="area-chart"></div>
+            </div>
+
+        </div>
+    </main>
+    <!-- End Main -->
+
+</div>
+
+<!-- Scripts -->
+<!-- ApexCharts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
+<!-- Custom JS -->
+<script>
+  // ---------- CHARTS ----------
+
+    // BAR CHART
+    const barChartOptions = {
+      series: [
+        {
+          name: 'Total Parking Slot',
+          data: [], // Initialize with empty data
+        },
+      ],
+      chart: {
+        type: 'bar',
+        height: 350,
+        toolbar: {
+          show: false,
+        },
+>>>>>>> Stashed changes
       },
     ],
     chart: {
@@ -288,6 +411,7 @@ const areaChartOptions = {
     },
   };
 
+<<<<<<< Updated upstream
   const areaChart = new ApexCharts(
     document.querySelector('#area-chart'),
     areaChartOptions
@@ -303,6 +427,89 @@ const areaChartOptions = {
     ]);
   }
 
+=======
+  const barChart = new ApexCharts(
+    document.querySelector('#bar-chart'),
+    barChartOptions
+  );
+  barChart.render();
+
+    // Function to update bar chart data with total parking spaces count
+    function updateBarChartData(totalParkingCount) {
+      console.log('Updating bar chart data with total parking spaces count:', totalParkingCount); // Debugging line
+      barChart.updateSeries([{
+        data: [totalParkingCount] // Update with the total parking spaces count
+      }]);
+    }
+
+    // Call the function to update bar chart data with total parking spaces count
+    updateBarChartData(<?php echo $totalParkingCount; ?>);
+
+// AREA CHART
+const areaChartOptions = {
+    series: [
+      {
+        name: 'Purchase Orders',
+        data: [0, 0, 0, 0, 0, 0, 0],
+      },
+      {
+        name: 'Sales Orders',
+        data: [0, 0, 0, 0, 0, 0, 0],
+      },
+    ],
+    chart: {
+      height: 350,
+      type: 'area',
+      toolbar: {
+        show: false,
+      },
+    },
+    colors: ['#4f35a1', '#246dec'],
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: 'smooth',
+    },
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+    markers: {
+      size: 0,
+    },
+    yaxis: [
+      {
+        title: {
+          text: 'Purchase Orders',
+        },
+      },
+      {
+        opposite: true,
+        title: {
+          text: 'Sales Orders',
+        },
+      },
+    ],
+    tooltip: {
+      shared: true,
+      intersect: false,
+    },
+  };
+
+  const areaChart = new ApexCharts(
+    document.querySelector('#area-chart'),
+    areaChartOptions
+  );
+  areaChart.render();
+
+  // Function to update area chart data
+  function updateAreaChartData(newPurchaseData, newSalesData) {
+    console.log('Updating area chart data to:', newPurchaseData, newSalesData); // Debugging line
+    areaChart.updateSeries([
+      { data: newPurchaseData },
+      { data: newSalesData }
+    ]);
+  }
+
+>>>>>>> Stashed changes
   // Example of updating area chart data after 3 seconds
   setTimeout(() => {
     updateAreaChartData([31, 40, 28, 51, 42, 109, 100], [40, 32, 45, 32, 34, 52, 41]);
