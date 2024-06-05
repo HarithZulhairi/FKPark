@@ -10,9 +10,6 @@ $con = mysqli_connect(HOSTNAME,USERNAME,PASSWORD,DATABASE);
 if(!$con){
     die("Connection failed: ");
 }
-else{
-    echo "Connection successful";
-}
 
 // Fetch event names
 $eventQuery = "SELECT event_name FROM event";

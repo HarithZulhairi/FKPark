@@ -1,3 +1,13 @@
+<?php
+    $con = mysqli_connect("localhost", "root", "");
+    if (!$con) {
+        die('Could not connect: ' . mysqli_connect_error());
+    }
+
+    mysqli_select_db($con, "fkpark") or die(mysqli_error($con));
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,57 +50,85 @@
                         <th>Parking Spot</th>
                         <th>Action</th>
                     </tr>
-                    <?php for ($i = 1; $i <= 20; $i++) { ?>
-                        <tr>
-                            <td>B1<?php echo str_pad($i, 2, '0', STR_PAD_LEFT); ?></td>
-                            <td><a href="confirmBooking.php?parkingSpot=B1<?php echo str_pad($i, 2, '0', STR_PAD_LEFT); ?>" class="book-link">Book</a></td>
-                        </tr>
-                    <?php } ?>
+                    <?php
+                        $result = mysqli_query($con, "SELECT * FROM parkingSlot WHERE parkingSlot_name LIKE 'B1%' AND parkingSlot_status = 'AVAILABLE'");
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "<tr>";
+                                echo "<td>" . $row['parkingSlot_name'] . "</td>";
+                                echo "<td><a href='confirmBooking.php?parkingSpot=" . $row['parkingSlot_name'] . "' class='book-link'>Book</a></td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='2'>No available spots.</td></tr>";
+                        }
+                    ?>
                 </table>
             </div>
 
-            <div id="sectionB" class="tab-content">
+            <div id="sectionB" class="tab-content active">
                 <table>
                     <tr>
                         <th>Parking Spot</th>
                         <th>Action</th>
                     </tr>
-                    <?php for ($i = 1; $i <= 20; $i++) { ?>
-                        <tr>
-                            <td>B2<?php echo str_pad($i, 2, '0', STR_PAD_LEFT); ?></td>
-                            <td><a href="confirmBooking.php?parkingSpot=B2<?php echo str_pad($i, 2, '0', STR_PAD_LEFT); ?>" class="book-link">Book</a></td>
-                        </tr>
-                    <?php } ?>
+                    <?php
+                        $result = mysqli_query($con, "SELECT * FROM parkingSlot WHERE parkingSlot_name LIKE 'B2%' AND parkingSlot_status = 'AVAILABLE'");
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "<tr>";
+                                echo "<td>" . $row['parkingSlot_name'] . "</td>";
+                                echo "<td><a href='confirmBooking.php?parkingSpot=" . $row['parkingSlot_name'] . "' class='book-link'>Book</a></td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='2'>No available spots.</td></tr>";
+                        }
+                    ?>
                 </table>
             </div>
 
-            <div id="sectionC" class="tab-content">
+            <div id="sectionC" class="tab-content active">
                 <table>
                     <tr>
                         <th>Parking Spot</th>
                         <th>Action</th>
                     </tr>
-                    <?php for ($i = 1; $i <= 20; $i++) { ?>
-                        <tr>
-                            <td>B3<?php echo str_pad($i, 2, '0', STR_PAD_LEFT); ?></td>
-                            <td><a href="confirmBooking.php?parkingSpot=B3<?php echo str_pad($i, 2, '0', STR_PAD_LEFT); ?>" class="book-link">Book</a></td>
-                        </tr>
-                    <?php } ?>
+                    <?php
+                        $result = mysqli_query($con, "SELECT * FROM parkingSlot WHERE parkingSlot_name LIKE 'B3%' AND parkingSlot_status = 'AVAILABLE'");
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "<tr>";
+                                echo "<td>" . $row['parkingSlot_name'] . "</td>";
+                                echo "<td><a href='confirmBooking.php?parkingSpot=" . $row['parkingSlot_name'] . "' class='book-link'>Book</a></td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='2'>No available spots.</td></tr>";
+                        }
+                    ?>
                 </table>
             </div>
 
-            <div id="sectionD" class="tab-content">
+            <div id="sectionD" class="tab-content active">
                 <table>
                     <tr>
                         <th>Parking Spot</th>
                         <th>Action</th>
                     </tr>
-                    <?php for ($i = 1; $i <= 40; $i++) { ?>
-                        <tr>
-                            <td>M1<?php echo str_pad($i, 2, '0', STR_PAD_LEFT); ?></td>
-                            <td><a href="confirmBooking.php?parkingSpot=M1<?php echo str_pad($i, 2, '0', STR_PAD_LEFT); ?>" class="book-link">Book</a></td>
-                        </tr>
-                    <?php } ?>
+                    <?php
+                        $result = mysqli_query($con, "SELECT * FROM parkingSlot WHERE parkingSlot_name LIKE 'M1%' AND parkingSlot_status = 'AVAILABLE'");
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "<tr>";
+                                echo "<td>" . $row['parkingSlot_name'] . "</td>";
+                                echo "<td><a href='confirmBooking.php?parkingSpot=" . $row['parkingSlot_name'] . "' class='book-link'>Book</a></td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='2'>No available spots.</td></tr>";
+                        }
+                    ?>
                 </table>
             </div>
         </div>
