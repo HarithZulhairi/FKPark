@@ -67,7 +67,7 @@ if (isset($_SESSION['userID']) && isset($_SESSION['userProfile'])) {
 
 </style>
 <body>
-    <div class="profile">
+    <div class="profile-name">
         <span class="username">Welcome, <?php echo htmlspecialchars($student_username); ?>!</span>
     </div>
 
