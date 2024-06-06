@@ -175,7 +175,7 @@
                     <li><a href="../Home/adminHomePage.php">Home</a></li>
                     <li><a class="dropdown-toggle-parking">Parking</a>
                         <div class="dropdown dropdown-parking">
-                            <a href="../ManageParkingArea/viewParking.php">List</a>
+                            <!--a href="../ManageParkingArea/viewParking.php">List</a-->
                             <a href="../ManageParkingArea/ManageParking.php">Manage</a>
                         </div>
                     </li>

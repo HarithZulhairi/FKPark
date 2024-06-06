@@ -77,7 +77,7 @@
 
     <div id="ParkingList">
         <div class="container">
-            <table class="table table-hover table-bordered table-striped" >
+            <table style="margin-top:30px;" class="table table-hover table-bordered table-striped" >
                 <tr>
                     <th style="text-align:center;">Parking Area</th>
                     <th style="text-align:center;" >Action</th>
