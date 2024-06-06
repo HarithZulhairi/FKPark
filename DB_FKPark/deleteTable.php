@@ -6,7 +6,7 @@ $link = mysqli_connect("localhost", "root", "") or die(mysqli_connect_error());
 mysqli_select_db($link, "fkpark") or die(mysqli_error($link));
 
 // Array containing table names in the order of deletion (child tables first)
-$tables = array("summons", "booking", "parkingSlot", "parkingArea", "event", "approval", "Vehicle", "Student", "Administrator", "UnitKeselamatanStaff");
+$tables = array("summons", "booking", "parkingSlot", "approval", "vehicle", "student", "administrator", "unitKeselamatanStaff", "parkingArea", "event");
 
 // Loop through each table and drop it
 foreach ($tables as $table) {

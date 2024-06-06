@@ -173,7 +173,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
  <!-- Modal -->
- <form action="../DB_FKPark/insert_data.php" method="post" >
+ <form action="../DB_FKPark/insert_data.php" method="post" onsubmit="return handleSubmit();">
  <div class="modal fade" id="parkingexampleModal" tabindex="-1" role="dialog" aria-labelledby="parkingexampleModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
   
@@ -282,9 +282,6 @@
       parkingStatus.value = 'UNAVAILABLE';
     }
   }
-</script>
-
-<script>
 
   function generateQR(){
 
@@ -299,6 +296,29 @@
 
 
    imgBox.innerHTML = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=50x50&data=' + encodeURIComponent(qrText) + '" alt="qrImage">';
+  }
+
+  // Function to check for duplicate parking names
+  function checkDuplicateParking() {
+    var selectedParking = document.querySelector('select[name="p_area"]').value;
+    var existingParkings = document.querySelectorAll('#list td:first-child');
+    for (var i = 0; i < existingParkings.length; i++) {
+      if (existingParkings[i].innerText.trim() === selectedParking) {
+        alert("Parking area already exists!");
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // Function to handle form submission
+  function handleSubmit() {
+    if (checkDuplicateParking()) {
+      generateQR();
+      return true; // Allow form submission
+    } else {
+      return false; // Prevent form submission
+    }
   }
 
 </script>
