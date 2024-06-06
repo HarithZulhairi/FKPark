@@ -41,7 +41,7 @@ ob_start(); // Start output buffering
                 $result = mysqli_query($con, $query);
 
                 if(!$result){
-                    die("query Failed" . mysqli_error($con));
+                    die("Query failed: " . mysqli_error($con));
                 } else {
                     $row = mysqli_fetch_assoc($result);
 
@@ -88,16 +88,26 @@ ob_start(); // Start output buffering
                 $update_p_area = $_POST['p_area'];
                 $update_p_status = $_POST['p_status'];
 
-                // Perform the database update
+                // Perform the database update for parking area
                 $query = "UPDATE `parkingArea` SET `parkingArea_name` = '$update_p_area', 
                                                 `parkingArea_status` = '$update_p_status' 
                           WHERE `parkingArea_ID` = '$p_area'"; // Changed `$id_new` to `$p_area`
 
-                $result = mysqli_query($con, $query);
+                $result1 = mysqli_query($con, $query);
+                if(!$result1){
+                    die("Query failed: " . mysqli_error($con));
+                }
 
-                if(!$result){
-                    die("query Failed" . mysqli_error($con));
-                } else {
+                // Perform the database update for parking slot
+                $query1 = "UPDATE `parkingSlot` SET  `parkingSlot_status` = '$update_p_status' 
+                            WHERE `parkingArea_ID` = '$p_area'"; // Changed `$id_new` to `$p_area`
+
+                $result2 = mysqli_query($con, $query1);
+                if(!$result2){
+                    die("Query failed: " . mysqli_error($con));
+                }
+
+                if($result1 && $result2){
                     // Redirect to the ManageParking.php file
                     header('location:../ManageParkingArea/ManageParking.php?update_msg=You have successfully updated the data!');
                     exit; // Exit to prevent further execution

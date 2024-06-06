@@ -78,12 +78,17 @@
 
 
     <div class="box1" style="display: flex; align-items: center; justify-content:center;padding-top:50px;">
-        <h2 style="margin-right:650px;">List of Parking</h2>
+        <h2 style="margin-right:500px;">List of Parking</h2>
         <div class="button-container" >
                     <a href="#" >
-                              <button type="submit" class="button btn-primary "data-bs-toggle="modal" data-bs-target="#parkingexampleModal">Add New Parking</button>
+                              <button type="submit" class="button btn-primary "data-bs-toggle="modal" data-bs-target="#parkingexampleModal" onclick="generateQR()" >Add New Parking</button>
                           </a>
         </div>
+        <div class="button-container">
+                        <a href="viewParkingSlot.php" >
+                                <button type="submit">View Parking Slot</button>
+                        </a>
+            </div>
         <div class=" button-container" >
                     <a href="#" >
                               <button type="submit" data-bs-toggle="modal" data-bs-target="#eventexampleModal">Add Event</button>
@@ -103,36 +108,30 @@
 
             <tbody>
             <?php
-                        $query = "select * from `parkingArea`";
+            $query = "SELECT pa.*, e.event_name FROM `parkingArea` pa LEFT JOIN `event` e ON pa.event_ID = e.event_ID";
 
-                        $result = mysqli_query($con, $query);
+            $result = mysqli_query($con, $query);
 
-                        if(!$result){
-                            die("query Failed".mysqli_error($con));
-                        }
-                        else{
-                            while($row = mysqli_fetch_assoc($result)){
-
-                                ?>
-                                    <tr>
-                                        <td style="padding-top:30px;" ><?php echo$row['parkingArea_name']; ?></td>
-                                        <td style="border-collapse: collapse;display: flex; align-items: center;">
-                                                <div style="margin:10px 10px;" class="button-container">
-                                                    <a href="event-link-here" >
-                                                        <button type="view">View</button>
-                                                    </a>
-                                                </div>
-
-                                                <a href="../ManageParkingArea/update_page_1.php?id=<?php echo$row['parkingArea_ID']; ?>" class="btn btn-success" style="margin-right:40px;" >Update</a>
-                                                <a href="../ManageParkingArea/delete_page.php?id=<?php echo$row['parkingArea_ID']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
-                                                    
-                                        </td>
-                                        <td style="padding-top:30px;" ><?php echo$row['parkingArea_status']; ?></td>
-                                    </tr>
-                                <?php
-                            }
-                        }
+            if (!$result) {
+                die("Query Failed: " . mysqli_error($con));
+            } else {
+                while ($row = mysqli_fetch_assoc($result)) {
                     ?>
+                    <tr>
+                        <td style="padding-top:30px;"><?php echo $row['parkingArea_name']; ?></td>
+                        <td style="border-collapse: collapse; display: flex; align-items: center;">
+                            <a href="../ManageParkingArea/update_page_1.php?id=<?php echo $row['parkingArea_ID']; ?>" class="btn btn-success" style="margin-right:40px;">Update</a>
+                            <a href="../ManageParkingArea/delete_page.php?id=<?php echo $row['parkingArea_ID']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                            <div style="padding-left:20px;" id="imgBox">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=50x50&data=<?php echo urlencode('Parking Area: ' . $row['parkingArea_name'] . '|Event: ' . $row['event_name'] . '|Status: ' . $row['parkingArea_status']); ?>" alt="qrImage">
+                        </div>
+                        </td>
+                        <td style="padding-top:30px;"><?php echo $row['parkingArea_status']; ?></td>
+                    </tr>
+                    <?php
+                }
+            }
+            ?>
 
             </tbody>
 
@@ -144,43 +143,28 @@
 
         <?php
                 if(isset($_GET['message'])){
-                    echo "<h6>" .$_GET['message'] . "</h6>";
+                    echo "<h6>" . $_GET['message'] . "</h6>";
                 }
-            ?>
-
-        <?php
                 if(isset($_GET['insert_msg'])){
-                    echo "<h6>" .$_GET['insert_msg'] . "</h6>";
+                    echo "<h6>" . $_GET['insert_msg'] . "</h6>";
                 }
-            ?>
-
-        <?php
                 if(isset($_GET['update_msg'])){
-                    echo "<h6>" .$_GET['update_msg'] . "</h6>";
+                    echo "<h6>" . $_GET['update_msg'] . "</h6>";
                 }
-            ?>
-
-        <?php
                 if(isset($_GET['delete_msg'])){
-                    echo "<h6>" .$_GET['delete_msg'] . "</h6>";
+                    echo "<h6>" . $_GET['delete_msg'] . "</h6>";
+                }
+                if (isset($_GET['insert_msg'])) {
+                    echo "<h6>" . $_GET['insert_msg'] . "</h6>";
+                    if (isset($_GET['qr_image'])) {
+                        echo "<h6>QR Code:</h6>";
+                        echo "<img src='../resource/" . $_GET['qr_image'] . "'>";
+                    }
                 }
             ?>
-
-        <?php
-        if (isset($_GET['insert_msg'])) {
-            echo "<h6>" . $_GET['insert_msg'] . "</h6>";
-            if (isset($_GET['qr_image'])) {
-                echo "<h6>QR Code:</h6>";
-                echo "<img src='../resource/" . $_GET['qr_image'] . "'>";
-            }
-        }
-        ?>
 
     </div>
-                
-
-
-    
+                    
     </main>
 
 
@@ -225,7 +209,7 @@
             </div>
             <div class="form-group">
                 <label for="p_status">Parking Status</label>
-                <input type="text" name="p_status" id="p_status" class="form-control" readonly>
+                <input type="text" name="p_status" id="p_status" class="form-control" readonly >
             </div>
         
       </div>
@@ -298,6 +282,25 @@
       parkingStatus.value = 'UNAVAILABLE';
     }
   }
+</script>
+
+<script>
+
+  function generateQR(){
+
+    let imgBox = document.getElementById("ImgBox");
+    let qrImage = document.getElementById("qrImage");
+    
+    var eventName = document.getElementById('event_name').value;
+    var parkingAreaName = document.querySelector('select[name="p_area"]').value;
+    var parkingStatus = document.getElementById('p_status').value;
+
+    var qrText = parkingAreaName + ' ' + eventName + ' ' + parkingStatus;
+
+
+   imgBox.innerHTML = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=50x50&data=' + encodeURIComponent(qrText) + '" alt="qrImage">';
+  }
+
 </script>
 </body>
 
