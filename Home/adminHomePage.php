@@ -84,7 +84,7 @@ if (isset($_SESSION['userID']) && isset($_SESSION['userProfile'])) {
                 <div class="swiper-wrapper">
                     <div class="swiper-slide"><img src="../resource/illustration.jpg" alt="Parking lot 1 at FKPARK"></div>
                     <div class="swiper-slide"><img src="../resource/FKPark_Map.png" alt="Parking lot 2 at FKPARK"></div>
-                    <div class="swiper-slide"><img src="../resource/parkingFkom3.jpg" alt="Parking lot 3 at FKPARK"></div>
+                    <div class="swiper-slide"><img src="../resource/parkingFkom.jpg" alt="Parking lot 3 at FKPARK"></div>
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
