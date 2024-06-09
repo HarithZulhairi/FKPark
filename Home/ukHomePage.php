@@ -1,31 +1,25 @@
 <?php 
-ob_start();
-session_start();
-include '../Layout/UKHeader.php'; 
-include '../DB_FKPark/dbcon.php'; // Ensure the database connection is included
+    ob_start();
+    session_start();
+    include '../Layout/UKHeader.php'; 
+    include '../DB_FKPark/dbcon.php'; // Ensure the database connection is included
 
-// Check if the user is logged in and retrieve user data
-if (isset($_SESSION['userID']) && isset($_SESSION['userProfile'])) {
-    $student_ID = $_SESSION['userID'];
-    $profilePath = $_SESSION['userProfile'];
-
-    // Fetch the student's name from the database
-    $query = "SELECT student_username FROM Student WHERE student_ID = ?";
-    if ($stmt = $con->prepare($query)) {
-        $stmt->bind_param("i", $student_ID);
-        $stmt->execute();
-        $stmt->bind_result($student_username);
-        $stmt->fetch();
-        $stmt->close();
-    } else {
-        die("Error preparing statement: " . $con->error);
+    if (!isset($_SESSION['username']) || !isset($_SESSION['role'])) {
+        header("Location: ../login.php");
+        exit;
     }
-} else {
-    // Redirect to login page if not logged in
-    header("Location:../Manage Login/Login.html");
-    ob_end_flush();
-    exit();
-}
+
+    // Optional: Check cookies if session is not set
+    if (!isset($_SESSION['username']) && isset($_COOKIE['username'])) {
+        $_SESSION['username'] = $_COOKIE['username'];
+        $_SESSION['role'] = $_COOKIE['role'];
+    }
+
+    // Verify role
+    if ($_SESSION['role'] != 'UnitKeselamatanStaff') { // Change this to 'Administrator' or 'UnitKeselamatanStaff' as needed
+        header("Location: ../login.php");
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>

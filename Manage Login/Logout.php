@@ -1,3 +1,16 @@
+<?php
+    session_start();
+    session_unset();
+    session_destroy();
+
+    // Clear cookies
+    setcookie('role', '', time() - 3600, "/");
+    setcookie('username', '', time() - 3600, "/");
+
+    header("Location: login.php");
+    exit;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
