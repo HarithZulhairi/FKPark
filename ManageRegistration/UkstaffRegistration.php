@@ -14,7 +14,7 @@
     <main>
         <div class="container-registration">
             <h2 class="title-registration">Unit Keselamatan Staff Registration</h2>
-            <form class="form-card" method="post" action="StudentRegistration.php" enctype="multipart/form-data">
+            <form class="form-card" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
                 <table class="form-table">
                     <tr>
                         <td><label for="name">Username</label></td>

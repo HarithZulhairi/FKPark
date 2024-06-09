@@ -24,8 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($userType == 'student') {
         $sql = "SELECT * FROM Student WHERE student_username='$username' AND student_password='$password'";
         $userIDColumn = "student_ID";
-        $userProfileColumn = "student_profile"; // Profile column for the student
         $usernameColumn = "student_username"; // Username column for the student
+        $profileColumn = "student_profile"; // Profile column for the student
     } else if ($userType == 'administrator') {
         $sql = "SELECT * FROM Administrator WHERE administrator_username='$username' AND administrator_password='$password'";
         $userIDColumn = "administrator_ID";
@@ -49,13 +49,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Store username in session
         $_SESSION['username'] = $loggedInUsername;
 
+        // Set cookies for userID and username
+        setcookie("userID", $row[$userIDColumn], time() + (86400 * 30), "/"); // 86400 = 1 day, cookie lasts for 30 days
+        setcookie("username", $loggedInUsername, time() + (86400 * 30), "/");
+
         // Determine redirect URL based on user type
         $redirectURL = '';
         if ($userType == 'student') {
             $redirectURL = "../Home/studentHomePage.php";
         } else if ($userType == 'administrator') {
             $redirectURL = "../Home/adminHomePage.php";
-        } else if ($userType == 'unit_staff') {
+        } else if ($userType == 'Unit Keselamatan Staff') {
             $redirectURL = "../Home/ukHomePage.php";
         }
 

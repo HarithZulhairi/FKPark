@@ -171,21 +171,22 @@ if (mysqli_query($con, $query8)) {
 } 
 
 // Create the summons table 
-$query9 = 'CREATE TABLE summons( ' .
-          'summons_ID INT NOT NULL AUTO_INCREMENT, ' .
-          'summons_date DATE NOT NULL, ' .
-          'summons_violation VARCHAR(30) NOT NULL, ' .
-          'summons_demerit INT NOT NULL, ' .
-          'summons_QR VARCHAR(255) NOT NULL, ' .
+$query9 = 'CREATE TABLE summon( ' .
+          'summon_ID INT NOT NULL AUTO_INCREMENT, ' .
+          'summon_datetime DATETIME NOT NULL, ' .
+          'summon_violation VARCHAR(30) NOT NULL, ' .
+          'summon_demerit INT NOT NULL, ' .
+          'summon_location VARCHAR(100) NOT NULL, ' .
+          'summon_QR VARCHAR(255), ' .
           'uk_ID INT NOT NULL, ' .
           'vehicle_numPlate VARCHAR(10) NOT NULL, ' .
-          'PRIMARY KEY(summons_ID), ' .
+          'PRIMARY KEY(summon_ID), ' .
           'FOREIGN KEY (uk_ID) REFERENCES unitKeselamatanStaff(uk_ID), ' . 
-          'FOREIGN KEY (vehicle_numPlate) REFERENCES vehicle(vehicle_numPlate)' .
+          'FOREIGN KEY (vehicle_numPlate) REFERENCES Vehicle(vehicle_numPlate)' .
           ')';
 
 if (mysqli_query($con, $query9)) {
-    echo "<h3>Your summons table has been created !!!</h3>";
+    echo "<h3>Your summon table has been created !!!</h3>";
 } else {
     echo "<br>";
     echo "Error creating table: " . mysqli_error($con);
