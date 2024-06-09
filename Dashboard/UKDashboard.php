@@ -34,7 +34,7 @@
 </head>
 <body>
 
-<?php include '../Layout/studentHeader.php'; ?>
+<?php include '../Layout/UKHeader.php'; ?>
 <div class="grid-container">
 
     <!-- Main -->
@@ -55,7 +55,7 @@
                     include '../DB_FKPark/dbcon.php';
 
                     // Fetch total demerit points from the database
-                    $query = "SELECT SUM(summons_demerit) AS total_demerit FROM summons";
+                    $query = "SELECT SUM(summon_demerit) AS total_demerit FROM summon";
                     $result = mysqli_query($con, $query);
                     $totalDemerit = 0;
                     if ($result && mysqli_num_rows($result) > 0) {
