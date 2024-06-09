@@ -6,23 +6,12 @@ if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// Fetching data for the currently logged-in student
-$userID = $_SESSION['userID']; // Assuming 'userID' is the session variable storing the user ID
-$query = "SELECT * FROM `student` WHERE student_ID = $userID";
+// Fetching all student data
+$query = "SELECT * FROM `student`";
 $result = mysqli_query($con, $query);
 
 if (!$result) {
     die("Query failed: " . mysqli_error($con));
-}
-
-// Fetching all student data (for administrator or privileged users)
-if ($_SESSION['userID'] == 'administrator' || $_SESSION['userID'] == 'Unit Keselamatan Staff') {
-    $queryAllStudents = "SELECT * FROM `student`";
-    $resultAllStudents = mysqli_query($con, $queryAllStudents);
-
-    if (!$resultAllStudents) {
-        die("Query failed: " . mysqli_error($con));
-    }
 }
 
 ?>
