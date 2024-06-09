@@ -61,7 +61,7 @@ if (!$result) {
                                         Student ID: <?= htmlspecialchars($row['student_ID']); ?>
                                     </div>
                                     <div class="card-body">
-                                        <p><img src="../ManageRegistration/uploads/<?= htmlspecialchars($row['student_profile']); ?>" alt="Profile Picture" width="100" height="100" class="rounded-circle mx-auto d-block"></p>
+                                        <p><img src="../ManageRegistration/<?= htmlspecialchars($row['student_profile']); ?>" alt="Profile Picture" width="100" height="100" class="rounded-circle mx-auto d-block"></p>
 
                                         <p class="card-text p-2 m-1 rounded" style="border:1px solid #0275d8;"><b>Name: </b><?= htmlspecialchars($row['student_username']); ?></p>
                                         <p class="card-text p-2 m-1 rounded" style="border:1px solid #0275d8;"><b>Password: </b><?= htmlspecialchars($row['student_password']); ?></p>
