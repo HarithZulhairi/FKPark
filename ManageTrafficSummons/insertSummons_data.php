@@ -1,10 +1,10 @@
 <?php
     session_start();
 
-    include '../DB_FKPark/dbcon.php';
+    include '../DB_FKPark/dbh.php';
 
 
-    if(isset($_POST['add_summons'])){
+    if(isset($_POST['form_submitted'])){
         
         $veh_plate = $_POST['vehicleNumPlate'];
         $violation = $_POST['violation'];
@@ -12,7 +12,7 @@
         $datetime = $_POST['datetime'];
 
         $summon_demerit = 0;
-        if($violation == "Speed")
+        if($violation == "Speeding")
         {
             $summon_demerit = 10;
         } 
@@ -42,7 +42,6 @@
             if(!$result){
                 die("Query Failed" . mysqli_error());
             }
-
             else{
                 $_SESSION['message'] = "Your data has been added successfully!";
                 header('location:ManageSummons.php');
@@ -51,6 +50,8 @@
         }
 
 
+    } else{
+        echo "Mak Kau Hijau";
     }
 
 
