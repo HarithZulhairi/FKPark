@@ -1,22 +1,17 @@
 <?php
 include '../DB_FKPark/dbcon.php';
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $query = "SELECT * FROM Student WHERE student_ID=?";
-    $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, "i", $id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
+if(isset($_GET['id'])) {
+    $student_ID = $_GET['id'];
+    $query = "SELECT * FROM student WHERE student_ID = '$student_ID'";
+    $result = mysqli_query($con, $query);
 
-    if ($row = mysqli_fetch_assoc($result)) {
-        echo json_encode($row);
+    if(!$result) {
+        die("Query failed: " . mysqli_error($con));
     } else {
-        echo json_encode(["error" => "No student found"]);
+        $student = mysqli_fetch_assoc($result);
+        echo json_encode($student);
     }
-
-    mysqli_stmt_close($stmt);
 }
-
 mysqli_close($con);
 ?>

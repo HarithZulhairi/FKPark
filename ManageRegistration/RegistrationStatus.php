@@ -1,8 +1,5 @@
-<?php
-session_start();
-include '../Layout/studentHeader.php';
-include '../DB_FKPark/dbcon.php';
-?>
+<?php include '../Layout/studentHeader.php'; ?>
+<?php include '../DB_FKPark/dbcon.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,17 +38,21 @@ include '../DB_FKPark/dbcon.php';
         }
         footer h5 {
             margin-top: 0;
+
         }
         footer ul {
             list-style: none;
             padding: 0;
+
         }
         footer ul li {
             margin: 5px 0;
+
         }
         footer ul li a {
             color: #fff;
             text-decoration: none;
+
         }
         footer ul li a:hover {
             text-decoration: underline;
@@ -62,6 +63,7 @@ include '../DB_FKPark/dbcon.php';
             padding: 50px;
         }
     </style>
+
 </head>
 <body>
     <main>
@@ -86,13 +88,9 @@ include '../DB_FKPark/dbcon.php';
                 </thead>
                 <tbody>
                     <?php
-                    // Fetch current user's ID from session
-                    $userID = $_SESSION['userID'];
-
                     $query = "SELECT v.*, COALESCE(a.approval_status, 'Pending') AS approval_status
                               FROM Vehicle v
-                              LEFT JOIN approval a ON v.vehicle_numPlate = a.vehicle_grant AND v.student_ID = a.student_ID
-                              WHERE v.student_ID = $userID"; // Filter by current user's ID
+                              LEFT JOIN approval a ON v.vehicle_numPlate = a.vehicle_grant AND v.student_ID = a.student_ID";
                     $result = mysqli_query($con, $query);
 
                     if (!$result) {
@@ -116,6 +114,25 @@ include '../DB_FKPark/dbcon.php';
             </table>
         </div>
     </main>
-    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div>
+                <h5>About FKPark</h5>
+                <p>FKPark is a premier parking management system providing seamless and efficient parking solutions.</p>
+            </div>
+            <div>
+                <h5>Quick Links</h5>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Booking</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5>Contact Us</h5>
+                <p>Email: info@fkpark.com<br>Phone: +123 456 7890</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
