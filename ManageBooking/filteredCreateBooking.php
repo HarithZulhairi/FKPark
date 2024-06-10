@@ -1,11 +1,32 @@
 <?php
-    $con = mysqli_connect("localhost", "root", "");
+    session_start();
+    ob_start();
+
+    if (!isset($_SESSION['userID'])) {
+        header("Location: ../Manage Login/login.html");
+        exit;
+    }
+
+    $studentID = $_SESSION['userID'];
+
+    $con = mysqli_connect("localhost", "root", "", "fkpark");
     if (!$con) {
         die('Could not connect: ' . mysqli_connect_error());
     }
 
-    mysqli_select_db($con, "fkpark") or die(mysqli_error($con));
+    $queryApp = "SELECT * FROM approval WHERE student_ID = '$studentID'";
+    $resultApp = mysqli_query($con, $queryApp);
 
+    if ($resultApp) {
+        $row = mysqli_fetch_assoc($resultApp);
+        if ($row['approval_status'] != 'Successful') {
+            echo "<script>alert('You need to register your vehicle first.'); window.location.href='../ManageRegistration/RegistrationVehicle.php';</script>";
+            exit; // Stop further execution of the script
+        }
+    } else {
+        echo "Error checking approval status: " . mysqli_error($con);
+        exit; // Stop further execution of the script in case of an error
+    }
 ?>
 
 <!DOCTYPE html>
@@ -52,7 +73,7 @@
                     </tr>
                     <?php
                         $today = date('Y-m-d');
-                        $result = mysqli_query($con, "SELECT * FROM parkingSlot WHERE parkingSlot_name LIKE 'B1%' AND (parkingSlot_status = 'AVAILABLE' AND NOT EXISTS (SELECT * FROM booking WHERE booking.parkingSlot_ID = parkingSlot.parkingSlot_ID AND booking_date = '{$today}'))");
+                        $result = mysqli_query($con, "SELECT * FROM parkingSlot WHERE parkingSlot_name LIKE 'B1%' AND (parkingSlot_status = 'AVAILABLE' AND NOT EXISTS (SELECT * FROM booking WHERE booking.parkingSlot_ID = parkingSlot.parkingSlot_ID AND booking.booking_date = '{$today}'))");
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
                                 $isAvailable = ($row['parkingSlot_status'] == 'AVAILABLE') ? 'true' : 'false';
@@ -146,3 +167,7 @@
     <?php include '../Layout/allUserFooter.php'; ?>
 </body>
 </html>
+
+<?php
+    ob_end_flush();
+?>

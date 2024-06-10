@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    if (!isset($_SESSION['userID']) || !isset($_GET['parkingSlotName']) || !isset($_GET['bookingDate']) || !isset($_GET['startTime']) || !isset($_GET['endTime'])) {
+    if (!isset($_SESSION['userID'])) {
         header("Location: ../Manage Login/login.php"); // Redirect to the login page
         exit;
     }
@@ -33,13 +33,13 @@
             <p>Start Time: <?php echo $startTime; ?></p>
             <p>End Time: <?php echo $endTime; ?></p>
         </div>
-        <button type="button" class="back-button" onclick="confirmBack()">Back</button>
+        <button type="button" class="back-button" onclick="confirmBack()">View booking</button>
     </div>
 </body>
 
 <script>
         function confirmBack() {
-            window.history.back();
+            window.location.href = 'viewBooking.php';
         }
 </script>
 </html>

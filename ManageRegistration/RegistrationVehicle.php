@@ -113,6 +113,7 @@ session_start();
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            font-weight: bold;
         }
 
         .submit-btn input[type="submit"]:hover {

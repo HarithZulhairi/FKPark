@@ -66,7 +66,7 @@
 
                 if (mysqli_stmt_execute($stmt)) {
                     $bookingID = mysqli_insert_id($con); // Get the last inserted booking ID
-                    header("Location: QRBooking.php?bookingID=$bookingID"); // Redirect to QRBooking.php with the booking ID
+                    header("Location: QRBooking.php?parkingSlotName=$parkingSpot&bookingDate=$date&startTime=$startTime&endTime=$endTime"); // Redirect to QRBooking.php with the booking ID
                     exit;
                 } else {
                     $error = "Error booking the parking spot: " . mysqli_error($con);
