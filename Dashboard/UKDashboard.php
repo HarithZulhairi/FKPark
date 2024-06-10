@@ -48,7 +48,7 @@
             <div class="card">
                 <div class="card-inner">
                     <p class="text-primary">DEMERIT TOTAL</p>
-                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/book_online.png" alt="Demerit Total"></span>
+                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/demerit1.png" alt="Demerit Total"></span>
                 </div>
                 <span class="text-primary font-weight-bold">
                     <?php
@@ -71,7 +71,7 @@
             <div class="card">
                 <div class="card-inner">
                     <p class="text-primary">VEHICLE REGISTERED</p>
-                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/unavailable.png" alt="Vehicle Registered"></span>
+                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/available1.png" alt="Vehicle Registered"></span>
                 </div>
                 <span class="text-primary font-weight-bold">
                     <?php
@@ -92,7 +92,7 @@
             <div class="card">
                 <div class="card-inner">
                     <p class="text-primary">REGISTRATION STATUS</p>
-                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/check.png" alt="Registration Status"></span>
+                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/check1.png" alt="Registration Status"></span>
                 </div>
                 <span class="text-primary font-weight-bold">
                     <?php
@@ -113,7 +113,7 @@
             <div class="card">
                 <div class="card-inner">
                     <p class="text-primary">TOTAL BOOKING</p>
-                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/event.png" alt="Total Booking"></span>
+                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/parking1.png" alt="Total Booking"></span>
                 </div>
                 <span class="text-primary font-weight-bold">
                     <?php
