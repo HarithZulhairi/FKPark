@@ -170,7 +170,6 @@
                     <li>
                         <a class="dropdown-toggle-parking">Summon</a>
                         <div class="dropdown dropdown-parking">
-                            <a href="../ManageTrafficSummons/CreateSummons.php">Create</a>
                             <a href="../ManageTrafficSummons/ManageSummons.php">Manage</a>
                         </div>
                     </li>
