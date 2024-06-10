@@ -49,7 +49,7 @@
               <div class="card">
                   <div class="card-inner">
                       <p class="text-primary">TOTAL PARKING SLOT</p>
-                      <span ><img class="colored_image" style="width:50px; height:50px;" src="../resource/book_online.png" alt="Parking"></span>
+                      <span ><img class="colored_image" style="width:50px; height:50px;" src="../resource/parking1.png" alt="Parking"></span>
                   </div>
                   <!-- Update the total parking spaces count with PHP -->
                   <span class="text-primary font-weight-bold">
@@ -93,7 +93,7 @@
               <div class="card">
                   <div class="card-inner">
                       <p class="text-primary">TOTAL EVENT </p>
-                      <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/unavailable.png" alt="Occupied"></span>
+                      <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/event1.png" alt="Occupied"></span>
                   </div>
                   <span class="text-primary font-weight-bold">
                     <?php
@@ -137,7 +137,7 @@
               <div class="card">
                   <div class="card-inner">
                       <p class="text-primary">TOTAL AVAILABLE PARKING</p>
-                      <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/event.png" alt="QR Code"></span>
+                      <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/available1.png" alt="QR Code"></span>
                   </div>
                   <span class="text-primary font-weight-bold">
                     <?php
