@@ -52,17 +52,20 @@ if (!$result) {
 <style>
     .card-body{
         padding-bottom: 30px;
+        
     }
 
-    .container {
+    .container-layout {
         align-items: center;
+        margin: auto;
+     
     }
 </style>
 <body>
 <?php include '../Layout/studentHeader.php'; ?>
 <?php include '../DB_FKPark/dbcon.php'; ?>
 
-<div class="container">
+<div class="container-layout">
     <div class="row justify-content-center">
         <div class="col-lg-10">
             <div class="card rounded-0 mt-3 border-primary">

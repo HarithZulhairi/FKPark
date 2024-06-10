@@ -22,24 +22,31 @@ ob_start(); // Start output buffering
     <?php include '../DB_FKPark/dbcon.php'; // Include the database connection file. ?>
 
 
-    <?php 
+    <?php
+// Include the database connection
+ob_start();
+include '../DB_FKPark/dbcon.php';
 
-        if(isset($_GET['id'])){
-            $studentID = $_GET['id']; // Get the id from the URL.
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['delete_student_id'])) {
+        $student_id_to_delete = $_POST['delete_student_id'];
+        
+        // Delete the student from the student table
+        $deleteQuery = "DELETE FROM student WHERE student_ID = ?";
+        $stmt = mysqli_prepare($con, $deleteQuery);
+        mysqli_stmt_bind_param($stmt, 'i', $student_id_to_delete);
+        $deleteResult = mysqli_stmt_execute($stmt);
+
+        if (!$deleteResult) {
+            die("Deletion failed: " . mysqli_error($con));
+        } else {
+            header('Location: ../ManageRegistration/viewRegistration.php?delete_msg=You deleted the data!');
+            exit;
         }
+    }
+}
+?>
 
-        $query = "delete from `student` where `student_ID` = '$studentID'";
-
-        $result = mysqli_query($con, $query);
-
-        if(!$result){
-            die("Query Failed".mysqli_error());
-        }
-        else{
-            header('location:../ManageRegistration/viewRegistration.php?delete_msg=You deleted the data!');
-        }
-
-    ?>
 
     <?php include '../Layout/allUserFooter.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
