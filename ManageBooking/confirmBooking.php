@@ -1,13 +1,13 @@
 <?php
-session_start();
-ob_start();
+    session_start();
+    ob_start();
 
-if (!isset($_SESSION['userID'])) {
-    header("Location: ../Manage Login/login.html");
-    exit;
-}
+    if (!isset($_SESSION['userID'])) {
+        header("Location: ../Manage Login/login.html");
+        exit;
+    }
 
-$studentID = $_SESSION['userID'];
+    $studentID = $_SESSION['userID'];
 ?>
 
 <!DOCTYPE html>
