@@ -75,9 +75,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="Login.css">
     <title>Login Page</title>
 </head>
 <body>
+<div class="container">
     <h2>Login</h2>
     <form method="POST" action="Login.php">
         <label for="role">Role:</label>
@@ -101,5 +103,7 @@
     }
     ?>
     <p><a href="forgotPassword.php">Forgot Password?</a></p>
+
+</div>
 </body>
 </html>

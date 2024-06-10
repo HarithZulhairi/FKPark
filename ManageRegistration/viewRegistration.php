@@ -58,8 +58,9 @@
     </style>
 </head>
 <body>
-    <?php include '../Layout/adminHeader.php'; ?>
     <?php include '../DB_FKPark/dbcon.php'; ?>
+    <?php include '../Layout/adminHeader.php'; ?>
+
 
     <main>
         <h1 id="main_title">List Of Registration</h1>
@@ -119,6 +120,7 @@
         <?php
 ob_start();
 
+
 if (isset($_GET['message'])) {
     echo "<h6>" . htmlspecialchars($_GET['message']) . "</h6>";
 }
@@ -128,7 +130,7 @@ if (isset($_GET['insert_msg'])) {
 }
 
 // Handle form submission for updating student info
-if (isset($_POST['update'])) {
+if (isset($_POST['save_changes'])) {
     $id = $_POST['student_ID'];
     $username = $_POST['student_username'];
     $password = $_POST['student_password'];
@@ -139,28 +141,45 @@ if (isset($_POST['update'])) {
     $birthdate = $_POST['student_birthdate'];
     $profile = $_POST['student_profile'];
 
-    $query = "UPDATE Student SET student_username='$username', student_password='$password', student_email='$email', student_age=$age, student_phoneNum='$phoneNum', student_gender='$gender', student_birthdate='$birthdate', student_profile='$profile' WHERE student_ID=$id";
-    if (mysqli_query($con, $query)) {
+    // Handle file upload if a new profile picture is provided
+    if ($_FILES['student_profile']['size'] > 0) {
+        $profile = 'uploads/' . basename($_FILES['student_profile']['name']);
+        move_uploaded_file($_FILES['student_profile']['tmp_name'], $profile);
+    }
+
+    $query = "UPDATE Student SET student_username=?, student_password=?, student_email=?, student_age=?, student_phoneNum=?, student_gender=?, student_birthdate=?, student_profile=? WHERE student_ID=?";
+    $stmt = mysqli_prepare($con, $query);
+    mysqli_stmt_bind_param($stmt, 'sssiisssi', $username, $password, $email, $age, $phoneNum, $gender, $birthdate, $profile, $id);
+
+    if (mysqli_stmt_execute($stmt)) {
         header("Location: viewRegistration.php?message=Record updated successfully");
         exit;
     } else {
         echo "Error updating record: " . mysqli_error($con);
     }
+
+    mysqli_stmt_close($stmt);
 }
 
-// Handle form submission for deleting student
-if (isset($_POST['delete'])) {
-    $id = $_POST['student_ID'];
-    $query = "DELETE FROM Student WHERE student_ID=:student_id";
+// Handle deletion of student
+if (isset($_GET['delete_student_id'])) {
+    $studentId = $_GET['delete_student_id'];
+
+    // Prepare the delete query
+    $query = "DELETE FROM Student WHERE student_ID = ?";
     $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, ":student_id", $id);
+    mysqli_stmt_bind_param($stmt, 'i', $studentId);
+
     if (mysqli_stmt_execute($stmt)) {
         header("Location: viewRegistration.php?message=Record deleted successfully");
-        exit; // Add exit to stop further execution
+        ob_end_flush();
+
+        exit;
     } else {
         echo "Error deleting record: " . mysqli_error($con);
     }
-    mysqli_stmt_close($stmt); // Close the prepared statement
+
+    mysqli_stmt_close($stmt);
 }
 
 
@@ -235,48 +254,76 @@ ob_end_flush();
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var updateButtons = document.querySelectorAll('.update-button');
-            updateButtons.forEach(function(button) {
-                button.addEventListener('click', function() {
-                    var studentId = this.getAttribute('data-id');
+document.addEventListener('DOMContentLoaded', function () {
+    // Handle the update buttons
+    var updateButtons = document.querySelectorAll('.update-button');
+    updateButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var studentId = this.getAttribute('data-id');
 
-                    // Fetch the student data using studentId
-                    fetch(`getStudentData.php?id=${studentId}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            document.getElementById('updateStudentId').value = data.student_ID;
-                            document.getElementById('updateUsername').value = data.student_username;
-                            document.getElementById('updatePassword').value = data.student_password;
-                            document.getElementById('updateEmail').value = data.student_email;
-                            document.getElementById('updateAge').value = data.student_age;
-                            document.getElementById('updatePhoneNumber').value = data.student_phoneNum;
-                            document.getElementById('updateGender').value = data.student_gender;
-                            document.getElementById('updateBirthday').value = data.student_birthdate;
-                        });
+            // Fetch the student data using studentId
+            fetch(`getStudentData.php?id=${studentId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('updateStudentId').value = data.student_ID;
+                    document.getElementById('updateUsername').value = data.student_username;
+                    document.getElementById('updatePassword').value = data.student_password;
+                    document.getElementById('updateEmail').value = data.student_email;
+                    document.getElementById('updateAge').value = data.student_age;
+                    document.getElementById('updatePhoneNumber').value = data.student_phoneNum;
+                    document.getElementById('updateGender').value = data.student_gender;
+                    document.getElementById('updateBirthday').value = data.student_birthdate;
                 });
-            });
+        });
+    });
 
-            document.getElementById('updateForm').addEventListener('submit', function(event) {
-                event.preventDefault();
+    document.getElementById('updateForm').addEventListener('submit', function(event) {
+        event.preventDefault();
 
-                // Implement the form submission to update student data
-                var formData = new FormData(this);
-                fetch('viewRegistration.php', {
-                    method: 'POST',
-                    body: formData
+        // Implement the form submission to update student data
+        var formData = new FormData(this);
+        fetch('viewRegistration.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert('Student updated successfully!');
+            location.reload();
+        })
+        .catch(error => {
+            alert('Failed to update student.');
+            console.error('Error:', error);
+        });
+    });
+
+    // Handle the delete buttons
+    var deleteButtons = document.querySelectorAll('.delete-button');
+    deleteButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var studentId = this.getAttribute('data-id');
+            if (confirm('Are you sure you want to delete this student?')) {
+                fetch(`viewRegistration.php?delete_student_id=${studentId}`, {
+                    method: 'GET'
                 })
                 .then(response => response.text())
                 .then(data => {
-                    alert('Student updated successfully!');
-                    location.reload();
+                    alert('Student deleted successfully!');
+                    document.getElementById(`student-${studentId}`).remove();
                 })
                 .catch(error => {
-                    alert('Failed to update student.');
+                    alert('Failed to delete student.');
                     console.error('Error:', error);
                 });
-            });
+            }
         });
+    });
+});
+</script>
+
+
+
+
 
 
     </script>

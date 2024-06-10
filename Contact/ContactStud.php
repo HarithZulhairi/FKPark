@@ -56,10 +56,10 @@
     <div class="container-contact-us">
         <table>
             <tr>
-                <th><img src="../resource/Syariffudin.jpg" alt="akmal" width="100" height="100" class="our-image"></th>
-                <th><img src="../resource/ArifAzlan.jpg" alt="arif" width="100" height="100" class="our-image"></th>
-                <th><img src="../resource/Harith.jpg" alt="harith" width="100" height="100" class="our-image"></th>
-                <th><img src="../resource/Azam.jpg" alt="Azam" width="100" height="100" class="our-image"></th>
+                <th><img src="../resource/akmal.png" alt="akmal" width="100" height="100" class="our-image"></th>
+                <th><img src="../resource/arif.png" alt="arif" width="100" height="100" class="our-image"></th>
+                <th><img src="../resource/harith.png" alt="harith" width="100" height="100" class="our-image"></th>
+                <th><img src="../resource/azam.png" alt="Azam" width="100" height="100" class="our-image"></th>
             </tr>
             <tr>
                 <td>CB22071</td>

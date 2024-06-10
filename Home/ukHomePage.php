@@ -67,15 +67,17 @@
     <main class="container">
         <section class="text-section">
             <h1>FKPARK</h1>
-            <p>We made it easier for you to park your vehicle.</p>
-            <button onclick="window.location.href='../ManageBooking/createBooking.php'">Book Now</button>
+            <p>They are waiting for you, <?php echo htmlspecialchars($_SESSION['username']) ?></p>
+            <p>Approve them now!</p>
+
+            <button onclick="window.location.href='../ManageRegistration/VehicleApproval.php'">Approve</button>
         </section>
         <section class="image-section">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide"><img src="../resource/illustration.jpg" alt="Parking lot 1 at FKPARK"></div>
                     <div class="swiper-slide"><img src="../resource/FKPark_Map.png" alt="Parking lot 2 at FKPARK"></div>
-                    <div class="swiper-slide"><img src="../resource/parkingFkom3.jpg" alt="Parking lot 3 at FKPARK"></div>
+                    <div class="swiper-slide"><img src="../resource/FK.jpg" alt="Parking lot 3 at FKPARK"></div>
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>

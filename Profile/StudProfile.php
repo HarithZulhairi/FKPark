@@ -6,7 +6,32 @@ if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    
+    // Query to check username and password
+    $query = "SELECT * FROM `student` WHERE student_username = ? AND student_password = ?";
+    $stmt = mysqli_prepare($con, $query);
+    mysqli_stmt_bind_param($stmt, 'ss', $username, $password);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    
+    if (mysqli_num_rows($result) == 1) {
+        $user = mysqli_fetch_assoc($result);
+        $_SESSION['student_ID'] = $user['student_ID'];
+        header('Location: StudProfile.php');
+    } else {
+        echo "Invalid login credentials.";
+    }
+    
+    mysqli_stmt_close($stmt);
+}
+
+
+
 // Fetching all student data
+
 $query = "SELECT * FROM `student`";
 $result = mysqli_query($con, $query);
 

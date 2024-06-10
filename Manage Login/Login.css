@@ -1,123 +1,86 @@
-/* Login.css */
+/* login2.css */
+
 body {
-  background-color: #f9f9f9;
-  background-image: url('../resource/parkingFkom.jpg');
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url('../resource/Blue-Polygon.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  margin: 0;
 }
 
-.card {
-  background: #ebebeb;
+.container {
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+  padding: 40px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 30px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   max-width: 400px;
-  width: 100%;
 }
 
-.d-flex {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: space-around;
-  flex-wrap: wrap;
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
 }
 
 form {
-  display: flex;
-  flex-direction: column;
+  margin-top: 20px;
 }
 
-.form-label {
-  margin-bottom: 8px;
+label {
+  display: block;
+  margin-bottom: 10px;
   color: #555;
-  font-size: 16px;
 }
 
-.form-control {
+input[type="text"],
+input[type="password"],
+select {
+  width: 100%;
   padding: 12px;
   margin-bottom: 20px;
   border: 1px solid #ddd;
-  border-radius: 6px;
+  border-radius: 5px;
+}
+
+button[type="submit"] {
   width: 100%;
-  box-sizing: border-box;
-  transition: border-color 0.3s;
-  font-size: 16px;
-}
-
-.form-control:focus {
-  border-color: #007bff;
-}
-
-.form-select {
   padding: 12px;
-  margin-bottom: 20px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  width: 100%;
-  box-sizing: border-box;
-  font-size: 16px;
-}
-
-.d-flex .form-check {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.form-check-input {
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-.form-check-label {
-  margin: 0;
-  cursor: pointer;
-}
-
-.forgot-password {
-  margin-top: -8px;
-  text-align: center;
-}
-
-.forgot-password a {
-  color: #007bff;
-  text-decoration: none;
-  transition: color 0.3s;
-  font-size: 14px;
-  padding-top: 5px;
-}
-
-.forgot-password a:hover {
-  color: #0056b3;
-}
-
-.btn-primary {
+  border: none;
   background-color: #007bff;
   color: #fff;
-  padding: 14px;
-  border: none;
-  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s;
-  font-size: 16px;
-  text-transform: uppercase;
+  border-radius: 5px;
 }
 
-.btn-primary:hover {
+button[type="submit"]:hover {
   background-color: #0056b3;
 }
 
-.btn-block {
-  width: 100%;
+.error-message {
+  color: red;
+  text-align: center;
   margin-top: 10px;
 }
 
+p {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
 
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px; 
+}
