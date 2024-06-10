@@ -44,6 +44,9 @@
             <p class="font-weight-bold">DASHBOARD</p>
         </div>
 
+       
+
+
         <div class="main-cards">
 
               <div class="card">
@@ -159,6 +162,8 @@
 
         </div>
 
+            
+
         <div class="charts">
 
               <div class="charts-card">
@@ -172,8 +177,41 @@
             </div>
 
         </div>
+
+        <div class="search-bar">
+            <form method="POST" action="">
+                <input type="text" name="search_query" placeholder="Search for parking area...">
+                <input type="submit" value="Search">
+            </form>
+
+            <!-- Search Results -->
+        </div>
+
+
+    <?php
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $search_query = mysqli_real_escape_string($con, $_POST['search_query']);
+            $searchQuery = "SELECT * FROM parkingArea WHERE parkingArea_name LIKE '%$search_query%'";
+            $searchResult = mysqli_query($con, $searchQuery);
+
+            if ($searchResult && mysqli_num_rows($searchResult) > 0) {
+                echo '<div class="search-results">';
+                echo '<p>Search Results:</p>';
+                while ($row = mysqli_fetch_assoc($searchResult)) {
+                    echo '<p>' . $row['parkingArea_name'] . '</p>';
+                }
+                echo '</div>';
+            } else {
+                echo '<div class="search-results">';
+                echo '<p>No results found for "' . htmlspecialchars($search_query) . '"</p>';
+                echo '</div>';
+            }
+        }
+        ?>
     </main>
     <!-- End Main -->
+
+    
 
 </div>
 
