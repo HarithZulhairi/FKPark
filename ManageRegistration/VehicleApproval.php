@@ -119,6 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <th>Student ID</th>
                         <th>Approve</th>
                         <th>Decline</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -139,6 +140,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             echo '<td>' . htmlspecialchars($row['student_ID']) . '</td>';
                             echo '<td><button type="button" class="btn btn-success approve-button" data-id="' . htmlspecialchars($row['vehicle_numPlate']) . '" data-student="' . htmlspecialchars($row['student_ID']) . '">Approve</button></td>';
                             echo '<td><button type="button" class="btn btn-danger cancel-button" data-id="' . htmlspecialchars($row['vehicle_numPlate']) . '" data-student="' . htmlspecialchars($row['student_ID']) . '">Decline</button></td>';
+                            echo '<td>
+                                    <form method="POST" action="deleteVehicle.php" onsubmit="return confirm(\'Are you sure you want to delete this vehicle?\');">
+                                        <input type="hidden" name="delete_vehicle_numPlate" value="' . htmlspecialchars($row['vehicle_numPlate']) . '">
+                                        <input type="hidden" name="student_ID" value="' . htmlspecialchars($row['student_ID']) . '">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                  </td>';
+                            echo '</tr>';
                             echo '</tr>';
                         }
                     }
