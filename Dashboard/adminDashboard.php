@@ -115,7 +115,7 @@
               <div class="card">
                   <div class="card-inner">
                       <p class="text-primary">TOTAL BOOKING MADE</p>
-                      <span><img  class="colored_image" style="width:50px; height:50px;" src="../resource/check.png" alt="Available"></span>
+                      <span><img  class="colored_image" style="width:50px; height:50px;" src="../resource/check1.png" alt="Available"></span>
                   </div>
                   <span class="text-primary font-weight-bold">
                     <?php

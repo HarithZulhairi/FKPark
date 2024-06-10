@@ -8,7 +8,7 @@ body {
 }
 
 .colored_image{
-  filter: invert(10%) sepia(100%) saturate(900%);
+  filter: invert(50%) sepia(100%) saturate(900%);
 }
 
 .material-icons-outlined {
