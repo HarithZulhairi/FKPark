@@ -1,36 +1,18 @@
 <?php
     session_start();
 
-    if (!isset($_SESSION['userID'])) {
-        header("Location: ../Manage Login/login.html");
+    if (!isset($_SESSION['userID']) || !isset($_GET['parkingSlotName']) || !isset($_GET['bookingDate']) || !isset($_GET['startTime']) || !isset($_GET['endTime'])) {
+        header("Location: ../Manage Login/login.php"); // Redirect to the login page
         exit;
     }
 
-    $studentID = $_SESSION['userID'];
+    $parkingSlotName = $_GET['parkingSlotName'];
+    $bookingDate = $_GET['bookingDate'];
+    $startTime = $_GET['startTime'];
+    $endTime = $_GET['endTime'];
 
-    if (!isset($_GET['bookingID'])) {
-        echo "No booking ID provided.";
-        exit;
-    }
-
-    $bookingID = $_GET['bookingID'];
-
-    $con = mysqli_connect("localhost", "root", "", "fkpark");
-    if (!$con) {
-        die('Could not connect: ' . mysqli_connect_error());
-    }
-
-    $query = "SELECT booking_QRCode FROM booking WHERE booking_ID = '$bookingID' AND student_ID = '$studentID'";
-    $result = mysqli_query($con, $query);
-    $booking = mysqli_fetch_assoc($result);
-
-    if (!$booking) {
-        echo "Booking not found or you do not have permission to view this booking.";
-        exit;
-    }
-
-    $qrCode = $booking['booking_QRCode'];
-    mysqli_close($con);
+    $qrData = "Parking Slot: $parkingSlotName | Date: $bookingDate | Start Time: $startTime | End Time: $endTime";
+    $qrDataEncoded = urlencode($qrData);
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +26,21 @@
 <body>
     <div class="qr-container">
         <h1>Your Booking QR Code</h1>
-        <img style="width:30%" src="data:image/png;base64,<?php echo base64_encode($qrCode); ?>" alt="QR Code">
+        <img style="width:30%" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<?php echo $qrDataEncoded; ?>" alt="QR Code">
+        <div id="bookingInfo" style="margin-top: 20px;">
+            <p>Parking Slot: <?php echo $parkingSlotName; ?></p>
+            <p>Date: <?php echo $bookingDate; ?></p>
+            <p>Start Time: <?php echo $startTime; ?></p>
+            <p>End Time: <?php echo $endTime; ?></p>
+        </div>
+        <button type="button" class="back-button" onclick="confirmBack()">Back</button>
     </div>
 </body>
+
+<script>
+        function confirmBack() {
+            window.history.back();
+        }
+</script>
 </html>
+

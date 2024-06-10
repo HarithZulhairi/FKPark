@@ -32,7 +32,7 @@
 
             <div class="booking-filter">
                 <div class="filter-bar">
-                    <a href="filteredCreateBooking.php" id="show-vacant-btn"><i class="fa-solid fa-filter" style="padding-right: 8px"></i>Show vacant slots today</a>
+                    <a href="createBooking.php" id="show-vacant-btn"><i class="fa-solid fa-filter" style="padding-right: 8px"></i>Show all available slots</a>
                 </div>
             </div>
 
@@ -51,7 +51,8 @@
                         <th>Action</th>
                     </tr>
                     <?php
-                        $result = mysqli_query($con, "SELECT * FROM parkingSlot WHERE parkingSlot_name LIKE 'B1%' AND parkingSlot_status = 'AVAILABLE'");
+                        $today = date('Y-m-d');
+                        $result = mysqli_query($con, "SELECT * FROM parkingSlot WHERE parkingSlot_name LIKE 'B1%' AND (parkingSlot_status = 'AVAILABLE' AND NOT EXISTS (SELECT * FROM booking WHERE booking.parkingSlot_ID = parkingSlot.parkingSlot_ID AND booking_date = '{$today}'))");
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
                                 $isAvailable = ($row['parkingSlot_status'] == 'AVAILABLE') ? 'true' : 'false';
@@ -74,7 +75,8 @@
                         <th>Action</th>
                     </tr>
                     <?php
-                        $result = mysqli_query($con, "SELECT * FROM parkingSlot WHERE parkingSlot_name LIKE 'B2%' AND parkingSlot_status = 'AVAILABLE'");
+                        $today = date('Y-m-d');
+                        $result = mysqli_query($con, "SELECT * FROM parkingSlot WHERE parkingSlot_name LIKE 'B2%' AND (parkingSlot_status = 'AVAILABLE' AND NOT EXISTS (SELECT * FROM booking WHERE booking.parkingSlot_ID = parkingSlot.parkingSlot_ID AND booking_date = '{$today}'))");
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
                                 $isAvailable = ($row['parkingSlot_status'] == 'AVAILABLE') ? 'true' : 'false';
@@ -98,7 +100,8 @@
                         <th>Action</th>
                     </tr>
                     <?php
-                        $result = mysqli_query($con, "SELECT * FROM parkingSlot WHERE parkingSlot_name LIKE 'B3%' AND parkingSlot_status = 'AVAILABLE'");
+                        $today = date('Y-m-d');
+                        $result = mysqli_query($con, "SELECT * FROM parkingSlot WHERE parkingSlot_name LIKE 'B3%' AND (parkingSlot_status = 'AVAILABLE' AND NOT EXISTS (SELECT * FROM booking WHERE booking.parkingSlot_ID = parkingSlot.parkingSlot_ID AND booking_date = '{$today}'))");
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
                                 $isAvailable = ($row['parkingSlot_status'] == 'AVAILABLE') ? 'true' : 'false';
@@ -121,7 +124,8 @@
                         <th>Action</th>
                     </tr>
                     <?php
-                        $result = mysqli_query($con, "SELECT * FROM parkingSlot WHERE parkingSlot_name LIKE 'M1%' AND parkingSlot_status = 'AVAILABLE'");
+                        $today = date('Y-m-d');
+                        $result = mysqli_query($con, "SELECT * FROM parkingSlot WHERE parkingSlot_name LIKE 'M1%' AND (parkingSlot_status = 'AVAILABLE' AND NOT EXISTS (SELECT * FROM booking WHERE booking.parkingSlot_ID = parkingSlot.parkingSlot_ID AND booking_date = '{$today}'))");
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
                                 $isAvailable = ($row['parkingSlot_status'] == 'AVAILABLE') ? 'true' : 'false';

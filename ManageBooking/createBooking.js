@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        var tabButtons = document.querySelectorAll('.tab-button');
+        tabButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var sectionId = this.getAttribute('data-section');
+                showTab(sectionId, this);
+            });
+        });
+    });
+    
+    
     // Function to handle tab switching
     function showTab(sectionId, element) {
         var tabs = document.querySelectorAll('.tab-button');
@@ -44,6 +55,38 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault();
             var parkingSpot = event.target.closest('tr').querySelector('td').textContent;
             window.location.href = 'confirmBooking.php?parkingSpot=' + encodeURIComponent(parkingSpot);
+
         }
     });
+
+    document.getElementById('show-vacant-btn').addEventListener('click', function() {
+        var today = new Date().toISOString().slice(0, 10); // Format today's date as YYYY-MM-DD
+        var sections = ['sectionA', 'sectionB', 'sectionC', 'sectionD'];
+
+        sections.forEach(function(section) {
+            var table = document.getElementById(section).querySelector('table');
+            fetchVacantSpots(table, section.charAt(section.length - 1), today);
+        });
+    });
 });
+
+function fetchVacantSpots(table, section, date) {
+    // Send an AJAX request to the server to get vacant spots
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'getVacantSpots.php?section=' + section + '&date=' + date, true);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            var spots = JSON.parse(this.responseText);
+            var rows = '';
+            spots.forEach(function(spot) {
+                rows += '<tr data-available="true">';
+                rows += '<td>' + spot.parkingSlot_name + '</td>';
+                rows += '<td><a href="confirmBooking.php?parkingSpot=' + spot.parkingSlot_name + '" class="book-link">Book</a></td>';
+                rows += '</tr>';
+            });
+            table.innerHTML = rows;
+        }
+    };
+    xhr.send();
+}
+
