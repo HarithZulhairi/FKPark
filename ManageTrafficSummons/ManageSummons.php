@@ -39,47 +39,55 @@ session_start();
                 <th style="width:180px;">Violation</th>
                 <th style="width:180px;">Student ID</th>
                 <th style="width:180px;">Action</th>
+                <th style="width:180px;">QR Code</th>
             </tr>
 
             <tbody>
-            <?php
-                        $query = "SELECT s.summon_ID, s.vehicle_numPlate, s.summon_violation, s.summon_datetime, s.summon_location,
-                                  v.student_ID
-                                  FROM summon s
-                                  JOIN vehicle v ON s.vehicle_numPlate = v.vehicle_numPlate";
+            <?php         
+                $query = "SELECT s.summon_ID, s.vehicle_numPlate, s.summon_violation, s.summon_datetime, s.summon_location,
+                          v.student_ID, st.student_username
+                          FROM summon s
+                          JOIN vehicle v ON s.vehicle_numPlate = v.vehicle_numPlate
+                          JOIN student st ON v.student_ID = st.student_ID";
 
-                        $result = mysqli_query($con, $query);
+                $result = mysqli_query($con, $query);
 
-                        if(!$result){
-                            die("query Failed".mysqli_error());
-                        }
-                        else{
-                            while($row = mysqli_fetch_assoc($result)){
+                if (!$result) {
+                    die("Query failed: " . mysqli_error($con));
+                } else {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                ?>
+                    <tr>
+                        <td><?php echo$row['summon_ID']; ?></td>
+                        <td><?php echo$row['vehicle_numPlate']; ?></td>
+                        <td><?php echo$row['summon_violation']; ?></td>
+                        <td><?php echo$row['student_ID']; ?></td>
 
-                                ?>
-                                    <tr>
-                                        <td><?php echo$row['summon_ID']; ?></td>
-                                        <td><?php echo$row['vehicle_numPlate']; ?></td>
-                                        <td><?php echo$row['summon_violation']; ?></td>
-                                        <td><?php echo$row['student_ID']; ?></td>
+                        <td style="border-collapse: collapse;display: flex; align-items: center;">
+                                <div style="margin:10px 10px;" class="button-container">
+                                    <a href="viewSummons_data.php?summon_id=<?php echo $row['summon_ID']; ?>" >
+                                        <button type="view">View</button>
+                                    </a>
+                                </div>
 
-                                        <td style="border-collapse: collapse;display: flex; align-items: center;">
-                                                <div style="margin:10px 10px;" class="button-container">
-                                                    <a href="event-link-here" >
-                                                        <button type="view">View</button>
-                                                    </a>
-                                                </div>
+                                <button type="submit" class="button btn btn-success" data-bs-toggle="modal" data-bs-target="#updateSummonsModal"
+                                onclick="populateUpdateModal('<?php echo $row['summon_ID']; ?>','<?php echo $row['vehicle_numPlate']; ?>','<?php echo $row['summon_violation']; ?>',
+                                '<?php echo $row['summon_datetime']; ?>','<?php echo $row['summon_location']; ?>')" style="margin-right: 40px;">Update</button>
 
-                                                <button type="submit" class="button btn btn-success" data-bs-toggle="modal" data-bs-target="#updateSummonsModal"
-                                                onclick="populateUpdateModal('<?php echo $row['summon_ID']; ?>','<?php echo $row['vehicle_numPlate']; ?>','<?php echo $row['summon_violation']; ?>',
-                                                '<?php echo $row['summon_datetime']; ?>','<?php echo $row['summon_location']; ?>')" style="margin-right: 40px;">Update</button>
-
-                                                <a href="#" class="button btn btn-danger" onclick="confirmDelete('<?php echo $row['summon_ID']; ?>')">Delete</a>
-                                    </tr>
-                                <?php
-                            }
-                        }
-                    ?>
+                                <a href="#" class="button btn btn-danger" onclick="confirmDelete('<?php echo $row['summon_ID']; ?>')">Delete</a>
+                        </td>
+                        <td>
+                        <div style="padding-left:20px;" id="imgBox">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=50x50&data=<?php echo urlencode
+                            ('Plate: ' . $row['vehicle_numPlate'] . '|Violation: ' . $row['summon_violation'] . 
+                            '|Student: ' . $row['student_username']); ?>" alt="qrImage">
+                        </div> 
+                        </td>
+                    </tr>
+                <?php
+                    }
+                }
+                ?>
 
             </tbody>
 
