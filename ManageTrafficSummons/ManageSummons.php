@@ -48,14 +48,16 @@ session_start();
                           v.student_ID, st.student_username
                           FROM summon s
                           JOIN vehicle v ON s.vehicle_numPlate = v.vehicle_numPlate
-                          JOIN student st ON v.student_ID = st.student_ID";
+                          JOIN student st ON v.student_ID = st.student_ID
+                          ORDER BY s.summon_ID";
 
                 $result = mysqli_query($con, $query);
 
                 if (!$result) {
                     die("Query failed: " . mysqli_error($con));
                 } else {
-                    while ($row = mysqli_fetch_assoc($result)) {
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
                 ?>
                     <tr>
                         <td><?php echo$row['summon_ID']; ?></td>
@@ -74,7 +76,7 @@ session_start();
                                 onclick="populateUpdateModal('<?php echo $row['summon_ID']; ?>','<?php echo $row['vehicle_numPlate']; ?>','<?php echo $row['summon_violation']; ?>',
                                 '<?php echo $row['summon_datetime']; ?>','<?php echo $row['summon_location']; ?>')" style="margin-right: 40px;">Update</button>
 
-                                <a href="#" class="button btn btn-danger" onclick="confirmDelete('<?php echo $row['summon_ID']; ?>')">Delete</a>
+                                <a href="#" class="button btn btn-danger" onclick="confirmDelete('<?php echo $row['summon_ID']; ?>', '<?php echo $row['vehicle_numPlate']; ?>')">Delete</a>
                         </td>
                         <td>
                         <div style="padding-left:20px;" id="imgBox">
@@ -86,6 +88,9 @@ session_start();
                     </tr>
                 <?php
                     }
+                  }else{
+                    echo "<tr><td colspan='6'>No Summons available.</td></tr>";
+                  }
                 }
                 ?>
 
@@ -214,7 +219,7 @@ session_start();
 
                     <div class="form-group">
                         <label for="update_vehicleNumPlate">Vehicle Number Plate</label>
-                        <input type="text" id="update_vehicleNumPlate" name="vehicleNumPlate" class="form-control" required>
+                        <input type="text" id="update_vehicleNumPlate" name="vehicleNumPlate" class="form-control" readonly>
                     </div>
 
                     <div class="form-group">

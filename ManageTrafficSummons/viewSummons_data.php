@@ -38,6 +38,20 @@
         $student_phoneNum = $row['student_phoneNum'];
         $student_demtot = $row['student_demtot'];
 
+        $enforcement = '';
+        if($student_demtot < 20){
+            $enforcement = 'Warning is issued!';
+        }
+        else if($student_demtot < 50){
+            $enforcement = 'Campus Vehicle Permission Revoked for 1 semester!';
+        }
+        else if($student_demtot < 80){
+            $enforcement = 'Campus Vehicle Permission Revoked for 2 semesters!';
+        }else{
+            $enforcement = 'Campus Vehicle Permission Revoked Indefinitely!';
+        }
+
+
         $qrData = "Vehicle Number Plate: $vehicle_numPlate | DateTime: $summon_datetime | Violation: $summon_violation | Student: $student_username ";
         $qrDataEncoded = urlencode($qrData);
     }
@@ -48,26 +62,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="QRBooking.css">
-    <title>QR Code for Summons</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="ManageSummons.css" rel="stylesheet">
+    <title>Manage Summons Page</title>
 </head>
-<body>
-    <div class="qr-container">
-        <h1>Your Summons QR Code</h1>
-        <img style="width:30%" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<?php echo $qrDataEncoded; ?>" alt="QR Code">
-        <div id="bookingInfo" style="margin-top: 20px;">
-            <p>Parking Slot: <?php echo $summon_violation; ?></p>
-            <p>Date: <?php echo $vehicle_type; ?></p>
-            <p>Start Time: <?php echo $student_username; ?></p>
-            <p>End Time: <?php echo $student_phoneNum; ?></p>
-        </div>
-        <button type="button" class="back-button" onclick="confirmBack()">View booking</button>
-    </div>
-</body>
+<style>
 
-<script>
+.qr-container {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.qr-container h2{
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.summonDetails {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.summonDetails table {
+    width: 100%;
+    max-width: 1000px;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.summonDetails th,
+.summonDetails td {
+    padding: 8px;
+    border: 1px solid black;
+}
+
+.summonDetails th {
+    background-color: #463FA7;
+    color: white;
+    font-weight: bold;
+}
+
+.summonDetails td {
+    background-color: #fff;
+}
+
+.sidetitle {
+    width: 200px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.back-button {
+    width: 100%;
+    max-width: 200px;
+    padding: 8px;
+    text-decoration: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    margin-top: 20px;
+}
+
+.back-button:hover {
+    transition: 0.3s;
+    background-color: #005fc4;
+}
+
+</style>
+<body>
+
+    <?php include '../Layout/UKHeader.php'; ?>
+
+    <main>
+    
+    <div class="qr-container">
+        <h2>Summon <?php echo $summon_ID ?> Details</h2>
+        <img style="width:10%" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<?php echo $qrDataEncoded; ?>" alt="QR Code">
+        <div class="summonDetails" style="margin-top: 20px;">
+            <table>
+                <tr>
+                    <th  colspan="2">Summon Details</th>
+                </tr>
+                <tr>
+                    <th class="sidetitle">Vehicle Number Plate:</th>
+                    <td><?php echo $vehicle_numPlate ?></td>
+                </tr>
+                <tr>
+                    <th class="sidetitle">Vehicle Type:</th>
+                    <td><?php echo $vehicle_type ?>: <?php echo $vehicle_brand?></td>
+                </tr>
+                <tr>
+                    <th class="sidetitle">Violation:</th>
+                    <td><?php echo $summon_violation?></td>
+                </tr>
+                <tr>
+                    <th class="sidetitle">DateTime of Summons:</th>
+                    <td><?php echo $summon_datetime ?></td>
+                </tr>
+                <tr>
+                    <th class="sidetitle">Demerit Point:</th>
+                    <td><?php echo $summon_demerit ?></td>
+                </tr>
+                <tr>
+                    <th class="sidetitle">Student Username:</th>
+                    <td><?php echo $student_username ?></td>
+                </tr>
+                <tr>
+                    <th class="sidetitle">Student Phone Number:</th>
+                    <td><?php echo $student_phoneNum ?></td>
+                </tr>
+                <tr>
+                    <th class="sidetitle">Student Total Demerit:</th>
+                    <td><?php echo $student_demtot ?></td>
+                </tr>
+                <tr>
+                    <th colspan="2"><strong>Enforcement:</strong></th>
+                </tr>
+                <tr>
+                    <td style="color: #FF4919; font-weight: bold;" colspan="2"><?php echo $enforcement ?></td>
+                </tr>
+            </table>
+         </div>
+        <button type="button" class="back-button" onclick="confirmBack()">Back</button>
+    </div>          
+
+
+    
+    </main>
+
+
+    <?php include '../Layout/allUserFooter.php'; ?>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
         function confirmBack() {
-            window.location.href = 'viewBooking.php';
+            window.location.href = 'ManageSummons.php';
         }
-</script>
+    </script>
+</body>
 </html>
+
+
