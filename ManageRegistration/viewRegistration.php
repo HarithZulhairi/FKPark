@@ -1,9 +1,84 @@
+<?php
+include '../DB_FKPark/dbcon.php';
+
+ob_start();
+
+// Display messages if any
+if (isset($_GET['message'])) {
+    echo "<h6>" . htmlspecialchars($_GET['message']) . "</h6>";
+}
+
+if (isset($_GET['insert_msg'])) {
+    echo "<h6>" . htmlspecialchars($_GET['insert_msg']) . "</h6>";
+}
+
+// Handle form submission for updating student info
+if (isset($_POST['save_changes'])) {
+    $id = $_POST['student_ID'];
+    $username = $_POST['student_username'];
+    $password = $_POST['student_password'];
+    $email = $_POST['student_email'];
+    $age = $_POST['student_age'];
+    $phoneNum = $_POST['student_phoneNum'];
+    $gender = $_POST['student_gender'];
+    $birthdate = $_POST['student_birthdate'];
+    $profile = $_POST['student_profile'];
+
+    // Handle file upload if a new profile picture is provided
+    if (isset($_FILES['student_profile']) && $_FILES['student_profile']['size'] > 0) {
+        $profile = 'uploads/' . basename($_FILES['student_profile']['name']);
+        if (!move_uploaded_file($_FILES['student_profile']['tmp_name'], $profile)) {
+            echo "Error uploading file.";
+            exit;
+        }
+    }
+
+    $query = "UPDATE student SET student_username=?, student_password=?, student_email=?, student_age=?, student_phoneNum=?, student_gender=?, student_birthdate=?, student_profile=? WHERE student_ID=?";
+    $stmt = mysqli_prepare($con, $query);
+    mysqli_stmt_bind_param($stmt, 'sssiisssi', $username, $password, $email, $age, $phoneNum, $gender, $birthdate, $profile, $id);
+
+    if (mysqli_stmt_execute($stmt)) {
+        header("Location: viewRegistration.php?message=Record updated successfully");
+        exit;
+    } else {
+        echo "Error updating record: " . mysqli_error($con);
+    }
+
+    mysqli_stmt_close($stmt);
+}
+
+// Handle deletion of student
+if (isset($_GET['delete_student_id'])) {
+    $studentId = $_GET['delete_student_id'];
+
+    // Prepare the delete query
+    $query = "DELETE FROM student WHERE student_ID = ?";
+    $stmt = mysqli_prepare($con, $query);
+    mysqli_stmt_bind_param($stmt, 'i', $studentId);
+
+    if (mysqli_stmt_execute($stmt)) {
+        header("Location: viewRegistration.php?message=Record deleted successfully");
+        ob_end_flush();
+        exit;
+    } else {
+        echo "Error deleting record: " . mysqli_error($con);
+    }
+
+    mysqli_stmt_close($stmt);
+}
+
+// Fetch students to display
+$query = "SELECT * FROM student";
+$result = mysqli_query($con, $query);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>List of Registration</title>
     <style>
         html, body {
@@ -53,14 +128,10 @@
         .view-container {
             text-align: center;
         }
-
-      
     </style>
 </head>
 <body>
-    <?php include '../DB_FKPark/dbcon.php'; ?>
     <?php include '../Layout/adminHeader.php'; ?>
-
 
     <main>
         <h1 id="main_title">List Of Registration</h1>
@@ -88,15 +159,12 @@
                 </thead>
                 <tbody>
                     <?php
-                    $query = "SELECT * FROM `student`";
-                    $result = mysqli_query($con, $query);
-
-                    if(!$result){
+                    if (!$result) {
                         die("Query failed: " . mysqli_error($con));
                     } else {
-                        while($row = mysqli_fetch_assoc($result)){
+                        while ($row = mysqli_fetch_assoc($result)) {
                     ?>
-                    <tr>
+                    <tr id="student-<?php echo htmlspecialchars($row['student_ID']); ?>">
                         <td><?php echo htmlspecialchars($row['student_ID']); ?></td>
                         <td><?php echo htmlspecialchars($row['student_username']); ?></td>
                         <td><?php echo htmlspecialchars($row['student_password']); ?></td>
@@ -116,85 +184,6 @@
                 </tbody>
             </table>
         </div>
-
-        <?php
-ob_start();
-
-
-if (isset($_GET['message'])) {
-    echo "<h6>" . htmlspecialchars($_GET['message']) . "</h6>";
-}
-
-if (isset($_GET['insert_msg'])) {
-    echo "<h6>" . htmlspecialchars($_GET['insert_msg']) . "</h6>";
-}
-
-// Handle form submission for updating student info
-if (isset($_POST['save_changes'])) {
-    $id = $_POST['student_ID'];
-    $username = $_POST['student_username'];
-    $password = $_POST['student_password'];
-    $email = $_POST['student_email'];
-    $age = $_POST['student_age'];
-    $phoneNum = $_POST['student_phoneNum'];
-    $gender = $_POST['student_gender'];
-    $birthdate = $_POST['student_birthdate'];
-    $profile = $_POST['student_profile'];
-
-    // Handle file upload if a new profile picture is provided
-    if ($_FILES['student_profile']['size'] > 0) {
-        $profile = 'uploads/' . basename($_FILES['student_profile']['name']);
-        move_uploaded_file($_FILES['student_profile']['tmp_name'], $profile);
-    }
-
-    $query = "UPDATE Student SET student_username=?, student_password=?, student_email=?, student_age=?, student_phoneNum=?, student_gender=?, student_birthdate=?, student_profile=? WHERE student_ID=?";
-    $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, 'sssiisssi', $username, $password, $email, $age, $phoneNum, $gender, $birthdate, $profile, $id);
-
-    if (mysqli_stmt_execute($stmt)) {
-        header("Location: viewRegistration.php?message=Record updated successfully");
-        exit;
-    } else {
-        echo "Error updating record: " . mysqli_error($con);
-    }
-
-    mysqli_stmt_close($stmt);
-}
-
-// Handle deletion of student
-if (isset($_GET['delete_student_id'])) {
-    $studentId = $_GET['delete_student_id'];
-
-    // Prepare the delete query
-    $query = "DELETE FROM Student WHERE student_ID = ?";
-    $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, 'i', $studentId);
-
-    if (mysqli_stmt_execute($stmt)) {
-        header("Location: viewRegistration.php?message=Record deleted successfully");
-        ob_end_flush();
-
-        exit;
-    } else {
-        echo "Error deleting record: " . mysqli_error($con);
-    }
-
-    mysqli_stmt_close($stmt);
-}
-
-
-// Fetch students to display
-$query = "SELECT * FROM Student";
-$result = mysqli_query($con, $query);
-
-
-
-mysqli_close($con);
-ob_end_flush();
-?>
-
-
-        
 
         <!-- Modal -->
         <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
@@ -232,100 +221,52 @@ ob_end_flush();
                                 <input type="text" class="form-control" placeholder="Enter gender" id="updateGender" name="student_gender" required>
                             </div>
                             <div class="mb-3">
-                                <label for="updateBirthday" class="form-label">Birthdate</label>
-                                <input type="date" class="form-control" placeholder="Enter Birthdate" id="updateBirthday" name="student_birthdate" required>
+                                <label for="updateBirthdate" class="form-label">Birthdate</label>
+                                <input type="date" class="form-control" id="updateBirthdate" name="student_birthdate" required>
                             </div>
                             <div class="mb-3">
                                 <label for="updateProfilePicture" class="form-label">Profile Picture</label>
-                                <input type="file" class="form-control" accept="image/*" id="updateProfilePicture" name="student_profile">
+                                <input type="file" class="form-control" id="updateProfilePicture" name="student_profile">
                             </div>
-                            <button type="submit" class="btn btn-primary" name="save_changes" value="submit">Save changes</button>
+                            <button type="submit" class="btn btn-primary" name="save_changes">Save changes</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        
     </main>
 
     <?php include '../Layout/allUserFooter.php'; ?>
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     <script>
-document.addEventListener('DOMContentLoaded', function () {
-    // Handle the update buttons
-    var updateButtons = document.querySelectorAll('.update-button');
-    updateButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            var studentId = this.getAttribute('data-id');
+        $(document).ready(function() {
+            $('.update-button').click(function() {
+                var studentId = $(this).data('id');
 
-            // Fetch the student data using studentId
-            fetch(`getStudentData.php?id=${studentId}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('updateStudentId').value = data.student_ID;
-                    document.getElementById('updateUsername').value = data.student_username;
-                    document.getElementById('updatePassword').value = data.student_password;
-                    document.getElementById('updateEmail').value = data.student_email;
-                    document.getElementById('updateAge').value = data.student_age;
-                    document.getElementById('updatePhoneNumber').value = data.student_phoneNum;
-                    document.getElementById('updateGender').value = data.student_gender;
-                    document.getElementById('updateBirthday').value = data.student_birthdate;
-                });
+                // Fetch student details from the table row
+                var row = $('#student-' + studentId);
+                var username = row.find('td:eq(1)').text();
+                var password = row.find('td:eq(2)').text();
+                var email = row.find('td:eq(3)').text();
+                var age = row.find('td:eq(4)').text();
+                var phoneNum = row.find('td:eq(5)').text();
+                var gender = row.find('td:eq(6)').text();
+                var birthdate = row.find('td:eq(7)').text();
+
+                // Set values in the modal form
+                $('#updateStudentId').val(studentId);
+                $('#updateUsername').val(username);
+                $('#updatePassword').val(password);
+                $('#updateEmail').val(email);
+                $('#updateAge').val(age);
+                $('#updatePhoneNumber').val(phoneNum);
+                $('#updateGender').val(gender);
+                $('#updateBirthdate').val(birthdate);
+            });
         });
-    });
-
-    document.getElementById('updateForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        // Implement the form submission to update student data
-        var formData = new FormData(this);
-        fetch('viewRegistration.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            alert('Student updated successfully!');
-            location.reload();
-        })
-        .catch(error => {
-            alert('Failed to update student.');
-            console.error('Error:', error);
-        });
-    });
-
-    // Handle the delete buttons
-    var deleteButtons = document.querySelectorAll('.delete-button');
-    deleteButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            var studentId = this.getAttribute('data-id');
-            if (confirm('Are you sure you want to delete this student?')) {
-                fetch(`viewRegistration.php?delete_student_id=${studentId}`, {
-                    method: 'GET'
-                })
-                .then(response => response.text())
-                .then(data => {
-                    alert('Student deleted successfully!');
-                    document.getElementById(`student-${studentId}`).remove();
-                })
-                .catch(error => {
-                    alert('Failed to delete student.');
-                    console.error('Error:', error);
-                });
-            }
-        });
-    });
-});
-</script>
-
-
-
-
-
-
     </script>
 </body>
 </html>

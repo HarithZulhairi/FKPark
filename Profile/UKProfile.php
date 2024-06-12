@@ -1,33 +1,30 @@
-<?php 
-session_start();
+<?php
+session_start(); // Ensure the session is started
+include '../DB_FKPark/dbcon.php';
+
 $con = mysqli_connect("localhost", "root", "", "fkpark");
 
-if (!$con) {
-    die("Connection failed: " . mysqli_connect_error());
+
+
+// Check if the user is logged in and the user ID is set in the session
+$uk_ID = isset($_SESSION['userID']) ? $_SESSION['userID'] : null;
+
+// If the student ID is not set, redirect to the login page
+if ($uk_ID === null) {
+    die('Unit Keselamatan Staff ID not found in session. Please login again.');
+}
+?>
+
+// Fetching all staff data
+
+$query = "SELECT * FROM `unitkeselamatanstaff` WHERE uk_ID = $uk_ID";
+$result = mysqli_query($con, $query);
+
+if (!$result) {
+    die("Query failed: " . mysqli_error($con));
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    
-    // Query to check username and password
-    $query = "SELECT * FROM `unitkeselamatanstaff` WHERE uk_username = ? AND uk_password = ?";
-    $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, 'ss', $username, $password);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    
-    if (mysqli_num_rows($result) == 1) {
-        $user = mysqli_fetch_assoc($result);
-        $_SESSION['uk_ID'] = $user['uk_ID'];
-        header('Location: UKProfile.php');
-    } else {
-        echo "Invalid login credentials.";
-    }
-    
-    mysqli_stmt_close($stmt);
-}
-
+?>
 
 
 // Fetching all administratort data

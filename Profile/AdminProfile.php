@@ -1,44 +1,28 @@
-<?php 
-session_start();
+<?php
+session_start(); // Ensure the session is started
+include '../DB_FKPark/dbcon.php';
+
 $con = mysqli_connect("localhost", "root", "", "fkpark");
 
-if (!$con) {
-    die("Connection failed: " . mysqli_connect_error());
+
+
+// Check if the user is logged in and the user ID is set in the session
+$administratorID = isset($_SESSION['userID']) ? $_SESSION['userID'] : null;
+
+// If the student ID is not set, redirect to the login page
+if ($studentID === null) {
+    die('Administrator ID not found in session. Please login again.');
 }
+?>
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    
-    // Query to check username and password
-    $query = "SELECT * FROM `administrator` WHERE administrator_username = ? AND administrator_password = ?";
-    $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, 'ss', $username, $password);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    
-    if (mysqli_num_rows($result) == 1) {
-        $user = mysqli_fetch_assoc($result);
-        $_SESSION['administrator_ID'] = $user['administrator_ID'];
-        header('Location: AdminProfile.php');
-    } else {
-        echo "Invalid login credentials.";
-    }
-    
-    mysqli_stmt_close($stmt);
-}
+// Fetching all admin data
 
-
-
-// Fetching all administratort data
-
-$query = "SELECT * FROM `administrator`";
+$query = "SELECT * FROM `administrator` WHERE adminitrator_ID = $administratorID";
 $result = mysqli_query($con, $query);
 
 if (!$result) {
     die("Query failed: " . mysqli_error($con));
 }
-
 
 ?>
 
