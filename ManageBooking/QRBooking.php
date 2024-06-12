@@ -1,36 +1,32 @@
 <?php
     session_start();
 
-    if (!isset($_SESSION['userID'])) {
-        header("Location: ../Manage Login/login.html");
-        exit;
-    }
-
-    $studentID = $_SESSION['userID'];
-
-    if (!isset($_GET['bookingID'])) {
-        echo "No booking ID provided.";
-        exit;
-    }
-
-    $bookingID = $_GET['bookingID'];
-
     $con = mysqli_connect("localhost", "root", "", "fkpark");
     if (!$con) {
         die('Could not connect: ' . mysqli_connect_error());
     }
 
-    $query = "SELECT booking_QRCode FROM booking WHERE booking_ID = '$bookingID' AND student_ID = '$studentID'";
-    $result = mysqli_query($con, $query);
-    $booking = mysqli_fetch_assoc($result);
-
-    if (!$booking) {
-        echo "Booking not found or you do not have permission to view this booking.";
+    if (!isset($_SESSION['userID'])) {
+        header("Location: ../Manage Login/login.php"); // Redirect to the login page
         exit;
     }
 
-    $qrCode = $booking['booking_QRCode'];
-    mysqli_close($con);
+    $parkingSlotName = $_GET['parkingSlotName'];
+    $bookingDate = $_GET['bookingDate'];
+    $startTime = $_GET['startTime'];
+    $endTime = $_GET['endTime'];
+    $studentID = $_SESSION['userID'];
+
+    $queryApp = "SELECT vehicle_grant FROM approval WHERE student_ID = '$studentID'";
+    $resultApp = mysqli_query($con, $queryApp);
+
+    if ($resultApp) {
+        $row = mysqli_fetch_assoc($resultApp);
+        $noplate = implode(", ",$row);
+    }
+
+    $qrData = "No plate: $noplate | Parking Slot: $parkingSlotName | Date: $bookingDate | Start Time: $startTime | End Time: $endTime";
+    $qrDataEncoded = urlencode($qrData);
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +40,22 @@
 <body>
     <div class="qr-container">
         <h1>Your Booking QR Code</h1>
-        <img style="width:30%" src="data:image/png;base64,<?php echo base64_encode($qrCode); ?>" alt="QR Code">
+        <img style="width:30%" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<?php echo $qrDataEncoded; ?>" alt="QR Code">
+        <div id="bookingInfo" style="margin-top: 20px;">
+            <b>No plate: <?php echo $noplate; ?></b>
+            <p>Parking Slot: <?php echo $parkingSlotName; ?></p>
+            <p>Date: <?php echo $bookingDate; ?></p>
+            <p>Start Time: <?php echo $startTime; ?></p>
+            <p>End Time: <?php echo $endTime; ?></p>     
+        </div>
+        <button type="button" class="back-button" onclick="confirmBack()">View booking</button>
     </div>
 </body>
+
+<script>
+        function confirmBack() {
+            window.location.href = 'viewBooking.php';
+        }
+</script>
 </html>
+

@@ -31,6 +31,54 @@
             flex: 1;
             padding: 20px;
         }
+        
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-results {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .search-results p {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .search-results table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .search-results th, .search-results td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .search-results th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .search-results tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .search-results tr:hover {
+            background-color: #ddd;
+        }
+
+        .search-results th, .search-results td {
+            padding: 12px 15px;
+        }
     </style>
 </head>
 <body>
@@ -43,6 +91,9 @@
         <div class="main-title">
             <p class="font-weight-bold">DASHBOARD</p>
         </div>
+
+       
+
 
         <div class="main-cards">
 
@@ -159,6 +210,8 @@
 
         </div>
 
+            
+
         <div class="charts">
 
               <div class="charts-card">
@@ -172,8 +225,62 @@
             </div>
 
         </div>
+
+        <div class="search-bar">
+            <form method="POST" action="">
+                <input type="text" name="search_query" placeholder="Search for parking area...">
+                <input type="submit" value="Search">
+            </form>
+
+            <!-- Search Results -->
+        </div>
+
+
+        <?php
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $search_query = mysqli_real_escape_string($con, $_POST['search_query']);
+                $searchQuery = "SELECT * FROM parkingArea WHERE parkingArea_name LIKE '%$search_query%'";
+                $searchResult = mysqli_query($con, $searchQuery);
+
+                if ($searchResult && mysqli_num_rows($searchResult) > 0) {
+                    echo '<div class="search-results">';
+                    echo '<p>Search Results:</p>';
+                    echo '<table>';
+                    echo '<tr><th>Parking Area Name</th><th>Available Bookings</th></tr>';
+
+                    while ($row = mysqli_fetch_assoc($searchResult)) {
+                        $areaId = $row['parkingArea_ID'];
+
+                        $searchQueryBooking = "SELECT COUNT(*) AS total_available_booking 
+                                            FROM parkingSlot 
+                                            WHERE parkingArea_ID = $areaId AND parkingSlot_status = 'AVAILABLE'";
+
+                        $searchResultBooking = mysqli_query($con, $searchQueryBooking);
+
+                        if ($searchResultBooking) {
+                            $bookingData = mysqli_fetch_assoc($searchResultBooking);
+                            $totalAvailableBooking = $bookingData['total_available_booking'];
+                            echo '<tr><td>' . htmlspecialchars($row['parkingArea_name']) . '</td><td>' . htmlspecialchars($totalAvailableBooking) . '</td></tr>';
+                        } else {
+                            echo '<tr><td>' . htmlspecialchars($row['parkingArea_name']) . '</td><td>Error fetching booking data</td></tr>';
+                        }
+                    }
+
+                    echo '</table>';
+                    echo '</div>';
+                } else {
+                    echo '<div class="search-results">';
+                    echo '<p>No results found for "' . htmlspecialchars($search_query) . '"</p>';
+                    echo '</div>';
+                }
+            }
+        ?>
+
+
     </main>
     <!-- End Main -->
+
+    
 
 </div>
 

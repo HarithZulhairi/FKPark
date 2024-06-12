@@ -39,47 +39,60 @@ session_start();
                 <th style="width:180px;">Violation</th>
                 <th style="width:180px;">Student ID</th>
                 <th style="width:180px;">Action</th>
+                <th style="width:180px;">QR Code</th>
             </tr>
 
             <tbody>
-            <?php
-                        $query = "SELECT s.summon_ID, s.vehicle_numPlate, s.summon_violation, s.summon_datetime, s.summon_location,
-                                  v.student_ID
-                                  FROM summon s
-                                  JOIN vehicle v ON s.vehicle_numPlate = v.vehicle_numPlate";
+            <?php         
+                $query = "SELECT s.summon_ID, s.vehicle_numPlate, s.summon_violation, s.summon_datetime, s.summon_location,
+                          v.student_ID, st.student_username
+                          FROM summon s
+                          JOIN vehicle v ON s.vehicle_numPlate = v.vehicle_numPlate
+                          JOIN student st ON v.student_ID = st.student_ID
+                          ORDER BY s.summon_ID";
 
-                        $result = mysqli_query($con, $query);
+                $result = mysqli_query($con, $query);
 
-                        if(!$result){
-                            die("query Failed".mysqli_error());
-                        }
-                        else{
-                            while($row = mysqli_fetch_assoc($result)){
+                if (!$result) {
+                    die("Query failed: " . mysqli_error($con));
+                } else {
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                ?>
+                    <tr>
+                        <td><?php echo$row['summon_ID']; ?></td>
+                        <td><?php echo$row['vehicle_numPlate']; ?></td>
+                        <td><?php echo$row['summon_violation']; ?></td>
+                        <td><?php echo$row['student_ID']; ?></td>
 
-                                ?>
-                                    <tr>
-                                        <td><?php echo$row['summon_ID']; ?></td>
-                                        <td><?php echo$row['vehicle_numPlate']; ?></td>
-                                        <td><?php echo$row['summon_violation']; ?></td>
-                                        <td><?php echo$row['student_ID']; ?></td>
+                        <td style="border-collapse: collapse;display: flex; align-items: center;">
+                                <div style="margin:10px 10px;" class="button-container">
+                                    <a href="viewSummons_data.php?summon_id=<?php echo $row['summon_ID']; ?>" >
+                                        <button type="view">View</button>
+                                    </a>
+                                </div>
 
-                                        <td style="border-collapse: collapse;display: flex; align-items: center;">
-                                                <div style="margin:10px 10px;" class="button-container">
-                                                    <a href="event-link-here" >
-                                                        <button type="view">View</button>
-                                                    </a>
-                                                </div>
+                                <button type="submit" class="button btn btn-success" data-bs-toggle="modal" data-bs-target="#updateSummonsModal"
+                                onclick="populateUpdateModal('<?php echo $row['summon_ID']; ?>','<?php echo $row['vehicle_numPlate']; ?>','<?php echo $row['summon_violation']; ?>',
+                                '<?php echo $row['summon_datetime']; ?>','<?php echo $row['summon_location']; ?>')" style="margin-right: 40px;">Update</button>
 
-                                                <button type="submit" class="button btn btn-success" data-bs-toggle="modal" data-bs-target="#updateSummonsModal"
-                                                onclick="populateUpdateModal('<?php echo $row['summon_ID']; ?>','<?php echo $row['vehicle_numPlate']; ?>','<?php echo $row['summon_violation']; ?>',
-                                                '<?php echo $row['summon_datetime']; ?>','<?php echo $row['summon_location']; ?>')" style="margin-right: 40px;">Update</button>
-
-                                                <a href="#" class="button btn btn-danger" onclick="confirmDelete('<?php echo $row['summon_ID']; ?>')">Delete</a>
-                                    </tr>
-                                <?php
-                            }
-                        }
-                    ?>
+                                <a href="#" class="button btn btn-danger" onclick="confirmDelete('<?php echo $row['summon_ID']; ?>', '<?php echo $row['vehicle_numPlate']; ?>')">Delete</a>
+                        </td>
+                        <td>
+                        <div style="padding-left:20px;" id="imgBox">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=50x50&data=<?php echo urlencode
+                            ('Plate: ' . $row['vehicle_numPlate'] . '|Violation: ' . $row['summon_violation'] . 
+                            '|Student: ' . $row['student_username']); ?>" alt="qrImage">
+                        </div> 
+                        </td>
+                    </tr>
+                <?php
+                    }
+                  }else{
+                    echo "<tr><td colspan='6'>No Summons available.</td></tr>";
+                  }
+                }
+                ?>
 
             </tbody>
 
@@ -206,7 +219,7 @@ session_start();
 
                     <div class="form-group">
                         <label for="update_vehicleNumPlate">Vehicle Number Plate</label>
-                        <input type="text" id="update_vehicleNumPlate" name="vehicleNumPlate" class="form-control" required>
+                        <input type="text" id="update_vehicleNumPlate" name="vehicleNumPlate" class="form-control" readonly>
                     </div>
 
                     <div class="form-group">

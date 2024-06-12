@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,88 +48,96 @@
         </div>
 
         <div class="main-cards">
-            <!-- Demerit Total Card -->
+            <!-- Summons Issued Card -->
             <div class="card">
                 <div class="card-inner">
-                    <p class="text-primary">DEMERIT TOTAL</p>
+                    <p class="text-primary">SUMMONS ISSUED BY YOU</p>
                     <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/demerit1.png" alt="Demerit Total"></span>
                 </div>
                 <span class="text-primary font-weight-bold">
                     <?php
                     include '../DB_FKPark/dbcon.php';
 
+                    $ukID = isset($_SESSION['userID']) ? $_SESSION['userID'] : null;
+                    if ($ukID === null) {
+                        die('Unit Keselamatan Staff ID not found in session. Please login again.');
+                    }
+
                     // Fetch total demerit points from the database
-                    $query = "SELECT SUM(summon_demerit) AS total_demerit FROM summon";
+                    $query = "SELECT COUNT(*) AS total_summons FROM summon WHERE uk_ID = $ukID";
                     $result = mysqli_query($con, $query);
                     $totalDemerit = 0;
                     if ($result && mysqli_num_rows($result) > 0) {
                         $row = mysqli_fetch_assoc($result);
-                        $totalDemerit = (int)$row['total_demerit'];
+                        $totalSummons = (int)$row['total_summons'];
                     }
-                    echo $totalDemerit;
+                    echo $totalSummons;
                     ?>
                 </span>
             </div>
 
-            <!-- Vehicle Registered Card -->
+            <!-- Speeding Total Card -->
             <div class="card">
                 <div class="card-inner">
-                    <p class="text-primary">VEHICLE REGISTERED</p>
-                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/available1.png" alt="Vehicle Registered"></span>
+                    <p class="text-primary">ALL SPEEDING SUMMONS</p>
+                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/demerit1.png" alt="Demerit Total"></span>
                 </div>
                 <span class="text-primary font-weight-bold">
                     <?php
-                    // Fetch count of distinct vehicle types from the database
-                    $query = "SELECT COUNT(DISTINCT vehicle_type) AS vehicle_count FROM vehicle";
+
+                    // Fetch total demerit points from the database
+                    $query = "SELECT COUNT(*) AS speed_summons FROM summon WHERE summon_violation = 'Speeding'";
                     $result = mysqli_query($con, $query);
-                    $vehicleCount = 0;
+                    $totalDemerit = 0;
                     if ($result && mysqli_num_rows($result) > 0) {
                         $row = mysqli_fetch_assoc($result);
-                        $vehicleCount = (int)$row['vehicle_count'];
+                        $totalSummonsSpeed = (int)$row['speed_summons'];
                     }
-                    echo $vehicleCount;
+                    echo $totalSummonsSpeed;
                     ?>
                 </span>
             </div>
 
-            <!-- Registration Status Card -->
+            <!-- Not Complying Card -->
             <div class="card">
                 <div class="card-inner">
-                    <p class="text-primary">REGISTRATION STATUS</p>
-                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/check1.png" alt="Registration Status"></span>
+                    <p class="text-primary">ALL NON COMPLIANCE SUMMONS</p>
+                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/demerit1.png" alt="Demerit Total"></span>
                 </div>
                 <span class="text-primary font-weight-bold">
                     <?php
-                    // Fetch count of approved registrations from the database
-                    $query = "SELECT COUNT(*) AS approved_count FROM approval WHERE approval_status = 'Approved'";
+
+                    // Fetch total demerit points from the database
+                    $query = "SELECT COUNT(*) AS nc_summons FROM summon WHERE summon_violation = 'Not Complying'";
                     $result = mysqli_query($con, $query);
-                    $approvedCount = 0;
+                    $totalDemerit = 0;
                     if ($result && mysqli_num_rows($result) > 0) {
                         $row = mysqli_fetch_assoc($result);
-                        $approvedCount = (int)$row['approved_count'];
+                        $totalSummonsNc = (int)$row['nc_summons'];
                     }
-                    echo $approvedCount;
+                    echo $totalSummonsNc;
                     ?>
                 </span>
             </div>
 
-            <!-- Total Booking Card -->
+            <!-- Accident Total Card -->
             <div class="card">
                 <div class="card-inner">
-                    <p class="text-primary">TOTAL BOOKING</p>
-                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/parking1.png" alt="Total Booking"></span>
+                    <p class="text-primary">ALL ACCIDENT SUMMONS</p>
+                    <span><img class="colored_image" style="width:50px; height:50px;" src="../resource/demerit1.png" alt="Demerit Total"></span>
                 </div>
                 <span class="text-primary font-weight-bold">
                     <?php
-                    // Fetch count of total bookings made by students
-                    $query = "SELECT COUNT(*) AS total_booking FROM booking";
+
+                    // Fetch total demerit points from the database
+                    $query = "SELECT COUNT(*) AS acc_summons FROM summon WHERE summon_violation = 'Accident'";
                     $result = mysqli_query($con, $query);
-                    $totalBooking = 0;
+                    $totalDemerit = 0;
                     if ($result && mysqli_num_rows($result) > 0) {
                         $row = mysqli_fetch_assoc($result);
-                        $totalBooking = (int)$row['total_booking'];
+                        $totalSummonsAcc = (int)$row['acc_summons'];
                     }
-                    echo $totalBooking;
+                    echo $totalSummonsAcc;
                     ?>
                 </span>
             </div>
@@ -133,11 +145,11 @@
 
         <div class="charts">
             <div class="charts-card">
-                <p class="chart-title">TOTAL BOOKING</p>
+                <p class="chart-title">TOTAL SUMMONS</p>
                 <div id="bar-chart"></div>
             </div>
             <div class="charts-card">
-                <p class="chart-title">DEMERIT TOTAL</p>
+                <p class="chart-title">YOUR ACTIVITY</p>
                 <div id="area-chart"></div>
             </div>
         </div>
@@ -154,7 +166,7 @@
   const barChartOptions = {
     series: [
       {
-        name: 'Total Parking Spaces',
+        name: 'Total Summons By Type',
         data: [],
       },
     ],
@@ -165,7 +177,7 @@
         show: false,
       },
     },
-    colors: ['#246dec'],
+    colors: ['#246dec', '#cc3c43', '#367952'],
     plotOptions: {
       bar: {
         distributed: true,
@@ -181,7 +193,7 @@
       show: false,
     },
     xaxis: {
-      categories: ['Total Parking Spaces'],
+      categories: ['Speeding', 'Not Complying', 'Accident'],
     },
     yaxis: {
       title: {
@@ -196,25 +208,21 @@
   );
   barChart.render();
 
-  function updateBarChartData(totalSpacesCount) {
+  function updateBarChartData(totalSummonsSpeed, totalSummonsNc, totalSummonsAcc) {
     barChart.updateSeries([{
-      data: [totalSpacesCount]
+      data: [totalSummonsSpeed, totalSummonsNc, totalSummonsAcc]
     }]);
   }
 
-  updateBarChartData(<?php echo $totalSpacesCount; ?>);
+  updateBarChartData(<?php echo $totalSummonsSpeed; ?>, <?php echo $totalSummonsNc; ?>, <?php echo $totalSummonsAcc; ?>);
 
   // AREA CHART
   const areaChartOptions = {
     series: [
       {
-        name: 'Purchase Orders',
-        data: [0, 0, 0, 0, 0, 0, 0],
-      },
-      {
-        name: 'Sales Orders',
-        data: [0, 0, 0, 0, 0, 0, 0],
-      },
+        name: 'Summons Issued',
+        data: [],
+      }
     ],
     chart: {
       height: 350,
@@ -223,29 +231,24 @@
         show: false,
       },
     },
-    colors: ['#4f35a1', '#246dec'],
+    colors: ['#4f35a1'],
     dataLabels: {
       enabled: false,
     },
     stroke: {
       curve: 'smooth',
     },
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     markers: {
       size: 0,
     },
     yaxis: [
       {
         title: {
-          text: 'Purchase Orders',
+          text: 'Summons Issued',
         },
-      },
-      {
-        opposite: true,
-        title: {
-          text: 'Sales Orders',
-        },
-      },
+      }
+      
     ],
     tooltip: {
       shared: true,
@@ -259,17 +262,40 @@
   );
   areaChart.render();
 
-  function updateAreaChartData(newPurchaseData, newSalesData) {
-    areaChart.updateSeries([
-      { data: newPurchaseData },
-      { data: newSalesData }
-    ]);
-  }
+  <?php
+          // Fetch car and motorcycle bookings for each month
+          $summonIssuedQuery = "SELECT COUNT(*) AS summons_issued, 
+                                MONTH(summon_datetime) AS month 
+                                FROM summon
+                                WHERE uk_id = $ukID
+                                GROUP BY MONTH(summon_datetime)
+                                ";
 
-  setTimeout(() => {
-    updateAreaChartData([31, 40, 28, 51, 42, 109, 100], [40, 32, 45, 32, 34, 52, 41]);
-  }, 3000);
+
+          $summonsIssuedResult = mysqli_query($con, $summonIssuedQuery);
+
+          // Initialize arrays to store data
+          $summonsIssuedData = array_fill(0, 12, 0);
+
+          while($row = mysqli_fetch_assoc($summonsIssuedResult)) {
+              $monthIndex = intval($row['month']) - 1;
+              $summonsIssuedData[$monthIndex] = intval($row['summons_issued']);
+          }
+
+      ?>
+
+      // Function to update area chart data
+      function updateAreaChartData(summonIssuedQuery) {
+          console.log('Updating area chart data to:', summonIssuedQuery); // Debugging line
+          areaChart.updateSeries([
+              { data: summonIssuedQuery }
+
+          ]);
+      }
+
+      updateAreaChartData(<?php echo json_encode($summonsIssuedData); ?>);
+
 </script>
-<script src="studDashboard.js"></script>
+
 </body>
 </html>

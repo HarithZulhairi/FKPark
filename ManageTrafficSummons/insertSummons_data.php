@@ -28,6 +28,15 @@
             die('Unit Keselamatan Staff ID not found in session. Please login again.');
         }
 
+        // Fetch student ID associated with the vehicle
+        $querystudentid = "SELECT `student_ID` FROM `vehicle` WHERE vehicle_numPlate = '$veh_plate'";
+        $getstid = mysqli_query($con, $querystudentid);
+        $student_id = mysqli_fetch_row($getstid)[0]; // Directly fetch the value
+
+        // Update student's demerit total
+        $querydemtot = "UPDATE `student` SET `student_demtot` = `student_demtot` + $summon_demerit WHERE `student_ID` = $student_id";
+        $upstdemtot = mysqli_query($con, $querydemtot);
+
 
         if(!$veh_plate || !$violation || !$location || !$datetime){
             header('location:ManageSummons.php?message=You need to fill in the required information! ');
@@ -39,7 +48,8 @@
 
             $result = mysqli_query($con, $query);
 
-            if(!$result){
+
+            if(!$result || !$upstdemtot){
                 die("Query Failed" . mysqli_error());
             }
             else{

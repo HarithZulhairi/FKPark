@@ -57,7 +57,7 @@ $studentID = $_SESSION['userID'];
                                 <td>{$row['booking_startTime']}</td>
                                 <td>{$row['booking_endTime']}</td>
                                 <td><a href='editBooking.php?bookingID={$row['booking_ID']}' class='action-btn'>Edit</a></td>
-                                <td><a href='QRBooking.php?bookingID={$row['booking_ID']}' class='action-btn'>View QR</a></td>
+                                <td><a href='QRBooking.php?parkingSlotName={$row['parkingSlot_name']}&bookingDate={$row['booking_date']}&startTime={$row['booking_startTime']}&endTime={$row['booking_endTime']}' class='action-btn'>View QR</a></td>
                                 <td><a href='#' onclick='confirmCancel({$row['booking_ID']})' class='action-btn'>Cancel</a></td>
                               </tr>";
                         $counter++;

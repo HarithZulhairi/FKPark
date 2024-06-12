@@ -9,9 +9,9 @@ function populateUpdateModal(id, vehicleNumPlate, violation, datetime, location)
     document.getElementById('updateModalTitle').innerText = 'Update Summon ' + id;
 }
 
-function confirmDelete(summon_ID) {
+function confirmDelete(summon_ID, veh_numPlate) {
     if (confirm("Are you sure you want to delete this summon?")) {
-        window.location.href = 'deleteSummons_data.php?summon_ID=' + summon_ID;
+        window.location.href = 'deleteSummons_data.php?summon_ID=' + summon_ID + '&vehicle_numPlate=' + veh_numPlate;
     }
 }
 
