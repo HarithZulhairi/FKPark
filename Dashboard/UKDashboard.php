@@ -48,7 +48,7 @@ session_start();
         </div>
 
         <div class="main-cards">
-            <!-- Demerit Total Card -->
+            <!-- Summons Issued Card -->
             <div class="card">
                 <div class="card-inner">
                     <p class="text-primary">SUMMONS ISSUED BY YOU</p>
