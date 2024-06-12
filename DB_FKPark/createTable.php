@@ -20,6 +20,7 @@ $query6 = 'CREATE TABLE Student( ' .
           'student_gender VARCHAR(10) NOT NULL, ' .
           'student_birthdate DATE NOT NULL, ' .
           'student_profile VARCHAR(255) NOT NULL, ' .
+          'student_demtot INT DEFAULT 0, ' .
           'PRIMARY KEY(student_ID)) ENGINE=InnoDB;';
 
 if (mysqli_query($con, $query6)) {
