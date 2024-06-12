@@ -10,10 +10,11 @@
 
     $summon_id = $_GET['summon_id'];
 
-    $query = "SELECT s.* ,v.*, st.*
+    $query = "SELECT s.* ,v.*, st.*, uks.*
               FROM summon s
               JOIN vehicle v ON s.vehicle_numPlate = v.vehicle_numPlate
               JOIN student st ON v.student_ID = st.student_ID
+              JOIN unitkeselamatanstaff uks ON s.uk_ID = uks.uk_ID
               WHERE s.summon_id = $summon_id";
 
     $result = mysqli_query($con, $query);
@@ -28,6 +29,7 @@
         $summon_datetime = $row['summon_datetime'];
         $summon_demerit = $row['summon_demerit'];
         $summon_location = $row['summon_location'];
+        
 
         $vehicle_numPlate = $row['vehicle_numPlate'];
         $vehicle_type = $row['vehicle_type'];
@@ -37,6 +39,9 @@
         $student_username = $row['student_username'];
         $student_phoneNum = $row['student_phoneNum'];
         $student_demtot = $row['student_demtot'];
+        
+        $uk_ID = $row['uk_ID'];
+        $uk_username = $row['uk_username'];
 
         $enforcement = '';
         if($student_demtot < 20){
@@ -154,6 +159,10 @@
                     <th  colspan="2">Summon Details</th>
                 </tr>
                 <tr>
+                    <th class="sidetitle">Issued By:</th>
+                    <td style="background-color:#ADA7FF" ><?php echo $uk_username ?></td>
+                </tr>
+                <tr>
                     <th class="sidetitle">Vehicle Number Plate:</th>
                     <td><?php echo $vehicle_numPlate ?></td>
                 </tr>
@@ -173,6 +182,7 @@
                     <th class="sidetitle">Demerit Point:</th>
                     <td><?php echo $summon_demerit ?></td>
                 </tr>
+                
                 <tr>
                     <th class="sidetitle">Student Username:</th>
                     <td><?php echo $student_username ?></td>
