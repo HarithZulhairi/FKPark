@@ -7,7 +7,7 @@
     setcookie('role', '', time() - 3600, "/");
     setcookie('username', '', time() - 3600, "/");
 
-    header("Location: login.php");
+    header("Location: Login.php");
     exit;
 ?>
 
@@ -28,7 +28,7 @@
 
     <script>
         document.getElementById('loginButton').addEventListener('click', function() {
-            window.location.href = 'Login.html';  
+            window.location.href = 'Login.php';  
         });
     </script>
 </body>
