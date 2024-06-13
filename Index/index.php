@@ -54,10 +54,10 @@
                 <h2>Contact Us</h2>
                 <div class="contact-content">
                     <div class="contact-info">
-                        <p>Have questions or need support? Reach out to our team.</p>
+                        <p><b>Have questions or need support? Reach out to our team.</b></p>
                         <p><i class="fa fa-phone"></i> +60 114 0483940</p>
                         <p><i class="fa fa-envelope"></i> misterwhoopy@gmail.com</p>
-                        <p><i class="fa fa-instagram"></i> @harith_misterwhoopy</p>
+                        <p><i class="fa fa-instagram"></i> @misterwhoopy_harith</p>
                     </div>
                     <form class="contact-form" action="send_email.php" method="post">
                         <input type="text" name="name" placeholder="Your Name" required>
