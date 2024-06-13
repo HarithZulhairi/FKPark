@@ -1,6 +1,5 @@
 <?php
 session_start(); // Ensure the session is started
-include '../DB_FKPark/dbcon.php';
 
 $con = mysqli_connect("localhost", "root", "", "fkpark");
 
@@ -10,14 +9,14 @@ $con = mysqli_connect("localhost", "root", "", "fkpark");
 $administratorID = isset($_SESSION['userID']) ? $_SESSION['userID'] : null;
 
 // If the student ID is not set, redirect to the login page
-if ($studentID === null) {
+if ($administratorID === null) {
     die('Administrator ID not found in session. Please login again.');
 }
-?>
 
-// Fetching all admin data
 
-$query = "SELECT * FROM `administrator` WHERE adminitrator_ID = $administratorID";
+
+
+$query = "SELECT * FROM `administrator` WHERE administrator_ID = $administratorID";
 $result = mysqli_query($con, $query);
 
 if (!$result) {
@@ -35,12 +34,15 @@ if (!$result) {
     <title>Profile</title>
 </head>
 <style>
-    .card-body{
+     .card-body{
         padding-bottom: 30px;
+        
     }
 
-    .container {
+    .container-layout {
         align-items: center;
+        margin: auto;
+     
     }
 </style>
 <body>

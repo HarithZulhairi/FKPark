@@ -13,7 +13,7 @@ $uk_ID = isset($_SESSION['userID']) ? $_SESSION['userID'] : null;
 if ($uk_ID === null) {
     die('Unit Keselamatan Staff ID not found in session. Please login again.');
 }
-?>
+
 
 // Fetching all staff data
 
@@ -50,10 +50,13 @@ if (!$result) {
 <style>
     .card-body{
         padding-bottom: 30px;
+        
     }
 
-    .container {
+    .container-layout {
         align-items: center;
+        margin: auto;
+     
     }
 </style>
 <body>

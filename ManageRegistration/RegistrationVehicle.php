@@ -119,6 +119,38 @@ session_start();
         .submit-btn input[type="submit"]:hover {
             background-color: #0056b3;
         }
+
+        /* Basic styling for the select element */
+        .select {
+            padding: 8px; /* Adjust padding as needed */
+            font-size: 16px; /* Adjust font size */
+            border: 1px solid #ccc; /* Border color */
+            border-radius: 4px; /* Rounded corners */
+            appearance: none; /* Remove default arrow icon on some browsers */
+            -webkit-appearance: none; /* Remove default arrow icon for Safari/Chrome */
+            -moz-appearance: none; /* Remove default arrow icon for Firefox */
+            background-color: #fff; /* Background color */
+            width: 100%; /* Full width */
+            max-width: 300px; /* Limit maximum width if needed */
+        }
+
+        /* Hover and focus states */
+        .select:hover,
+        .select:focus {
+            border-color: #246dec; /* Highlight border color on hover/focus */
+        }
+
+        /* Arrow icon */
+        .select::after {
+            content: '\25BC'; /* Unicode character for down arrow */
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #555; /* Arrow color */
+        }
+
     </style>
 </head>
 <body>

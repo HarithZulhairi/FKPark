@@ -31,6 +31,9 @@ if ($studentID === null) {
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../Dashboard/adminDashboard.css">
 
+    <!-- Include ApexCharts Library -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
     <style>
         html, body {
             height: 100%;
@@ -48,6 +51,75 @@ if ($studentID === null) {
             flex: 1;
             padding: 20px;
         }
+
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-bar input[type="text"] {
+            width: 200px;
+            padding: 8px;
+            font-size: 14px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        .search-bar input[type="submit"] {
+            padding: 5px 12px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .search-results table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .search-results {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .search-results p {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .search-results table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .search-results th, .search-results td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .search-results th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .search-results tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .search-results tr:hover {
+            background-color: #ddd;
+        }
+
+        .search-results th, .search-results td {
+            padding: 12px 15px;
+        }
+
+        
     </style>
 </head>
 <body>
@@ -82,14 +154,14 @@ if ($studentID === null) {
                 mysqli_stmt_execute($stmtSummons);
                 $resultSummons = mysqli_stmt_get_result($stmtSummons);
 
-                $totalSummons = 0;
+                $totalSummonCount = 0;
 
                 if ($resultSummons && mysqli_num_rows($resultSummons) > 0) {
                     $rowSummons = mysqli_fetch_assoc($resultSummons);
-                    $totalSummons = (int)$rowSummons['summon_count'];
+                    $totalSummonCount = (int)$rowSummons['summon_count'];
                 }
 
-                echo $totalSummons;
+                echo $totalSummonCount;
                 ?>
             </span>
         </div>
@@ -104,21 +176,26 @@ if ($studentID === null) {
             </div>
             <!-- Update the total demerit points count with PHP -->
             <span class="text-primary font-weight-bold">
-                <?php
-                // Fetch the sum of demerit points from the summon table
-                $query = "SELECT SUM(summon_demerit) AS total_demerit FROM summon";
-                $result = mysqli_query($con, $query);
+                    <?php
+                    $querySummons = "SELECT SUM(summon_demerit) AS summon_demerit 
+                                    FROM Summon s
+                                    JOIN Vehicle v ON s.vehicle_numPlate = v.vehicle_numPlate
+                                    JOIN Student st ON v.student_ID = st.student_ID
+                                    WHERE st.student_ID = ?";
+                    
+                    $stmtSummons = mysqli_prepare($con, $querySummons);
+                    mysqli_stmt_bind_param($stmtSummons, 'i', $studentID);
+                    mysqli_stmt_execute($stmtSummons);
+                    $resultSummons = mysqli_stmt_get_result($stmtSummons);
 
-                // Initialize a variable to store the total demerit points
-                $totalDemeritPoints = 0;
+                    $totalSummons = 0;
 
-                // Check if the query was successful and fetch the sum
-                if ($result && mysqli_num_rows($result) > 0) {
-                    $row = mysqli_fetch_assoc($result);
-                    $totalDemeritPoints = (int)$row['total_demerit'];
-                }
+                    if ($resultSummons && mysqli_num_rows($resultSummons) > 0) {
+                        $rowSummons = mysqli_fetch_assoc($resultSummons);
+                        $totalDemeritPoints = (int)$rowSummons['summon_demerit'];
+                    }
 
-                echo $totalDemeritPoints;
+                    echo $totalDemeritPoints;
                 ?>
             </span>
         </div>
@@ -155,6 +232,41 @@ if ($studentID === null) {
             </span>
         </div>
 
+        <div class="card">
+                  <div class="card-inner">
+                      <p class="text-primary">TOTAL BOOKING MADE</p>
+                      <span><img  class="colored_image" style="width:50px; height:50px;" src="../resource/check1.png" alt="Available"></span>
+                  </div>
+                  <span class="text-primary font-weight-bold">
+                    <?php
+                      // Assuming $con is your mysqli connection and $stmt4 is your prepared statement
+
+                          $query4 = "SELECT COUNT(*) AS total_booking FROM booking WHERE student_ID = ?";
+                          
+                          // Prepare the statement
+                          $stmt4 = mysqli_prepare($con, $query4);
+                          
+                          // Assuming $studentID is set correctly earlier in your code
+                          mysqli_stmt_bind_param($stmt4, 'i', $studentID);
+                          
+                          // Execute the statement
+                          mysqli_stmt_execute($stmt4);
+                          
+                          // Get the result
+                          $result4 = mysqli_stmt_get_result($stmt4);
+                          
+                          $totalBookingCount = 0;
+                          
+                          if ($result4 && mysqli_num_rows($result4) > 0){
+                              $row4 = mysqli_fetch_assoc($result4);
+                              $totalBookingCount = (int)$row4['total_booking'];
+                          }
+                          
+                          echo $totalBookingCount;
+                    ?>
+                  </span>
+              </div>
+
               
 
         </div>
@@ -165,13 +277,62 @@ if ($studentID === null) {
                   <p class="chart-title">TOTAL DEMERIT</p>
                   <div id="bar-chart"></div>
               </div>
-
-            <div class="charts-card">
-                <p class="chart-title">TOTAL SUMMON</p>
-                <div id="area-chart"></div>
-            </div>
+              <div class="charts-card">
+                  <p class="chart-title">TOTAL BOOKING</p>
+                  <div id="area-chart"></div>
+              </div>
+        
 
         </div>
+
+        <div class="search-bar">
+            <form method="POST" action="">
+                <input type="text" name="search_query" placeholder="Search..." required>
+                <input type="submit" value="Search">
+            </form>
+
+            <!-- Search Results -->
+        </div>
+ <!-- Search Results -->
+ <?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $search_query = mysqli_real_escape_string($con, $_POST['search_query']);
+    
+    // Query to fetch search results based on the search query
+
+    $searchQuery = "SELECT * FROM student WHERE student_demtot LIKE '%$search_query%'";
+    $searchResult = mysqli_query($con, $searchQuery);
+
+
+
+        // Check if there are any search results
+        if ($searchResult && mysqli_num_rows($searchResult) > 0) {
+          echo '<div class="search-results">';
+          echo '<p>Search Results: ' . htmlspecialchars($search_query) . '</p>';
+          echo '<table>';
+          echo '<tr><th>Student ID</th><th>Demerit</th></tr>';
+  
+          // Loop through and display each search result
+          while ($row = mysqli_fetch_assoc($searchResult)) {
+              $studentId = $row['student_ID'];
+              $studentDemtot = $row['student_demtot'];
+  
+              echo '<tr><td>' . htmlspecialchars($studentId) . '</td><td>' . htmlspecialchars($studentDemtot) . '</td></tr>';
+          }
+  
+          echo '</table>';
+          echo '</div>';
+      } else {
+          // Display message if no results are found
+          echo '<div class="search-results">';
+          echo '<p>No results found for "' . htmlspecialchars($search_query) . '"</p>';
+          echo '</div>';
+      }
+
+   
+}
+?>
+
     </main>
     <!-- End Main -->
 
@@ -184,12 +345,12 @@ if ($studentID === null) {
 <script>
   // ---------- CHARTS ----------
 
-    // BAR CHART FOR DEMERIT POINTS
-    const barChartOptions = {
+  // BAR CHART FOR TOTAL DEMERIT
+  const barChartOptions = {
         series: [
             {
-                name: 'Total Demerit Points',
-                data: [], //Initialize with empty data
+                name: 'Total Demerit',
+                data: [], // Initialize with empty data
             },
         ],
         chart: {
@@ -199,13 +360,12 @@ if ($studentID === null) {
                 show: false,
             },
         },
-        colors: ['#e74c3c'],
+        colors: ['#246dec'],
         plotOptions: {
             bar: {
                 distributed: true,
                 borderRadius: 4,
                 horizontal: false,
-                
                 columnWidth: '40%',
             },
         },
@@ -216,11 +376,11 @@ if ($studentID === null) {
             show: false,
         },
         xaxis: {
-            categories: ['Total Demerit Point'],
+            categories: ['Total Demerit'],
         },
         yaxis: {
             title: {
-                text: 'Count',
+                text: 'Points',
             },
         },
     };
@@ -231,69 +391,9 @@ if ($studentID === null) {
     );
     barChart.render();
 
-    // Function to update bar chart data with total parking spaces count
-    function updateBarChartData(totalDemeritCount) {
-      console.log('Updating bar chart data with total demerit point count:', totalDemeritCount); // Debugging line
-      barChart.updateSeries([{
-        data: [totalDemeritCount] // Update with the total demerit point count
-      }]);
-    }
-
-    // Call the function to update bar chart data with total demerit point count
-    updateBarChartData(<?php echo $totalDemeritCount; ?>);
-
-
-
-      // BAR CHART FOR TOTAL SUMMON
-    const barChartOptions = {
-      series: [
-        {
-          name: 'Total Summon',
-          data: [], // Initialize with empty data
-        },
-      ],
-      chart: {
-        type: 'bar',
-        height: 350,
-        toolbar: {
-          show: false,
-        },
-      },
-      colors: ['#246dec'],
-      plotOptions: {
-        bar: {
-          distributed: true,
-          borderRadius: 4,
-          horizontal: false,
-        
-          columnWidth: '40%',
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      legend: {
-        show: false,
-      },
-      xaxis: {
-        categories: ['Total Summon'],
-      },
-      yaxis: {
-        title: {
-          text: 'Count',
-        },
-      },
-    };
-
-  const barChart = new ApexCharts(
-    document.querySelector('#bar-chart'),
-    barChartOptions
-  );
-  barChart.render();
-
-  <?php
-  //fetch summon count for student_ID through vehicle_numPlate from vehicle
-    $summonQuery = "SELECT COUNT(*) AS summon_count 
+    <?php
+    // Fetch total demerit points for student_ID through vehicle_numPlate from vehicle
+    $summonQuery = "SELECT SUM(summon_demerit) AS total_demerit 
                     FROM Summon s
                     JOIN Vehicle v ON s.vehicle_numPlate = v.vehicle_numPlate
                     JOIN Student st ON v.student_ID = st.student_ID
@@ -302,24 +402,63 @@ if ($studentID === null) {
     $stmtSummon->bind_param("i", $studentID);
     $stmtSummon->execute();
     $summonResult = $stmtSummon->get_result();
-    $summonData = $summonResult->fetch_assoc()['summon_count'];
+    $summonData = $summonResult->fetch_assoc()['total_demerit'];
     $stmtSummon->close();
     mysqli_close($con);
     ?>
     const summonData = [<?php echo $summonData; ?>];
 
-
-    // Function to update bar chart data with total parking spaces count
-    function updateBarChartData(totalSummonCount) {
-      console.log('Updating bar chart data with total parking spaces count:', totalSummonCount); // Debugging line
-      barChart.updateSeries([{
-        data: [totalSummonCount] // Update with the total summon  count
-      }]);
+    // Function to update bar chart data with total demerit points
+    function updateBarChartData(totalDemeritPoints) {
+        console.log('Updating bar chart data with total demerit points:', totalDemeritPoints); // Debugging line
+        barChart.updateSeries([{
+            data: [totalDemeritPoints] // Update with the total demerit points
+        }]);
     }
 
-    // Call the function to update bar chart data with total parking spaces count
-    updateBarChartData(<?php echo $totalSummonCount; ?>);
+    // Call the function to update bar chart data with total demerit points
+    updateBarChartData(<?php echo $totalDemeritPoints; ?>);
 
+     // AREA CHART FOR TOTAL BOOKING
+     const areaChartOptions = {
+        series: [{
+            name: 'Total Booking',
+            data: [<?php echo $totalBookingCount; ?>], // Initialize with the fetched booking count
+        }],
+        chart: {
+            height: 350,
+            type: 'area',
+            toolbar: {
+                show: false,
+            },
+        },
+        colors: ['#246dec'],
+        dataLabels: {
+            enabled: false,
+        },
+        stroke: {
+            curve: 'smooth',
+        },
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        markers: {
+            size: 0,
+        },
+        yaxis: {
+            title: {
+                text: 'Total Booking',
+            },
+        },
+        tooltip: {
+            shared: true,
+            intersect: false,
+        },
+    };
+
+    const areaChart = new ApexCharts(
+        document.querySelector('#area-chart'),
+        areaChartOptions
+    );
+    areaChart.render();
   </script>
 
   <?php include '../Layout/allUserFooter.php'; ?>
