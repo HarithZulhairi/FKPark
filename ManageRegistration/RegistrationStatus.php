@@ -1,5 +1,16 @@
-<?php include '../Layout/studentHeader.php'; ?>
-<?php include '../DB_FKPark/dbcon.php'; ?>
+<?php
+session_start(); // Ensure the session is started
+include '../Layout/studentHeader.php';
+include '../DB_FKPark/dbcon.php';
+
+if (!isset($_SESSION['userID'])) {
+    // Redirect to login if the user is not logged in
+    header("Location: Login.php");
+    exit();
+}
+
+$userID = $_SESSION['userID'];
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,21 +49,17 @@
         }
         footer h5 {
             margin-top: 0;
-
         }
         footer ul {
             list-style: none;
             padding: 0;
-
         }
         footer ul li {
             margin: 5px 0;
-
         }
         footer ul li a {
             color: #fff;
             text-decoration: none;
-
         }
         footer ul li a:hover {
             text-decoration: underline;
@@ -63,7 +70,6 @@
             padding: 50px;
         }
     </style>
-
 </head>
 <body>
     <main>
@@ -90,13 +96,15 @@
                     <?php
                     $query = "SELECT v.*, COALESCE(a.approval_status, 'Pending') AS approval_status
                               FROM Vehicle v
-                              LEFT JOIN approval a ON v.vehicle_numPlate = a.vehicle_grant AND v.student_ID = a.student_ID";
-                    $result = mysqli_query($con, $query);
+                              LEFT JOIN approval a ON v.vehicle_numPlate = a.vehicle_grant AND v.student_ID = a.student_ID
+                              WHERE v.student_ID = ?";
+                    $stmt = $con->prepare($query);
+                    $stmt->bind_param("s", $userID);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
 
-                    if (!$result) {
-                        die("Query failed: " . mysqli_error($con));
-                    } else {
-                        while ($row = mysqli_fetch_assoc($result)) {
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
                             echo '<tr>';
                             echo '<td>' . htmlspecialchars($row['vehicle_numPlate']) . '</td>';
                             echo '<td>' . htmlspecialchars($row['vehicle_type']) . '</td>';
@@ -107,8 +115,11 @@
                             echo '<td>' . htmlspecialchars($row['approval_status']) . '</td>';
                             echo '</tr>';
                         }
+                    } else {
+                        echo '<div class="alert alert-info">No records found for your registration status.</div>';
                     }
-                    mysqli_close($con);
+                    $stmt->close();
+                    $con->close();
                     ?>
                 </tbody>
             </table>

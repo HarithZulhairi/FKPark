@@ -150,7 +150,23 @@ session_start();
                         <label for="numPlate">Number Plate:</label>
                         <input type="text" id="numPlate" name="numPlate" required>
                         <label for="brand">Brand:</label>
-                        <input type="text" id="brand" name="brand" required>
+                        <select id="brand" name="brand" required>
+                            <option value="Toyota">Toyota</option>
+                            <option value="Honda">Honda</option>
+                            <option value="Ford">Ford</option>
+                            <option value="Chevrolet">Chevrolet</option>
+                            <option value="Nissan">Nissan</option>
+                            <option value="BMW">BMW</option>
+                            <option value="Mercedes-Benz">Mercedes-Benz</option>
+                            <option value="Audi">Audi</option>
+                            <option value="Volkswagen">Volkswagen</option>
+                            <option value="Hyundai">Hyundai</option>
+                            <option value="Mazda">Mazda</option>
+                            <option value="Kia">Kia</option>
+                            <option value="Subaru">Subaru</option>
+                            <option value="Proton">Proton</option>
+                            <option value="Perodua">Perodua</option>
+                        </select>
                         <label for="trans">Transmission:</label>
                         <input type="text" id="trans" name="trans" required>
                         <label for="grantFile">Upload Grant File:</label>

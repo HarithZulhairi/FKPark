@@ -135,8 +135,12 @@
                     
                     </li>
                     <li>
-                        <a href="../ManageRegistration/RegistrationVehicle.php">Vehicle Registration</a>
-                    </li>
+                    <a class="dropdown-toggle">Vehicle</a>
+                        <div class="dropdown">
+                            <a href="../ManageRegistration/RegistrationVehicle.php">Register Vehicle</a>
+                            <a href="../ManageRegistration/RegistrationStatus.php">Status Vehicle</a>
+                        </div>                   
+                     </li>
                     <li>
                         <a class="dropdown-toggle">Booking</a>
                         <div class="dropdown">

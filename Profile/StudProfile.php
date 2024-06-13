@@ -2,37 +2,21 @@
 session_start();
 $con = mysqli_connect("localhost", "root", "", "fkpark");
 
-if (!$con) {
-    die("Connection failed: " . mysqli_connect_error());
-}
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    
-    // Query to check username and password
-    $query = "SELECT * FROM `student` WHERE student_username = ? AND student_password = ?";
-    $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, 'ss', $username, $password);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    
-    if (mysqli_num_rows($result) == 1) {
-        $user = mysqli_fetch_assoc($result);
-        $_SESSION['student_ID'] = $user['student_ID'];
-        header('Location: StudProfile.php');
-    } else {
-        echo "Invalid login credentials.";
-    }
-    
-    mysqli_stmt_close($stmt);
+
+// Check if the user is logged in and the user ID is set in the session
+$studentID = isset($_SESSION['userID']) ? $_SESSION['userID'] : null;
+
+// If the student ID is not set, redirect to the login page
+if ($studentID === null) {
+    die('Student ID not found in session. Please login again.');
 }
 
 
 
 // Fetching all student data
 
-$query = "SELECT * FROM `student`";
+$query = "SELECT * FROM `student` WHERE student_ID = $studentID";
 $result = mysqli_query($con, $query);
 
 if (!$result) {
