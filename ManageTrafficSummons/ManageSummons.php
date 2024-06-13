@@ -34,12 +34,12 @@ session_start();
         <div id="list">
         <table class="table table-hover table-bordered table-striped" >
             <tr>
-                <th style="width:280px;">Summon No</th>
-                <th style="width:300px;">Vehicle No</th>
+                <th style="width:100px;">Summon ID</th>
+                <th style="width:300px;">Vehicle Plate</th>
                 <th style="width:180px;">Violation</th>
-                <th style="width:180px;">Student ID</th>
+                <th style="width:380px;">Date Time</th>
                 <th style="width:180px;">Action</th>
-                <th style="width:180px;">QR Code</th>
+                <th style="width:280px;">QR Code</th>
             </tr>
 
             <tbody>
@@ -63,7 +63,7 @@ session_start();
                         <td><?php echo$row['summon_ID']; ?></td>
                         <td><?php echo$row['vehicle_numPlate']; ?></td>
                         <td><?php echo$row['summon_violation']; ?></td>
-                        <td><?php echo$row['student_ID']; ?></td>
+                        <td><?php echo $row['summon_datetime'];; ?></td>
 
                         <td style="border-collapse: collapse;display: flex; align-items: center;">
                                 <div style="margin:10px 10px;" class="button-container">
