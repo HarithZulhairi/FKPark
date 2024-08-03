@@ -170,10 +170,13 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Booking dropdown toggle
-            document.querySelector('.dropdown-toggle').addEventListener('click', function (event) {
-                event.preventDefault();
-                var dropdown = this.nextElementSibling;
-                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            var dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            dropdownToggles.forEach(function (toggle) {
+                toggle.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    var dropdown = this.nextElementSibling;
+                    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                });
             });
 
             // Profile dropdown toggle
@@ -185,7 +188,9 @@
 
             // Close dropdowns if clicked outside
             document.addEventListener('click', function (event) {
-                var isClickInsideBooking = document.querySelector('.dropdown-toggle').contains(event.target);
+                var isClickInsideBooking = Array.from(dropdownToggles).some(function (toggle) {
+                    return toggle.contains(event.target);
+                });
                 var isClickInsideProfile = document.querySelector('.profile-toggle').contains(event.target);
                 var dropdowns = document.querySelectorAll('.dropdown, .profile-dropdown');
 
