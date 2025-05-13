@@ -156,6 +156,9 @@
                     </li>
                 </ul>
             </nav>
+            <div class="inbox">
+                <a href="../Home/inbox.php" class="inbox-toggle"><i class="fas fa-user"></i></a>
+            </div>            
             <div class="profile">
                 <a href="#" class="profile-toggle"><i class="fas fa-user"></i></a>
                 <div class="profile-dropdown">
