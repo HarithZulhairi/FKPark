@@ -153,7 +153,7 @@ session_start();
     <script src="ManageSummons.js"></script>
 
  <!-- Modal Create Summons -->
- <form id="summonsForm"  action="insertSummons_data.php" onsubmit="return validateVehicleNumPlate('summonsForm')" method="POST">
+ <form id="summonsForm" action="insertSummons_data.php" onsubmit="return validateVehicleNumPlate('summonsForm')" method="POST" enctype="multipart/form-data">
  <div class="modal fade" id="summonsModal" tabindex="-1" role="dialog" aria-labelledby="summonsModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
   
@@ -183,7 +183,13 @@ session_start();
             
             <div class="form-group">
                 <label for="location">Location</label>
-                <input type="text" id="location" name="location" class="form-control" required>
+                <select id="update_location" name="location" class="form-control" required>
+                    <option value="" disabled selected>Select parking area</option>
+                    <option value="B1">B1</option>
+                    <option value="B2">B2</option>
+                    <option value="B3">B3</option>
+                    <option value="M1">M1</option>
+                </select>
             </div>
 
 
@@ -191,9 +197,18 @@ session_start();
                 <label for="datetime">Date and Time</label>
                 <input type="datetime-local" id="datetime" name="datetime" class="form-control" required>
             </div>
-                   
+
+            <div class="form-group">
+                <label for="remarks">Remarks</label>
+                <textarea id="remarks" name="remarks" class="form-control" placeholder="Enter remarks here..."></textarea>
+            </div>
+
+            <div class="form-group">
+               <label for="carImage">Upload Car Image</label>
+               <input type="file" id="carImage" name="carImage" class="form-control" accept="image/*">
+            </div>
+               
             
-        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -234,7 +249,13 @@ session_start();
                     
                     <div class="form-group">
                         <label for="update_location">Location</label>
-                        <input type="text" id="update_location" name="location" class="form-control" required>
+                        <select id="update_location" name="location" class="form-control" required>
+                             <option value="" disabled selected>Select parking area</option>
+                            <option value="B1">B1</option>
+                            <option value="B2">B2</option>
+                            <option value="B3">B3</option>
+                            <option value="M1">M1</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
