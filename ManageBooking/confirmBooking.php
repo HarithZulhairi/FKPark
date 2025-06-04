@@ -64,13 +64,23 @@
                 $stmt = mysqli_prepare($con, $bookingQuery);
                 mysqli_stmt_bind_param($stmt, 'ssssii', $startTime, $endTime, $date, $qrCode, $parkingSlotID, $studentID);
 
-                if (mysqli_stmt_execute($stmt)) {
-                    $bookingID = mysqli_insert_id($con); // Get the last inserted booking ID
-                    header("Location: QRBooking.php?parkingSlotName=$parkingSpot&bookingDate=$date&startTime=$startTime&endTime=$endTime"); // Redirect to QRBooking.php with the booking ID
-                    exit;
-                } else {
-                    $error = "Error booking the parking spot: " . mysqli_error($con);
-                }
+        if (mysqli_stmt_execute($stmt)) {
+            $bookingID = mysqli_insert_id($con); // Get the last inserted booking ID
+
+            // Insert into inbox
+            $message = "Your parking has been booked successfully for $date from $startTime to $endTime.";
+            $inboxQuery = "INSERT INTO inbox (student_ID, booking_ID, message, time) VALUES (?, ?, ?, NOW())";
+            $stmtInbox = mysqli_prepare($con, $inboxQuery);
+            mysqli_stmt_bind_param($stmtInbox, 'iis', $studentID, $bookingID, $message);
+            mysqli_stmt_execute($stmtInbox);
+
+            // Redirect to QRBooking
+            header("Location: QRBooking.php?parkingSlotName=$parkingSpot&bookingDate=$date&startTime=$startTime&endTime=$endTime");
+            exit;
+        } else {
+            $error = "Error booking the parking spot: " . mysqli_error($con);
+        }
+
             }
         }
 

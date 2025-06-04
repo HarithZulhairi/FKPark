@@ -121,6 +121,15 @@
             font-size:16px;
         }
 
+        .inbox a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 20px;
+            margin-right: 0px; /* spacing between inbox and profile */
+        }
+
+
     </style>
 </head>
 <body>
@@ -157,8 +166,9 @@
                 </ul>
             </nav>
             <div class="inbox">
-                <a href="../Home/inbox.php" class="inbox-toggle"><i class="fas fa-user"></i></a>
-            </div>            
+                <a href="../Home/inbox.php" class="inbox-toggle"><i class="fas fa-inbox"></i></a>
+            </div>
+
             <div class="profile">
                 <a href="#" class="profile-toggle"><i class="fas fa-user"></i></a>
                 <div class="profile-dropdown">
