@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="StudentRegistration.css">
     <title>Student Registration</title>
 </head>
+
 <body>
     <?php include '../Layout/adminHeader.php'; ?>
-    
+
     <main>
         <div class="container-registration">
             <h2 class="title-registration">Student Registration</h2>
@@ -16,11 +18,14 @@
                 <table class="form-table">
                     <tr>
                         <td><label for="name">Username</label></td>
-                        <td><input type="text" id="name" name="Name" class="form-control" placeholder="Enter student username" required></td>
+                        <td><input type="text" id="name" name="Name" class="form-control" placeholder="Enter student username" pattern="[A-Za-z]+" title="Only letters are allowed" required>
+                        </td>
                     </tr>
                     <tr>
                         <td><label for="password">Password</label></td>
-                        <td><input type="password" id="password" name="Password" class="form-control" placeholder="Enter student password" required></td>
+                        <td><input type="password" id="password" name="Password" class="form-control" placeholder="Enter student password" minlength="7" required>
+
+                        </td>
                     </tr>
                     <tr>
                         <td><label for="email">Email</label></td>
@@ -61,6 +66,7 @@
 
     <?php include '../Layout/allUserFooter.php'; ?>
 </body>
+
 </html>
 
 <?php
@@ -73,7 +79,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_select_db($con, "fkpark") or die(mysqli_error($con));
 
     $username = $_POST["Name"];
+    if (!preg_match("/^[a-zA-Z]+$/", $username)) {
+        echo "<script>alert('Username must contain only letters.');</script>";
+        exit;
+    }
     $password = $_POST["Password"];
+    // Server-side password length check
+    if (strlen($password) < 6) {
+        echo "<script>alert('Password is too short. It must be at least 6 characters.');</script>";
+        exit;
+    }
     $email = $_POST["Email"];
     $age = $_POST["Age"];
     $phoneNum = $_POST["PhoneNum"];
