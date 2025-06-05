@@ -185,10 +185,15 @@ session_start();
                 <label for="location">Location</label>
                 <select id="update_location" name="location" class="form-control" required>
                     <option value="" disabled selected>Select parking area</option>
+                    <option value="A1">B1</option>
+                    <option value="A2">B2</option>
+                    <option value="A3">B3</option>
+                    <option value="A5">M1</option>
                     <option value="B1">B1</option>
                     <option value="B2">B2</option>
                     <option value="B3">B3</option>
                     <option value="M1">M1</option>
+                    <option value="M2">M2</option>
                 </select>
             </div>
 
@@ -250,11 +255,15 @@ session_start();
                     <div class="form-group">
                         <label for="update_location">Location</label>
                         <select id="update_location" name="location" class="form-control" required>
-                             <option value="" disabled selected>Select parking area</option>
-                            <option value="B1">B1</option>
-                            <option value="B2">B2</option>
-                            <option value="B3">B3</option>
-                            <option value="M1">M1</option>
+                             <option value="A1">B1</option>
+                             <option value="A2">B2</option>
+                             <option value="A3">B3</option>
+                             <option value="A5">M1</option>
+                             <option value="B1">B1</option>
+                             <option value="B2">B2</option>
+                             <option value="B3">B3</option>
+                             <option value="M1">M1</option>
+                             <option value="M2">M2</option>
                         </select>
                     </div>
 

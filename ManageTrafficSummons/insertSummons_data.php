@@ -64,7 +64,7 @@ if (isset($_POST['form_submitted'])) {
     if (!$result || !$upstdemtot) {
         die("Query Failed: " . $stmt->error);
     } else {
-        $inboxMessage = "You have violated 1 traffic rule. Please check your record.";
+        $inboxMessage = "You have violated 1 traffic rule.";
         $inboxInsert = $con->prepare("INSERT INTO inbox (student_ID, message, time, is_read) VALUES (?, ?, NOW(), 0)");
         $inboxInsert->bind_param("is", $student_id, $inboxMessage);
         $inboxInsert->execute();
