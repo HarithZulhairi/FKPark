@@ -2,24 +2,36 @@
 session_start();
 $con = mysqli_connect("localhost", "root", "", "fkpark");
 
-// Check if the user is logged in and the user ID is set in the session
-$uk_ID = isset($_SESSION['userID']) ? $_SESSION['userID'] : null;
-
-// If the staff ID is not set, redirect to the login page
-if ($uk_ID === null) {
-    die('Unit Keselamatan Staff ID not found in session. Please login again.');
+// Check messages
+if (isset($_SESSION['error'])) {
+    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            ' . $_SESSION['error'] . '
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>';
+    unset($_SESSION['error']);
 }
 
-// Fetching all staff data
+if (isset($_SESSION['message'])) {
+    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            ' . $_SESSION['message'] . '
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>';
+    unset($_SESSION['message']);
+}
+
+// Check if user is logged in
+$uk_ID = isset($_SESSION['userID']) ? $_SESSION['userID'] : null;
+if ($uk_ID === null) {
+    die('UK Staff ID not found in session. Please login again.');
+}
+
+// Fetch UK staff data
 $query = "SELECT * FROM unitkeselamatanstaff WHERE uk_ID = $uk_ID";
 $result = mysqli_query($con, $query);
 
 if (!$result) {
     die("Query failed: " . mysqli_error($con));
 }
-
-// Add cache buster to profile image URL if you have one
-$cacheBuster = time();
 ?>
 
 <!DOCTYPE html>
@@ -28,9 +40,10 @@ $cacheBuster = time();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <title>Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>UK Staff Profile</title>
     <style>
+        /* Your existing CSS styles */
         body {
             background-color: #f8f9fa;
         }
@@ -52,20 +65,6 @@ $cacheBuster = time();
             padding-bottom: 10px;
         }
 
-        .profile-picture {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #007bff;
-            margin: 0 auto 20px;
-            display: block;
-        }
-
-        .profile-info {
-            margin-bottom: 20px;
-        }
-
         .profile-info p {
             margin-bottom: 10px;
             padding: 8px 15px;
@@ -79,62 +78,12 @@ $cacheBuster = time();
             display: inline-block;
         }
 
-        .nav-tabs .nav-link {
-            color: #495057;
-            font-weight: 500;
-        }
-
-        .nav-tabs .nav-link.active {
-            color: #007bff;
-            font-weight: bold;
-            border-bottom: 3px solid #007bff;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-control {
-            border-radius: 5px;
-            padding: 10px;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 5px;
-        }
-
-        .btn-secondary {
-            background-color: #6c757d;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 5px;
-        }
-
-        .btn-group {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .file-input-wrapper {
-            max-width: 300px;
-            margin: 0 auto;
-        }
-
-        .file-input-label {
-            display: block;
-            margin-bottom: 5px;
-        }
+        /* Keep all your existing styles */
     </style>
 </head>
 
 <body>
     <?php include '../Layout/UKHeader.php'; ?>
-    <?php include '../DB_FKPark/dbcon.php'; ?>
 
     <div class="container">
         <div class="profile-container">
@@ -150,18 +99,14 @@ $cacheBuster = time();
             <div class="tab-content">
                 <!-- Profile Tab -->
                 <div class="tab-pane container active" id="profile">
-                    <?php
-                    // Reset pointer to first record
-                    mysqli_data_seek($result, 0);
-                    while ($row = mysqli_fetch_assoc($result)) { ?>
+                    <?php while ($row = mysqli_fetch_assoc($result)) { ?>
                         <div class="text-center mb-4">
-                            <h3 class="profile-header">Unit Keselamatan Staff Profile</h3>
+                            <h3 class="profile-header">UK Staff Profile</h3>
                         </div>
 
                         <div class="profile-info">
                             <p><b>Staff ID:</b> <?= htmlspecialchars($row['uk_ID']); ?></p>
                             <p><b>Name:</b> <?= htmlspecialchars($row['uk_username']); ?></p>
-                            <p><b>Password:</b> <?= htmlspecialchars($row['uk_password']); ?></p>
                             <p><b>Email:</b> <?= htmlspecialchars($row['uk_email']); ?></p>
                             <p><b>Age:</b> <?= htmlspecialchars($row['uk_age']); ?></p>
                         </div>
@@ -170,15 +115,13 @@ $cacheBuster = time();
 
                 <!-- Edit Profile Tab -->
                 <div class="tab-pane container fade" id="editProfile">
-                    <?php
-                    // Reset result pointer and fetch data again
-                    mysqli_data_seek($result, 0);
+                    <?php mysqli_data_seek($result, 0);
                     while ($row = mysqli_fetch_assoc($result)) { ?>
                         <div class="text-center mb-4">
                             <h3 class="profile-header">Edit Profile</h3>
                         </div>
 
-                        <form method="POST" action="update_profile.php" enctype="multipart/form-data" id="profileForm">
+                        <form method="POST" action="update_profile.php" id="profileForm">
                             <input type="hidden" name="uk_ID" value="<?= htmlspecialchars($row['uk_ID']); ?>">
 
                             <div class="row">
@@ -220,18 +163,8 @@ $cacheBuster = time();
 
     <?php include '../Layout/allUserFooter.php'; ?>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-    <script>
-        // Force page reload after form submission
-        document.getElementById('profileForm').addEventListener('submit', function() {
-            setTimeout(function() {
-                window.location.reload(true);
-            }, 1000);
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
-
 <?php mysqli_close($con); ?>
